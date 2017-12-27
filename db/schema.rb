@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222010926) do
+ActiveRecord::Schema.define(version: 20171226225713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,19 +125,18 @@ ActiveRecord::Schema.define(version: 20171222010926) do
     t.index ["charge_id"], name: "index_charges_shipping_lines_on_charge_id"
   end
 
+  create_table "config", primary_key: "key", id: :string, limit: 100, force: :cascade do |t|
+    t.jsonb "val"
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+  end
+
   create_table "current_products", force: :cascade do |t|
     t.string "prod_id_key"
     t.string "prod_id_value"
     t.string "next_month_prod_id"
     t.index ["prod_id_key"], name: "index_current_products_on_prod_id_key"
     t.index ["prod_id_value"], name: "index_current_products_on_prod_id_value"
-  end
-
-  create_table "customer_info", force: :cascade do |t|
-    t.string "shopify_id"
-    t.string "subscription_id"
-    t.index ["shopify_id"], name: "index_customer_info_on_shopify_id"
-    t.index ["subscription_id"], name: "index_customer_info_on_subscription_id"
   end
 
   create_table "customers", force: :cascade do |t|
