@@ -55,9 +55,21 @@ module FixSubInfo
         bad_prod_id7 = "91049066514"
         bad_prod_id8 = "91049230354"
         bad_prod_id9 = "91049197586"
+        bad_prod_id10 = "91236171794"
+        bad_prod_id11 = "126714937362"
+        bad_prod_id12 = "91235975186"
+        bad_prod_id13 = "126713757714"
+        bad_prod_id14 = "91236466706"
+        bad_prod_id15 = "126717034514"
+        bad_prod_id15 = "91236368402"
+        bad_prod_id16 = "126715920402"
+        bad_prod_id17 = "109303332882"
+        bad_prod_id18 = "126723686418"
+        bad_prod_id19 = "109301366802"
+        bad_prod_id20 = "126718771218"
         
 
-        subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2017-12-31' and (shopify_product_id = \'#{bad_prod_id1}\' or shopify_product_id = \'#{bad_prod_id2}\' or shopify_product_id = \'#{bad_prod_id3}\' or shopify_product_id = \'#{bad_prod_id4}\' or shopify_product_id = \'#{bad_prod_id5}\' or shopify_product_id = \'#{bad_prod_id6}\' or shopify_product_id = \'#{bad_prod_id7}\' or shopify_product_id = \'#{bad_prod_id8}\' or shopify_product_id = \'#{bad_prod_id9}\')"
+        subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2018-01-31' and (shopify_product_id = \'#{bad_prod_id1}\' or shopify_product_id = \'#{bad_prod_id2}\' or shopify_product_id = \'#{bad_prod_id3}\' or shopify_product_id = \'#{bad_prod_id4}\' or shopify_product_id = \'#{bad_prod_id5}\' or shopify_product_id = \'#{bad_prod_id6}\' or shopify_product_id = \'#{bad_prod_id7}\' or shopify_product_id = \'#{bad_prod_id8}\' or shopify_product_id = \'#{bad_prod_id9}\' or shopify_product_id = \'#{bad_prod_id10}\' or  shopify_product_id = \'#{bad_prod_id11}\' or shopify_product_id = \'#{bad_prod_id12}\'  or shopify_product_id = \'#{bad_prod_id13}\' or shopify_product_id = \'#{bad_prod_id14}\' or shopify_product_id = \'#{bad_prod_id15}\' or shopify_product_id = \'#{bad_prod_id16}\' or shopify_product_id = \'#{bad_prod_id17}\' or shopify_product_id = \'#{bad_prod_id18}\' or shopify_product_id = \'#{bad_prod_id19}\' or shopify_product_id = \'#{bad_prod_id20}\')"
         update_records = ActiveRecord::Base.connection.execute(subs_update)
 
 
@@ -72,7 +84,7 @@ module FixSubInfo
         #@conn.exec(my_delete)
         #my_reorder = "ALTER SEQUENCE current_products_id_seq RESTART WITH 1"
         #@conn.exec(my_reorder)
-        my_insert = "insert into update_products (sku, product_title, shopify_product_id, shopify_variant_id) values ($1, $2, $3, $4)"
+        my_insert = "insert into update_products (sku, product_title, shopify_product_id, shopify_variant_id, product_collection) values ($1, $2, $3, $4, $5)"
         @conn.prepare('statement1', "#{my_insert}")
         CSV.foreach('update_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
           #puts row.inspect
@@ -80,8 +92,9 @@ module FixSubInfo
           product_title = row['product_title']
           shopify_product_id = row['shopify_product_id']
           shopify_variant_id = row['shopify_variant_id']
+          product_collection = row['product_collection']
           
-          @conn.exec_prepared('statement1', [sku, product_title, shopify_product_id, shopify_variant_id])
+          @conn.exec_prepared('statement1', [sku, product_title, shopify_product_id, shopify_variant_id, product_collection])
         end
           @conn.close
   
@@ -122,9 +135,41 @@ module FixSubInfo
          @queue = "subscription_property_update"
          def self.perform(params)
            #logger.info "UpdateSubscriptionProduct#perform params: #{params.inspect}"
-           update_subscription_product(params)
+           update_subscriptions_next_month(params)
          end
    
+       end
+
+       def load_bad_alternate_monthly_box
+        BadMonthlyBox.delete_all
+        ActiveRecord::Base.connection.reset_pk_sequence!('bad_monthly_box')
+        CSV.foreach('ellie_threepack.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+          puts row.inspect
+          subscription_id = row['subscription_id']
+          bad_monthly = BadMonthlyBox.create(subscription_id: subscription_id)
+          BadMonthlyBox.update_all(updated_at: nil)
+          
+        end
+
+
+       end
+
+       def update_bad_alternate_monthly_box
+        params = {"action" => "bad_monthly_box", "recharge_change_header" => @my_change_charge_header} 
+        Resque.enqueue(UpdateBadMonthlyBox, params)
+
+
+       end
+
+       class UpdateBadMonthlyBox
+        extend ResqueHelper  
+        @queue = "bad_monthly_box"
+        def self.perform(params)
+          #logger.info "UpdateSubscriptionProduct#perform params: #{params.inspect}"
+          bad_monthly_box(params)
+        end
+
+
        end
 
 

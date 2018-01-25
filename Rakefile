@@ -40,4 +40,16 @@ task :update_subs_next_month do |t|
     FixSubInfo::SubUpdater.new.update_subscription_product
 end
 
+#load_bad_alternate_monthly_box
+desc 'load bad_alternate_monthly_box subscriptions to be fixed'
+task :load_bad_alternate_box do |t|
+    FixSubInfo::SubUpdater.new.load_bad_alternate_monthly_box
+end
+
+#update_bad_alternate_monthly_box
+desc 'update bad alternate monthly box'
+task :update_bad_alternate_monthly_box do |t|
+    FixSubInfo::SubUpdater.new.update_bad_alternate_monthly_box
+end
+
 end

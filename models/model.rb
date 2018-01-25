@@ -9,3 +9,7 @@ end
 class UpdateProduct < ActiveRecord::Base
   
 end
+
+class BadMonthlyBox < ActiveRecord::Base
+    self.table_name = "bad_monthly_box"
+end
