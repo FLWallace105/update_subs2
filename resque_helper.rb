@@ -42,7 +42,8 @@ module ResqueHelper
             my_line_items << {"name" => "product_collection", "value" => my_product_collection}
         end
 
-        stuff_to_return = {"sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => my_line_items}
+        #stuff_to_return = {"sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => my_line_items}
+        stuff_to_return = { "properties" => my_line_items}
 
         return stuff_to_return
     end
@@ -98,7 +99,7 @@ module ResqueHelper
                 Resque.logger.info "Been running #{duration} seconds"
                 if duration > 480
                     Resque.logger.info "Been running more than 8 minutes must exit"
-                    exit
+                    break
                 
                     end
             
