@@ -8,10 +8,13 @@ require 'active_record'
 require 'sinatra/activerecord/rake'
 require 'resque/tasks'
 require_relative 'update_subs'
+require 'pry'
 
 namespace :sub_update do
 desc 'list current products'
 task :current_products do |t|
+  # binding.pry
+  # return
     FixSubInfo::SubUpdater.new.get_current_products
 end
 

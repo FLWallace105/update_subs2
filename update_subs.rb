@@ -74,23 +74,25 @@ module FixSubInfo
 
       update_records = ActiveRecord::Base.connection.execute(subs_update)
       # update_records = ActiveRecord::Base.connection.execute(three_months_update)
-
-      # Order.where(
-      #   shopify_order_id: ['23729012754', '9175678162', '9109818066'],
-      #   status: 'CANCELLED'
-      # ).where("scheduled_at > ?", DateTime.now).each do |order|
-      #   SubscriptionsUpdated.create(
-      #     subscription_id: order.shopify_order_id,
-      #     customer_id: order.customer_id,
-      #     next_charge_scheduled_at: next_charge_scheduled_at(order),
-      #     product_title: ,
-      #     status: ,
-      #     sku: ,
-      #     shopify_product_id: ,
-      #     shopify_variant_id: ,
-      #     raw_line_item_properties: ,
-      #   )
-      # end
+      # binding.pry
+      # return
+      prepaid_subscriptions_set_to_cancel(
+        monthly_box1, monthly_box2, monthly_box3
+      ).each do |order|
+        subscription = Subscription.find_by_customer_id(order.customer_id)
+        SubscriptionsUpdated.create(
+          subscription_id: subscription&.subscription_id,
+          customer_id: subscription&.customer_id,
+          updated_at: subscription&.updated_at,
+          next_charge_scheduled_at: subscription&.next_charge_scheduled_at,
+          product_title: subscription&.product_title,
+          status: subscription&.status,
+          sku: subscription&.sku,
+          shopify_product_id: subscription&.shopify_product_id,
+          shopify_variant_id: subscription&.shopify_variant_id,
+          raw_line_items: subscription&.raw_line_item_properties
+        )
+      end
     end
 
     def load_update_products
@@ -178,8 +180,12 @@ module FixSubInfo
 
     private
 
-    def next_charge_scheduled_at(order)
-      Subscription.find_by_subscription_id(order.subscription_id)&.next_charge_scheduled_at
+    def prepaid_subscriptions_set_to_cancel(monthly_box1, monthly_box2, monthly_box3)
+      Order.where(
+        status: 'CANCELLED'
+      ).where("scheduled_at > ?", DateTime.now).select do |order|
+        [monthly_box1, monthly_box2, monthly_box3].include?(order.shopify_product_id)
+      end
     end
   end
 end
