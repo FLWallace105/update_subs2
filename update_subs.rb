@@ -63,7 +63,6 @@ module FixSubInfo
       bad_prod_id19 = "109301366802"
       bad_prod_id20 = "126718771218"
 
-
       monthly_box1 = "23729012754"
       monthly_box2 = "9175678162"
       monthly_box3 = "9109818066"
@@ -72,14 +71,16 @@ module FixSubInfo
 
       # three_months_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2018-01-31' and (shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\' )"
 
-      update_records = ActiveRecord::Base.connection.execute(subs_update)
-      # update_records = ActiveRecord::Base.connection.execute(three_months_update)
-      # binding.pry
-      # return
+      # This creates SubscriptionsUpdated records from normal subscriptions and
+      # prepaid subscription NOT set to cancel:
+      ActiveRecord::Base.connection.execute(subs_update)
+      # ActiveRecord::Base.connection.execute(three_months_update)
+
       prepaid_subscriptions_set_to_cancel(
         monthly_box1, monthly_box2, monthly_box3
       ).each do |order|
         subscription = Subscription.find_by_customer_id(order.customer_id)
+        next unless subscription
         SubscriptionsUpdated.create(
           subscription_id: subscription&.subscription_id,
           customer_id: subscription&.customer_id,
