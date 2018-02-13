@@ -29,7 +29,6 @@ end
 
 class Subscription < ActiveRecord::Base
   self.primary_key = :subscription_id
-  belongs_to :customer
   has_many :order_line_items, class_name: 'OrderLineItemsFixed'
   has_many :orders, through: :order_line_items
   after_save :update_line_items
