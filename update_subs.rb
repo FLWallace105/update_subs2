@@ -74,6 +74,23 @@ module FixSubInfo
 
       update_records = ActiveRecord::Base.connection.execute(subs_update)
       # update_records = ActiveRecord::Base.connection.execute(three_months_update)
+
+      # Order.where(
+      #   shopify_order_id: ['23729012754', '9175678162', '9109818066'],
+      #   status: 'CANCELLED'
+      # ).where("scheduled_at > ?", DateTime.now).each do |order|
+      #   SubscriptionsUpdated.create(
+      #     subscription_id: order.shopify_order_id,
+      #     customer_id: order.customer_id,
+      #     next_charge_scheduled_at: next_charge_scheduled_at(order),
+      #     product_title: ,
+      #     status: ,
+      #     sku: ,
+      #     shopify_product_id: ,
+      #     shopify_variant_id: ,
+      #     raw_line_item_properties: ,
+      #   )
+      # end
     end
 
     def load_update_products
@@ -157,6 +174,12 @@ module FixSubInfo
         # logger.info "UpdateSubscriptionProduct#perform params: #{params.inspect}"
         bad_monthly_box(params)
       end
+    end
+
+    private
+
+    def next_charge_scheduled_at(order)
+      Subscription.find_by_subscription_id(order.subscription_id)&.next_charge_scheduled_at
     end
   end
 end
