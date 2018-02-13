@@ -40,10 +40,3 @@ class OrderLineItemsFixed < ActiveRecord::Base
   belongs_to :subscription
   belongs_to :order
 end
-
-class Customer < ActiveRecord::Base
-  self.primary_key = :customer_id
-
-  has_many :subscriptions
-  has_many :orders, through: :subscriptions
-end
