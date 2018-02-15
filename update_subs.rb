@@ -77,11 +77,14 @@ module FixSubInfo
       ActiveRecord::Base.connection.execute(subs_update)
       # ActiveRecord::Base.connection.execute(three_months_update)
 
-      prepaid_subscriptions_set_to_cancel(
+      # This creates SubscriptionsUpdated records from cancelled subscriptions
+      # that have orders that are not cancelled. 
+      not_canceled_orders_from_boxes(
         monthly_box1, monthly_box2, monthly_box3
       ).each do |order|
         subscription = Subscription.find_by_customer_id(order.customer_id)
-        next unless subscription
+        next unless subscription&.status&.downcase == 'cancelled'
+        next unless [monthly_box1, monthly_box2, monthly_box3].include?(subscription.shopify_product_id)
         SubscriptionsUpdated.create(
           subscription_id: subscription.subscription_id,
           customer_id: subscription.customer_id,
@@ -182,9 +185,9 @@ module FixSubInfo
 
     private
 
-    def prepaid_subscriptions_set_to_cancel(monthly_box1, monthly_box2, monthly_box3)
+    def not_canceled_orders_from_boxes(monthly_box1, monthly_box2, monthly_box3)
       Order.where(
-        status: 'CANCELLED'
+        "status NOT ILIKE ?", 'CANCELLED'
       ).where("scheduled_at > ?", DateTime.now).select do |order|
         [monthly_box1, monthly_box2, monthly_box3].include?(order.shopify_product_id)
       end

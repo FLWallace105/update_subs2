@@ -28,7 +28,6 @@ task :load_new_products do |t|
     FixSubInfo::SubUpdater.new.load_update_products
 end
 
-
 #load the current products we need to change
 desc 'load the current products we need to update for next month'
 task :load_current_products do |t|
