@@ -13,6 +13,7 @@ require 'pry'
 namespace :sub_update do
 desc 'list current products'
 task :current_products do |t|
+  binding.pry
     FixSubInfo::SubUpdater.new.get_current_products
 end
 
@@ -38,7 +39,7 @@ end
 #update_subscription_product
 desc 'update subscriptions with next months product info'
 task :update_subs_next_month do |t|
-    FixSubInfo::SubUpdater.new.update_subscription_product
+  FixSubInfo::SubUpdater.new.update_subscription_product
 end
 
 #load_bad_alternate_monthly_box

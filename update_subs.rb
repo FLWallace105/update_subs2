@@ -8,6 +8,7 @@ require 'active_record'
 require "sinatra/activerecord"
 require_relative 'models/model'
 require_relative 'resque_helper'
+require 'pry'
 
 module FixSubInfo
   class SubUpdater
@@ -72,7 +73,7 @@ module FixSubInfo
       # three_months_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2018-01-31' and (shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\' )"
 
       # This creates SubscriptionsUpdated records from normal subscriptions and
-      # prepaid subscription NOT set to cancel:
+      # prepaid subscriptions NOT set to cancel:
       ActiveRecord::Base.connection.execute(subs_update)
       # ActiveRecord::Base.connection.execute(three_months_update)
 
@@ -82,16 +83,16 @@ module FixSubInfo
         subscription = Subscription.find_by_customer_id(order.customer_id)
         next unless subscription
         SubscriptionsUpdated.create(
-          subscription_id: subscription&.subscription_id,
-          customer_id: subscription&.customer_id,
-          updated_at: subscription&.updated_at,
-          next_charge_scheduled_at: subscription&.next_charge_scheduled_at,
-          product_title: subscription&.product_title,
-          status: subscription&.status,
-          sku: subscription&.sku,
-          shopify_product_id: subscription&.shopify_product_id,
-          shopify_variant_id: subscription&.shopify_variant_id,
-          raw_line_items: subscription&.raw_line_item_properties
+          subscription_id: subscription.subscription_id,
+          customer_id: subscription.customer_id,
+          updated_at: subscription.updated_at,
+          next_charge_scheduled_at: subscription.next_charge_scheduled_at,
+          product_title: subscription.product_title,
+          status: subscription.status,
+          sku: subscription.sku,
+          shopify_product_id: subscription.shopify_product_id,
+          shopify_variant_id: subscription.shopify_variant_id,
+          raw_line_items: subscription.raw_line_item_properties
         )
       end
     end
@@ -126,15 +127,15 @@ module FixSubInfo
       # @conn.exec(my_delete)
       # my_reorder = "ALTER SEQUENCE current_products_id_seq RESTART WITH 1"
       # @conn.exec(my_reorder)
-      my_insert = "insert into current_products (prod_id_key, prod_id_value, next_month_prod_id) values ($1, $2, $3)"
+      my_insert = "insert into current_products (prod_id_key, prod_id_value, next_month_prod_id, prepaid) values ($1, $2, $3, $4)"
       @conn.prepare('statement1', "#{my_insert}")
       CSV.foreach('current_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
         # puts row.inspect
         prod_id_key = row['prod_id_key']
         prod_id_value = row['prod_id_value']
         next_month_prod_id = row['next_month_prod_id']
-
-        @conn.exec_prepared('statement1', [prod_id_key, prod_id_value, next_month_prod_id])
+        prepaid = row['prepaid']
+        @conn.exec_prepared('statement1', [prod_id_key, prod_id_value, next_month_prod_id, prepaid])
       end
       @conn.close
     end

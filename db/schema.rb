@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180125002516) do
+ActiveRecord::Schema.define(version: 20180214193219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20180125002516) do
     t.string "prod_id_key"
     t.string "prod_id_value"
     t.string "next_month_prod_id"
+    t.boolean "prepaid", default: false
     t.index ["prod_id_key"], name: "index_current_products_on_prod_id_key"
     t.index ["prod_id_value"], name: "index_current_products_on_prod_id_value"
   end
