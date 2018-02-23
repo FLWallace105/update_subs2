@@ -49,6 +49,7 @@ module ResqueHelper
 
   def update_subscriptions_next_month(params)
     puts params.inspect
+    puts "Got here"
     recharge_change_header = params['recharge_change_header']
     Resque.logger = Logger.new("#{Dir.getwd}/logs/update_subs_resque.log")
     Resque.logger.info "For updating subscriptions Got params #{params.inspect}"
