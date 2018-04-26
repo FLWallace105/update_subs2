@@ -52,4 +52,10 @@ task :update_bad_alternate_monthly_box do |t|
     FixSubInfo::SubUpdater.new.update_bad_alternate_monthly_box
 end
 
+#update bad sub
+desc 'update bad subscription'
+task :update_bad_subs do |t|
+    FixSubInfo::SubUpdater.new.update_bad_subs
+end
+
 end

@@ -93,11 +93,12 @@ module ResqueHelper
       sleep 6
       my_current = Time.now
       duration = (my_current - my_now).ceil
+      puts "Been running #{duration} seconds"
       Resque.logger.info "Been running #{duration} seconds"
 
       if duration > 480
         Resque.logger.info "Been running more than 8 minutes must exit"
-        break
+        exit
       end
     end
     puts "All done updating subscriptions!"
@@ -141,4 +142,73 @@ module ResqueHelper
 
       # puts stuff_to_return
   end
+
+
+  def fix_bad_sub(params)
+    puts params.inspect
+    puts "Got here"
+    my_now = Time.now
+    recharge_change_header = params['recharge_change_header']
+    puts recharge_change_header
+    mysubs = SubscriptionsUpdated.where(updated: false)
+    puts "I am here"
+
+    mysubs.each do |sub|
+      prod_title =  sub.product_title
+      prod_id = sub.shopify_product_id
+      prod_id = prod_id.to_i
+      variant_id = sub.shopify_variant_id
+      variant_id = variant_id.to_i
+      sku = sub.sku
+      line_items = sub.raw_line_items
+      my_sub_id = sub.subscription_id
+      p prod_title
+      product_update = { "sku" => sku, "product_title" => prod_title, "shopify_product_id" => prod_id, "properties" => line_items, "shopify_variant_id" => variant_id  }
+      body = product_update.to_json
+      puts product_update
+
+      hard_code = {"sku" => "722457911059", "product_title" => "La Vie En Rose - 3 Item", "shopify_product_id" => "138427301906", "shopify_variant_id" => "1340705931282" }.to_json
+
+      #fix_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/10260823", :headers => recharge_change_header, :body => hard_code, :timeout => 80 )
+      #p fix_sub.inspect
+      #p "done hard code test"
+
+      my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{sub.subscription_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
+      puts my_update_sub.inspect
+
+      if my_update_sub.code == 200
+        # set update flag and print success
+        sub.updated = true
+        time_updated = DateTime.now
+        time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
+        #sub.processed_at = time_updated_str
+        sub.save
+        puts "Updated subscription id #{my_sub_id}"
+        
+      else
+        # echo out error message.
+        puts "WARNING -- COULD NOT UPDATE subscription #{my_sub_id}"
+        
+      end
+
+      
+      sleep 6
+      my_current = Time.now
+      duration = (my_current - my_now).ceil
+      puts "Been running #{duration} seconds"
+      
+
+      if duration > 480
+        puts "Been running more than 8 minutes must exit"
+        exit
+      end
+
+      
+
+    end
+
+
+  end
+
+
 end
