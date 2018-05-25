@@ -58,4 +58,28 @@ task :update_bad_subs do |t|
     FixSubInfo::SubUpdater.new.update_bad_subs
 end
 
+#load threemonths
+desc 'load fix_three_months table'
+task :load_three_months do |t|
+    FixSubInfo::SubUpdater.new.fix_three_months
+end
+
+#update_fix_three_months
+desc 'update the fix_three_months records in ReCharge'
+task :update_fix_three_months do |t|
+    FixSubInfo::SubUpdater.new.update_fix_three_months
+end 
+
+#load_fix_bad_recurring
+desc 'load the bad_recurring_subs table with data'
+task :load_bad_recurring_subs do |t|
+    FixSubInfo::SubUpdater.new.load_fix_bad_recurring
+end
+
+#update_bad_recurring
+desc 'update the bad_recurring_subs in ReCharge'
+task :update_bad_recurring_subs do |t|
+    FixSubInfo::SubUpdater.new.update_bad_recurring
+end
+
 end

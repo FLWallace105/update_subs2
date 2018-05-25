@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214193219) do
+ActiveRecord::Schema.define(version: 20180430221120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,22 @@ ActiveRecord::Schema.define(version: 20180214193219) do
     t.string "subscription_id"
     t.boolean "updated", default: false
     t.datetime "updated_at"
+  end
+
+  create_table "bad_recurring_subs", force: :cascade do |t|
+    t.string "subscription_id"
+    t.string "customer_id"
+    t.datetime "next_charge_scheduled_at"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "status"
+    t.string "product_title"
+    t.string "product_id"
+    t.string "variant_id"
+    t.string "sku"
+    t.jsonb "line_item_properties"
+    t.boolean "updated", default: false
+    t.datetime "updated_at"
+    t.integer "expire_after_specific_number_charges"
   end
 
   create_table "charge_billing_address", force: :cascade do |t|
@@ -184,6 +200,21 @@ ActiveRecord::Schema.define(version: 20180214193219) do
     t.datetime "synced_at"
     t.index ["customer_id"], name: "index_customers_on_customer_id"
     t.index ["shopify_customer_id"], name: "index_customers_on_shopify_customer_id"
+  end
+
+  create_table "fix_three_months", force: :cascade do |t|
+    t.string "subscription_id"
+    t.string "customer_id"
+    t.datetime "next_charge_scheduled_at"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "status"
+    t.string "product_title"
+    t.string "product_id"
+    t.string "variant_id"
+    t.string "sku"
+    t.jsonb "line_item_properties"
+    t.boolean "updated", default: false
+    t.datetime "updated_at"
   end
 
   create_table "matching_products", force: :cascade do |t|
@@ -424,6 +455,23 @@ ActiveRecord::Schema.define(version: 20180214193219) do
     t.string "subscription_id"
     t.jsonb "properties"
     t.boolean "updated", default: false
+  end
+
+  create_table "update_prepaid", force: :cascade do |t|
+    t.string "customer_id"
+    t.string "order_id"
+    t.string "title"
+    t.datetime "scheduled_at"
+    t.boolean "is_updated", default: false
+    t.datetime "updated_at"
+    t.text "properties"
+  end
+
+  create_table "update_prepaid_config", force: :cascade do |t|
+    t.string "title"
+    t.string "product_id"
+    t.string "variant_id"
+    t.string "product_collection"
   end
 
   create_table "update_products", force: :cascade do |t|

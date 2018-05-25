@@ -11,7 +11,10 @@ Dotenv.load
 module ResqueHelper
   def get_new_subs_properties(product_id, my_sub_id)
     # Get subscription and raw_line_item_properties
+    puts "In this module"
+    puts "#{product_id}, #{my_sub_id}"
     my_local_sub = SubscriptionsUpdated.find_by_subscription_id(my_sub_id)
+    puts "my_local_sub = #{my_local_sub.inspect}"
     my_line_items = my_local_sub.raw_line_items
     my_prod = CurrentProduct.find_by_prod_id_value(product_id)
     next_month_product_id = my_prod.next_month_prod_id
@@ -210,5 +213,89 @@ module ResqueHelper
 
   end
 
+  def three_months_subs(params)
+    #puts params.inspect
+    #puts "Got here"
+    my_now = Time.now
+    recharge_change_header = params['recharge_change_header']
+    #puts recharge_change_header
+    #exit
+    my_product_collection = "May Flowers - 5 Items"
+    mythreesubs = FixThreeMonths.where(updated: false)
+
+    mythreesubs.each do |sub|
+      #puts sub.line_item_properties
+      
+      found_collection = false
+
+      sub.line_item_properties.map do |mystuff|
+      # puts "#{key}, #{value}"
+      if mystuff['name'] == 'product_collection'
+        mystuff['value'] = my_product_collection
+        found_collection = true
+      end
+      end
+
+      puts "my_line_items = #{sub.line_item_properties.inspect}"
+
+      if found_collection == false
+        # only if I did not find the product_collection property in the line items do I need to add it
+        puts "We are adding the product collection to the line item properties"
+        sub.line_item_properties << { "name" => "product_collection", "value" => my_product_collection }
+      end
+
+    stuff_to_send = { "sku" => "722457572908", "product_title" => "3 MONTHS", "shopify_product_id" => 23729012754, "shopify_variant_id" => 177939546130, "properties" => sub.line_item_properties }
+    puts stuff_to_send
+    stuff_to_send_json = stuff_to_send.to_json
+    my_sub_id = sub.subscription_id
+    my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{my_sub_id}", :headers => recharge_change_header, :body => stuff_to_send_json, :timeout => 80)
+    puts my_update_sub.inspect
+
+    if my_update_sub.code == 200
+      sub.updated = true
+      time_updated = DateTime.now
+      time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
+      sub.updated_at = time_updated_str
+      sub.save
+      puts "Updated subscription id #{sub.subscription_id}"
+
+    else
+      puts "Could not update subscription id #{sub.subscription_id}"
+    end
+
+    sleep 4
+    my_current = Time.now
+    duration = (my_current - my_now).ceil
+    puts "Been running #{duration} seconds"
+     
+
+    if duration > 480
+        puts "Been running more than 8 minutes must exit"
+        exit
+    end
+
+    end
+  
+  end
+
+
+  def update_bad_recurring(params)
+    recharge_change_header = params['recharge_change_header']
+    badsubs = BadRecurringSub.where(updated: false)
+
+    badsubs.each do |mysub|
+      puts "Subscription_id: #{mysub.subscription_id} expire: #{mysub.expire_after_specific_number_charges}"
+      my_sub_id = mysub.subscription_id
+      stuff_to_send_json = {"cancellation_reason" => "Misconfigured Subscription"}.to_json
+      my_update_sub = HTTParty.post("https://api.rechargeapps.com/subscriptions/#{my_sub_id}/cancel", :headers => recharge_change_header, :body => stuff_to_send_json, :timeout => 80)
+      puts my_update_sub.inspect
+      puts my_update_sub.code
+
+
+
+      sleep 4
+    end
+
+  end
 
 end

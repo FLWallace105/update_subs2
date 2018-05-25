@@ -39,3 +39,12 @@ class OrderLineItemsFixed < ActiveRecord::Base
   belongs_to :subscription
   belongs_to :order
 end
+
+
+class FixThreeMonths < ActiveRecord::Base
+  self.table_name = 'fix_three_months'
+end   
+
+class BadRecurringSub < ActiveRecord::Base
+  self.table_name = 'bad_recurring_subs'
+end

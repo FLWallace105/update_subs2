@@ -118,8 +118,26 @@ module FixSubInfo
       bad_prod_id55 = "197986910226"
       bad_prod_id56 = "210212585490"
 
+      #May Flowers
+      bad_prod_id57 = "207131443218"
+      bad_prod_id58 = "219709145106"
+      bad_prod_id59 = "207131279378"
+      bad_prod_id60 = "219709276178"
 
-      subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > '2018-04-30' or next_charge_scheduled_at is null)  and (shopify_product_id = \'#{bad_prod_id1}\' or shopify_product_id = \'#{bad_prod_id2}\' or shopify_product_id = \'#{bad_prod_id3}\' or shopify_product_id = \'#{bad_prod_id4}\' or shopify_product_id = \'#{bad_prod_id5}\' or shopify_product_id = \'#{bad_prod_id6}\' or shopify_product_id = \'#{bad_prod_id7}\' or shopify_product_id = \'#{bad_prod_id8}\' or shopify_product_id = \'#{bad_prod_id9}\' or shopify_product_id = \'#{bad_prod_id10}\' or  shopify_product_id = \'#{bad_prod_id11}\' or shopify_product_id = \'#{bad_prod_id12}\'  or shopify_product_id = \'#{bad_prod_id13}\' or shopify_product_id = \'#{bad_prod_id14}\' or shopify_product_id = \'#{bad_prod_id15}\' or shopify_product_id = \'#{bad_prod_id16}\' or shopify_product_id = \'#{bad_prod_id17}\' or shopify_product_id = \'#{bad_prod_id18}\' or shopify_product_id = \'#{bad_prod_id19}\' or shopify_product_id = \'#{bad_prod_id20}\' or shopify_product_id = \'#{bad_prod_id21}\' or shopify_product_id = \'#{bad_prod_id22}\' or shopify_product_id = \'#{bad_prod_id23}\' or shopify_product_id = \'#{bad_prod_id24}\' or shopify_product_id = \'#{bad_prod_id25}\' or shopify_product_id = \'#{bad_prod_id26}\' or shopify_product_id = \'#{bad_prod_id27}\' or shopify_product_id = \'#{bad_prod_id28}\' or shopify_product_id = \'#{bad_prod_id29}\' or shopify_product_id = \'#{bad_prod_id30}\'  or shopify_product_id = \'#{bad_prod_id31}\' or shopify_product_id = \'#{bad_prod_id32}\' or shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\'  or   shopify_product_id = \'#{bad_prod_id33}\' or  shopify_product_id = \'#{bad_prod_id34}\' or  shopify_product_id = \'#{bad_prod_id35}\' or  shopify_product_id = \'#{bad_prod_id36}\' or  shopify_product_id = \'#{bad_prod_id37}\' or  shopify_product_id = \'#{bad_prod_id38}\' or  shopify_product_id = \'#{bad_prod_id39}\' or  shopify_product_id = \'#{bad_prod_id40}\' or  shopify_product_id = \'#{bad_prod_id41}\' or  shopify_product_id = \'#{bad_prod_id42}\' or  shopify_product_id = \'#{bad_prod_id43}\' or  shopify_product_id = \'#{bad_prod_id44}\' or  shopify_product_id = \'#{bad_prod_id45}\' or  shopify_product_id = \'#{bad_prod_id46}\' or  shopify_product_id = \'#{bad_prod_id47}\' or  shopify_product_id = \'#{bad_prod_id48}\' or  shopify_product_id = \'#{bad_prod_id49}\' or  shopify_product_id = \'#{bad_prod_id50}\' or  shopify_product_id = \'#{bad_prod_id51}\' or  shopify_product_id = \'#{bad_prod_id52}\' or  shopify_product_id = \'#{bad_prod_id53}\' or  shopify_product_id = \'#{bad_prod_id54}\' or  shopify_product_id = \'#{bad_prod_id55}\' or  shopify_product_id = \'#{bad_prod_id56}\')"
+      #Wild Orchid
+      bad_prod_id61 = "207131803666"
+      bad_prod_id62 = "219709407250"
+      bad_prod_id63 = "207131705362"
+      bad_prod_id64 = "219709538322"
+
+      #skys the limit
+      bad_prod_id65 = "207132033042"
+      bad_prod_id66 = "219709702162"
+      bad_prod_id67 = "207131967506"
+      bad_prod_id68 = "219709767698"
+
+
+      subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > '2018-05-31' or next_charge_scheduled_at is null)  and (shopify_product_id = \'#{bad_prod_id1}\' or shopify_product_id = \'#{bad_prod_id2}\' or shopify_product_id = \'#{bad_prod_id3}\' or shopify_product_id = \'#{bad_prod_id4}\' or shopify_product_id = \'#{bad_prod_id5}\' or shopify_product_id = \'#{bad_prod_id6}\' or shopify_product_id = \'#{bad_prod_id7}\' or shopify_product_id = \'#{bad_prod_id8}\' or shopify_product_id = \'#{bad_prod_id9}\' or shopify_product_id = \'#{bad_prod_id10}\' or  shopify_product_id = \'#{bad_prod_id11}\' or shopify_product_id = \'#{bad_prod_id12}\'  or shopify_product_id = \'#{bad_prod_id13}\' or shopify_product_id = \'#{bad_prod_id14}\' or shopify_product_id = \'#{bad_prod_id15}\' or shopify_product_id = \'#{bad_prod_id16}\' or shopify_product_id = \'#{bad_prod_id17}\' or shopify_product_id = \'#{bad_prod_id18}\' or shopify_product_id = \'#{bad_prod_id19}\' or shopify_product_id = \'#{bad_prod_id20}\' or shopify_product_id = \'#{bad_prod_id21}\' or shopify_product_id = \'#{bad_prod_id22}\' or shopify_product_id = \'#{bad_prod_id23}\' or shopify_product_id = \'#{bad_prod_id24}\' or shopify_product_id = \'#{bad_prod_id25}\' or shopify_product_id = \'#{bad_prod_id26}\' or shopify_product_id = \'#{bad_prod_id27}\' or shopify_product_id = \'#{bad_prod_id28}\' or shopify_product_id = \'#{bad_prod_id29}\' or shopify_product_id = \'#{bad_prod_id30}\'  or shopify_product_id = \'#{bad_prod_id31}\' or shopify_product_id = \'#{bad_prod_id32}\' or shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\'  or   shopify_product_id = \'#{bad_prod_id33}\' or  shopify_product_id = \'#{bad_prod_id34}\' or  shopify_product_id = \'#{bad_prod_id35}\' or  shopify_product_id = \'#{bad_prod_id36}\' or  shopify_product_id = \'#{bad_prod_id37}\' or  shopify_product_id = \'#{bad_prod_id38}\' or  shopify_product_id = \'#{bad_prod_id39}\' or  shopify_product_id = \'#{bad_prod_id40}\' or  shopify_product_id = \'#{bad_prod_id41}\' or  shopify_product_id = \'#{bad_prod_id42}\' or  shopify_product_id = \'#{bad_prod_id43}\' or  shopify_product_id = \'#{bad_prod_id44}\' or  shopify_product_id = \'#{bad_prod_id45}\' or  shopify_product_id = \'#{bad_prod_id46}\' or  shopify_product_id = \'#{bad_prod_id47}\' or  shopify_product_id = \'#{bad_prod_id48}\' or  shopify_product_id = \'#{bad_prod_id49}\' or  shopify_product_id = \'#{bad_prod_id50}\' or  shopify_product_id = \'#{bad_prod_id51}\' or  shopify_product_id = \'#{bad_prod_id52}\' or  shopify_product_id = \'#{bad_prod_id53}\' or  shopify_product_id = \'#{bad_prod_id54}\' or  shopify_product_id = \'#{bad_prod_id55}\' or  shopify_product_id = \'#{bad_prod_id56}\' or shopify_product_id = \'#{bad_prod_id57}\' or shopify_product_id = \'#{bad_prod_id58}\' or shopify_product_id = \'#{bad_prod_id59}\' or shopify_product_id = \'#{bad_prod_id60}\' or shopify_product_id = \'#{bad_prod_id61}\' or shopify_product_id = \'#{bad_prod_id62}\' or shopify_product_id = \'#{bad_prod_id63}\' or shopify_product_id = \'#{bad_prod_id64}\' or shopify_product_id = \'#{bad_prod_id65}\' or shopify_product_id = \'#{bad_prod_id66}\' or shopify_product_id = \'#{bad_prod_id67}\' or shopify_product_id = \'#{bad_prod_id68}\')"
 
       
       
@@ -252,6 +270,74 @@ module FixSubInfo
 
       end
     end
+
+    #Code to fix Improperly set up In the Zone, Set the Pace, All Star as recurring instead of
+    #one time only.
+    def load_improper_setup
+
+
+    end
+
+    #Code to fix the bad Three Months
+
+    def fix_three_months
+      FixThreeMonths.delete_all
+      ActiveRecord::Base.connection.reset_pk_sequence!('fix_three_months')
+      my_sql_command = "insert into fix_three_months (subscription_id, customer_id, next_charge_scheduled_at, price, status, product_title, product_id, variant_id, sku, line_item_properties) select subscription_id, customer_id, next_charge_scheduled_at, price,  status, product_title,  shopify_product_id, shopify_variant_id, sku, raw_line_item_properties from subscriptions where status = \'ACTIVE\' and price > 49.95 "
+
+      records_array = ActiveRecord::Base.connection.execute(my_sql_command)
+
+    end
+
+    def update_fix_three_months
+      #puts "I am here"
+      params = { "recharge_change_header" => @my_change_charge_header }
+      #puts params.inspect
+      Resque.enqueue(FixThreeMonths, params)
+      
+    end
+
+    class FixThreeMonths
+      extend ResqueHelper
+      @queue = "update_three_months_subs"
+      
+      def self.perform(params)
+        puts "Starting job"
+        #puts "here params are #{params.inspect}"
+        three_months_subs(params)
+
+      end
+
+    end
+
+    def load_fix_bad_recurring
+      BadRecurringSub.delete_all
+      ActiveRecord::Base.connection.reset_pk_sequence!('bad_recurring_subs')
+      my_sql_command = "insert into bad_recurring_subs (subscription_id, customer_id, next_charge_scheduled_at, price, status, product_title, product_id, variant_id, sku, line_item_properties, expire_after_specific_number_charges) select subscription_id, customer_id, next_charge_scheduled_at, price,  status, product_title,  shopify_product_id, shopify_variant_id, sku, raw_line_item_properties, expire_after_specific_number_charges from subscriptions where status = \'ACTIVE\' and (product_title ilike \'All%Star%march%\' or product_title ilike \'Set%the%Pace%march%\' or product_title ilike \'In%the%zone%march%\')"
+
+      records_array = ActiveRecord::Base.connection.execute(my_sql_command)
+
+
+    end
+
+    def update_bad_recurring
+      #puts "I am here"
+      params = { "recharge_change_header" => @my_change_charge_header }
+      #puts params.inspect
+      Resque.enqueue(FixBadRecurring, params)     
+    end
+
+    class FixBadRecurring
+      extend ResqueHelper
+      @queue = "update_bad_recurring"    
+      def self.perform(params)
+        puts "Starting job"
+        #puts "here params are #{params.inspect}"
+        update_bad_recurring(params)
+      end
+    end
+
+
 
     private
 
