@@ -24,6 +24,9 @@ module ResqueHelper
     # Now get product_collection property and loop through my_raw_line_items to set or add
     my_product_collection = my_new_product_info.product_collection
     found_collection = false
+    found_unique_id = false
+    my_unique_id = SecureRandom.uuid
+
 
     my_line_items.map do |mystuff|
       # puts "#{key}, #{value}"
@@ -31,8 +34,18 @@ module ResqueHelper
         mystuff['value'] = my_product_collection
         found_collection = true
       end
+      if mystuff['name'] == 'unique_identifier'
+        mystuff['value'] = my_unique_id
+        found_unique_id = true
+      end
     end
     puts "my_line_items = #{my_line_items.inspect}"
+
+    if found_unique_id == false
+      puts "We are adding the unique_identifier to the line item properties"
+      my_line_items << { "name" => "unique_identifier", "value" => my_unique_id }
+
+    end
 
     if found_collection == false
       # only if I did not find the product_collection property in the line items do I need to add it
