@@ -17,6 +17,10 @@ module ResqueHelper
     puts "my_local_sub = #{my_local_sub.inspect}"
     my_line_items = my_local_sub.raw_line_items
     my_prod = CurrentProduct.find_by_prod_id_value(product_id)
+    if my_prod.nil?
+      stuff_to_return = {"skip" => true}
+    end
+    
     next_month_product_id = my_prod.next_month_prod_id
     my_new_product_info = UpdateProduct.find_by_shopify_product_id(next_month_product_id)
     # puts my_new_product_info.inspect
@@ -25,6 +29,8 @@ module ResqueHelper
     my_product_collection = my_new_product_info.product_collection
     found_collection = false
     found_unique_id = false
+    found_sports_jacket = false
+    tops_size = ""
     my_unique_id = SecureRandom.uuid
 
 
@@ -38,13 +44,27 @@ module ResqueHelper
         mystuff['value'] = my_unique_id
         found_unique_id = true
       end
+      if mystuff['name'] == "sports-jacket"
+        found_sports_jacket = true
+      end
+      if mystuff['name'] == "tops"
+        tops_size = mystuff['value']
+        puts "ATTENTION -- Tops SIZE = #{tops_size}"
+      end
     end
     puts "my_line_items = #{my_line_items.inspect}"
+    puts "---------"
+    puts "tops_size = #{tops_size}"
 
     if found_unique_id == false
       puts "We are adding the unique_identifier to the line item properties"
       my_line_items << { "name" => "unique_identifier", "value" => my_unique_id }
 
+    end
+
+    if found_sports_jacket == false
+      puts "We are adding the sports-bra size for the sports-jacket size"
+      my_line_items << { "name" => "sports-jacket", "value" => tops_size}
     end
 
     if found_collection == false
@@ -82,28 +102,36 @@ module ResqueHelper
       Resque.logger.info "#{my_sub_id}, #{my_product_id}"
       Resque.logger.info sub.inspect
       new_prod_info = get_new_subs_properties(my_product_id, my_sub_id)
-      puts "NEW PRODUCT INFO: #{new_prod_info}"
-      Resque.logger.info "new prod info = #{new_prod_info}"
-      body = new_prod_info.to_json
-
-      my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{my_sub_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
-      puts my_update_sub.inspect
-      Resque.logger.info my_update_sub.inspect
-
-      if my_update_sub.code == 200
-        # set update flag and print success
-        sub.updated = true
-        time_updated = DateTime.now
-        time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
-        sub.processed_at = time_updated_str
-        sub.save
-        puts "Updated subscription id #{my_sub_id}"
-        Resque.logger.info "Updated subscription id #{my_sub_id}"
+      if new_prod_info['skip'] == true
+        next
       else
-        # echo out error message.
-        puts "WARNING -- COULD NOT UPDATE subscription #{my_sub_id}"
-        Resque.logger.warn "WARNING -- COULD NOT UPDATE subscription #{my_sub_id}"
+        puts "NEW PRODUCT INFO: #{new_prod_info}"
+        Resque.logger.info "new prod info = #{new_prod_info}"
+        body = new_prod_info.to_json
+
+        my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{my_sub_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
+        puts my_update_sub.inspect
+        Resque.logger.info my_update_sub.inspect
+
+        if my_update_sub.code == 200
+          # set update flag and print success
+          sub.updated = true
+          time_updated = DateTime.now
+          time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
+          sub.processed_at = time_updated_str
+          sub.save
+          puts "Updated subscription id #{my_sub_id}"
+          Resque.logger.info "Updated subscription id #{my_sub_id}"
+        else
+          # echo out error message.
+          puts "WARNING -- COULD NOT UPDATE subscription #{my_sub_id}"
+          Resque.logger.warn "WARNING -- COULD NOT UPDATE subscription #{my_sub_id}"
+        end
+
+
       end
+      
+      
 
       Resque.logger.info "Sleeping 6 seconds"
       sleep 6
