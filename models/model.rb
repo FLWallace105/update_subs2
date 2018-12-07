@@ -12,6 +12,10 @@ class BadMonthlyBox < ActiveRecord::Base
   self.table_name = "bad_monthly_box"
 end
 
+class Customer < ActiveRecord::Base
+  self.table_name = 'customers'
+end
+
 class Order < ActiveRecord::Base
   self.primary_key = :order_id
   self.inheritance_column = nil
@@ -47,4 +51,8 @@ end
 
 class BadRecurringSub < ActiveRecord::Base
   self.table_name = 'bad_recurring_subs'
+end
+
+class ToughLuxeSub < ActiveRecord::Base
+  self.table_name = 'tough_luxe_subs'
 end

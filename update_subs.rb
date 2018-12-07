@@ -263,7 +263,7 @@ module FixSubInfo
       bad_prod_id139 = "2076520939578"
       bad_prod_id140 = "2092150227002"
 
-
+      alt_subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' "
 
       subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > '2018-11-30' or next_charge_scheduled_at is null)  and (shopify_product_id = \'#{bad_prod_id1}\' or shopify_product_id = \'#{bad_prod_id2}\' or shopify_product_id = \'#{bad_prod_id3}\' or shopify_product_id = \'#{bad_prod_id4}\' or shopify_product_id = \'#{bad_prod_id5}\' or shopify_product_id = \'#{bad_prod_id6}\' or shopify_product_id = \'#{bad_prod_id7}\' or shopify_product_id = \'#{bad_prod_id8}\' or shopify_product_id = \'#{bad_prod_id9}\' or shopify_product_id = \'#{bad_prod_id10}\' or  shopify_product_id = \'#{bad_prod_id11}\' or shopify_product_id = \'#{bad_prod_id12}\'  or shopify_product_id = \'#{bad_prod_id13}\' or shopify_product_id = \'#{bad_prod_id14}\' or shopify_product_id = \'#{bad_prod_id15}\' or shopify_product_id = \'#{bad_prod_id16}\' or shopify_product_id = \'#{bad_prod_id17}\' or shopify_product_id = \'#{bad_prod_id18}\' or shopify_product_id = \'#{bad_prod_id19}\' or shopify_product_id = \'#{bad_prod_id20}\' or shopify_product_id = \'#{bad_prod_id21}\' or shopify_product_id = \'#{bad_prod_id22}\' or shopify_product_id = \'#{bad_prod_id23}\' or shopify_product_id = \'#{bad_prod_id24}\' or shopify_product_id = \'#{bad_prod_id25}\' or shopify_product_id = \'#{bad_prod_id26}\' or shopify_product_id = \'#{bad_prod_id27}\' or shopify_product_id = \'#{bad_prod_id28}\' or shopify_product_id = \'#{bad_prod_id29}\' or shopify_product_id = \'#{bad_prod_id30}\'  or shopify_product_id = \'#{bad_prod_id31}\' or shopify_product_id = \'#{bad_prod_id32}\' or shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\'  or   shopify_product_id = \'#{bad_prod_id33}\' or  shopify_product_id = \'#{bad_prod_id34}\' or  shopify_product_id = \'#{bad_prod_id35}\' or  shopify_product_id = \'#{bad_prod_id36}\' or  shopify_product_id = \'#{bad_prod_id37}\' or  shopify_product_id = \'#{bad_prod_id38}\' or  shopify_product_id = \'#{bad_prod_id39}\' or  shopify_product_id = \'#{bad_prod_id40}\' or  shopify_product_id = \'#{bad_prod_id41}\' or  shopify_product_id = \'#{bad_prod_id42}\' or  shopify_product_id = \'#{bad_prod_id43}\' or  shopify_product_id = \'#{bad_prod_id44}\' or  shopify_product_id = \'#{bad_prod_id45}\' or  shopify_product_id = \'#{bad_prod_id46}\' or  shopify_product_id = \'#{bad_prod_id47}\' or  shopify_product_id = \'#{bad_prod_id48}\' or  shopify_product_id = \'#{bad_prod_id49}\' or  shopify_product_id = \'#{bad_prod_id50}\' or  shopify_product_id = \'#{bad_prod_id51}\' or  shopify_product_id = \'#{bad_prod_id52}\' or  shopify_product_id = \'#{bad_prod_id53}\' or  shopify_product_id = \'#{bad_prod_id54}\' or  shopify_product_id = \'#{bad_prod_id55}\' or  shopify_product_id = \'#{bad_prod_id56}\' or shopify_product_id = \'#{bad_prod_id57}\' or shopify_product_id = \'#{bad_prod_id58}\' or shopify_product_id = \'#{bad_prod_id59}\' or shopify_product_id = \'#{bad_prod_id60}\' or shopify_product_id = \'#{bad_prod_id61}\' or shopify_product_id = \'#{bad_prod_id62}\' or shopify_product_id = \'#{bad_prod_id63}\' or shopify_product_id = \'#{bad_prod_id64}\' or shopify_product_id = \'#{bad_prod_id65}\' or shopify_product_id = \'#{bad_prod_id66}\' or shopify_product_id = \'#{bad_prod_id67}\' or shopify_product_id = \'#{bad_prod_id69}\' or shopify_product_id = \'#{bad_prod_id70}\' or shopify_product_id = \'#{bad_prod_id71}\' or shopify_product_id = \'#{bad_prod_id72}\' or shopify_product_id = \'#{bad_prod_id73}\' or shopify_product_id = \'#{bad_prod_id74}\' or shopify_product_id = \'#{bad_prod_id75}\' or shopify_product_id = \'#{bad_prod_id76}\' or shopify_product_id = \'#{bad_prod_id77}\' or shopify_product_id = \'#{bad_prod_id78}\' or shopify_product_id = \'#{bad_prod_id79}\' or shopify_product_id = \'#{bad_prod_id80}\' or shopify_product_id = \'#{bad_prod_id81}\' or shopify_product_id = \'#{bad_prod_id82}\' or shopify_product_id = \'#{bad_prod_id83}\' or shopify_product_id = \'#{bad_prod_id84}\' or shopify_product_id = \'#{bad_prod_id85}\' or shopify_product_id = \'#{bad_prod_id86}\' or shopify_product_id = \'#{bad_prod_id87}\' or shopify_product_id = \'#{bad_prod_id88}\' or shopify_product_id = \'#{bad_prod_id89}\' or shopify_product_id = \'#{bad_prod_id90}\' or shopify_product_id = \'#{bad_prod_id91}\' or shopify_product_id = \'#{bad_prod_id92}\' or shopify_product_id = \'#{bad_prod_id93}\' or shopify_product_id = \'#{bad_prod_id94}\' or shopify_product_id = \'#{bad_prod_id95}\' or shopify_product_id = \'#{bad_prod_id96}\' or shopify_product_id = \'#{bad_prod_id97}\' or shopify_product_id = \'#{bad_prod_id98}\' or shopify_product_id = \'#{bad_prod_id99}\' or shopify_product_id = \'#{bad_prod_id100}\' or shopify_product_id = \'#{bad_prod_id101}\' or shopify_product_id = \'#{bad_prod_id102}\' or shopify_product_id = \'#{bad_prod_id103}\' or shopify_product_id = \'#{bad_prod_id104}\' or shopify_product_id = \'#{bad_prod_id105}\' or shopify_product_id = \'#{bad_prod_id106}\' or shopify_product_id = \'#{bad_prod_id107}\' or shopify_product_id = \'#{bad_prod_id108}\' or shopify_product_id = \'#{bad_prod_id109}\' or shopify_product_id = \'#{bad_prod_id110}\' or shopify_product_id = \'#{bad_prod_id111}\' or shopify_product_id = \'#{bad_prod_id112}\' or shopify_product_id = \'#{bad_prod_id113}\' or shopify_product_id = \'#{bad_prod_id114}\' or shopify_product_id = \'#{bad_prod_id115}\' or shopify_product_id = \'#{bad_prod_id116}\' or shopify_product_id = \'#{bad_prod_id117}\' or shopify_product_id = \'#{bad_prod_id118}\' or shopify_product_id = \'#{bad_prod_id119}\' or shopify_product_id = \'#{bad_prod_id120}\' or shopify_product_id = \'#{bad_prod_id121}\' or shopify_product_id = \'#{bad_prod_id122}\' or shopify_product_id = \'#{bad_prod_id123}\' or shopify_product_id = \'#{bad_prod_id124}\' or shopify_product_id = \'#{bad_prod_id125}\' or shopify_product_id = \'#{bad_prod_id126}\' or shopify_product_id = \'#{bad_prod_id127}\' or shopify_product_id = \'#{bad_prod_id128}\' or shopify_product_id = \'#{bad_prod_id129}\' or shopify_product_id = \'#{bad_prod_id130}\' or shopify_product_id = \'#{bad_prod_id131}\' or shopify_product_id = \'#{bad_prod_id132}\' or shopify_product_id = \'#{bad_prod_id133}\' or shopify_product_id = \'#{bad_prod_id134}\' or shopify_product_id = \'#{bad_prod_id135}\' or shopify_product_id = \'#{bad_prod_id136}\' or shopify_product_id = \'#{bad_prod_id137}\' or shopify_product_id = \'#{bad_prod_id138}\' or shopify_product_id = \'#{bad_prod_id139}\' or shopify_product_id = \'#{bad_prod_id140}\')"
 
@@ -278,7 +278,8 @@ module FixSubInfo
       # prepaid subscriptions NOT set to cancel:
 
       #ActiveRecord::Base.connection.execute(staging_subs_update)
-      ActiveRecord::Base.connection.execute(subs_update)
+      #ActiveRecord::Base.connection.execute(subs_update)
+      ActiveRecord::Base.connection.execute(alt_subs_update)
       
       # ActiveRecord::Base.connection.execute(three_months_update)
 
@@ -314,7 +315,7 @@ module FixSubInfo
       # @conn.exec(my_reorder)
       my_insert = "insert into update_products (sku, product_title, shopify_product_id, shopify_variant_id, product_collection) values ($1, $2, $3, $4, $5)"
       @conn.prepare('statement1', "#{my_insert}")
-      CSV.foreach('december2018_update_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+      CSV.foreach('dec2018_alternate_update_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
         # puts row.inspect
         sku = row['sku']
         product_title = row['product_title']
@@ -337,7 +338,7 @@ module FixSubInfo
       # @conn.exec(my_reorder)
       my_insert = "insert into current_products (prod_id_key, prod_id_value, next_month_prod_id, prepaid) values ($1, $2, $3, $4)"
       @conn.prepare('statement1', "#{my_insert}")
-      CSV.foreach('december2018_current_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+      CSV.foreach('december2018_alternate_current_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
         # puts row.inspect
         prod_id_key = row['prod_id_key']
         prod_id_value = row['prod_id_value']
@@ -468,6 +469,114 @@ module FixSubInfo
         update_bad_recurring(params)
       end
     end
+
+    def fix_missing_sports_jacket
+      puts "Starting to fix missing sports-jacket subs ..."
+      params = { "recharge_change_header" => @my_change_charge_header }
+      Resque.enqueue(FixMissingSportsJacket, params)
+
+    end
+
+    class FixMissingSportsJacket
+      extend ResqueHelper
+      @queue = "update_missing_sports_jacket"
+      def self.perform(params)
+        puts "starting to update missing sports-jacket sizes"
+        update_missing_sports_jacket(params)
+      end
+    end
+
+    def fix_filtered_missing_sports_jacket
+      puts "Fixing filtered sports-jacket subs"
+      params = { "recharge_change_header" => @my_change_charge_header }
+      Resque.enqueue(FixFilteredSportsJacket, params)
+
+    end
+
+
+    class FixFilteredSportsJacket
+      extend ResqueHelper
+      @queue = "update_filtered_sports_jacket"
+      def self.perform(params)
+        puts "starting filtered missing sports-jacket list"
+        update_missing_sports_jacket_filtered(params)
+      end
+
+    end
+
+
+
+    #900+ subscribers get Street Smarts2 collection
+    def load_tough_luxe_subs
+      puts "Starting Tough Luxe Subs import"
+      ToughLuxeSub.delete_all
+      ActiveRecord::Base.connection.reset_pk_sequence!('tough_luxe_subs')
+      CSV.foreach('tough_luxe_customers.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+        puts row.inspect
+        email = row['email']
+        puts email
+        bad_tough_luxe = ToughLuxeSub.create(email: email)
+        
+      end
+      puts "Done"
+
+
+    end
+
+    def set_up_tough_luxe_update
+      # Hard code three months product ids
+      three_months = 23729012754
+      three_months_auto = 10301516626
+      vip_three_month = 9109818066
+      vip_three_monthly = 9175678162
+
+      SubscriptionsUpdated.delete_all
+      # Now reset index
+      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+
+
+      processed_subs = 0
+      prepaid_subs = 0
+      mysubs = ToughLuxeSub.all
+      mysubs.each do |sub|
+        puts sub.inspect
+        my_email = sub.email
+        my_customer = Customer.find_by_email(my_email)
+        if !my_customer.nil?
+          sub.found_customer = true
+          sub.save!
+          processed_subs += 1
+          my_customer_id = my_customer.customer_id
+          puts my_customer.inspect
+          my_subscriptions = Subscription.where("status = ? and customer_id = ?", 'ACTIVE', my_customer_id)
+          my_subscriptions.each do |mysub|
+          puts mysub.inspect
+            local_shopify_product_id = mysub.shopify_product_id
+            if local_shopify_product_id == three_months || local_shopify_product_id == three_months_auto ||  local_shopify_product_id == vip_three_month || local_shopify_product_id == vip_three_monthly
+              puts "funky"
+              #processed_subs -= 1
+              prepaid_subs += 1
+            else
+              puts "non funky"
+              #Add to subscriptions_updated here
+              #insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties
+              new_sub_updated = SubscriptionsUpdated.create(subscription_id: mysub.subscription_id, customer_id: mysub.customer_id, updated_at: mysub.updated_at, next_charge_scheduled_at: mysub.next_charge_scheduled_at, product_title: mysub.product_title, status: mysub.status, shopify_product_id: mysub.shopify_product_id, shopify_variant_id: mysub.shopify_variant_id, raw_line_items: mysub.raw_line_item_properties)
+
+
+            end
+          end
+        else
+          puts "Can't find this customer anymore!"
+
+        end
+        
+        puts "--------"
+
+      end
+      puts "Processed #{processed_subs} subs and did not process #{prepaid_subs} prepaid subs"
+
+    end
+
 
 
 

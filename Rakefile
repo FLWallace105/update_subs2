@@ -82,4 +82,30 @@ task :update_bad_recurring_subs do |t|
     FixSubInfo::SubUpdater.new.update_bad_recurring
 end
 
+#load_tough_luxe_subs
+desc 'load bad tough_luxe subs from csv file'
+task :load_tough_luxe_subs do |t|
+    FixSubInfo::SubUpdater.new.load_tough_luxe_subs
+
+end
+
+#set_up_tough_luxe_update
+desc 'set up tough luxe subs to be updated'
+task :setup_tough_luxe_update do |t|
+    FixSubInfo::SubUpdater.new.set_up_tough_luxe_update
+
+end
+
+#fix_missing_sports_jacket
+desc 'fix missing sports-jacket size in subscriptions'
+task :fix_missing_sports_jacket do |t|
+    FixSubInfo::SubUpdater.new.fix_missing_sports_jacket
+end
+
+#fix_filtered_missing_sports_jacket
+desc 'fix FILTERED missing sports-jacket size in subscriptions'
+task :fix_filtered_missing_sports_jacket do |t|
+    FixSubInfo::SubUpdater.new.fix_filtered_missing_sports_jacket
+end
+
 end

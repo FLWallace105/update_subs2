@@ -339,4 +339,128 @@ module ResqueHelper
 
   end
 
+
+  def update_missing_sports_jacket(params)
+    #This one filters the subs with no sports-jacket size and with a product_collection so we just have those we want to fix.
+
+    recharge_change_header = params['recharge_change_header']  
+    my_subs = SubscriptionsUpdated.where(updated: false)
+    my_now = Time.now
+    number_subs_to_fix = 0
+    my_subs.each do |sub|
+      #puts sub.inspect
+      puts "Checking #{sub.subscription_id}, #{sub.product_title}, #{sub.raw_line_items}"
+      my_props = sub.raw_line_items
+      found_product_collection = false
+      found_sports_jacket_size = false
+      top_size = ""
+      my_props.each do |myp|
+        puts myp.inspect
+        if myp['name'] == "tops"
+          top_size = myp['value']
+        end
+        if myp['name'] == "product_collection"
+          found_product_collection = true
+        end
+        if myp['name'] == "sports-jacket" && !myp['value'].nil? && myp['value'] != ""
+          found_sports_jacket_size = true
+        end
+        
+      end
+
+      if found_product_collection && !found_sports_jacket_size
+        number_subs_to_fix += 1 
+        my_props << { "name" => "sports-jacket", "value" => top_size}
+        puts "============================================"
+        puts "FIXED raw_line_item_properties = #{my_props}"
+        puts "============================================"
+      else
+        #delete this record
+        puts "Deleting subscription #{sub.subscription_id} from this table"
+        local_subscription = SubscriptionsUpdated.find_by(subscription_id: sub.subscription_id)
+        local_subscription.destroy
+
+      end
+
+    end
+
+    puts "We have #{number_subs_to_fix} subscriptions to fix missing sports-jacket size"
+  end
+
+
+  def update_missing_sports_jacket_filtered(params)
+    #This one uses the above filtering method to work on only those with missing sports-jacket and picks the top size
+    Resque.logger = Logger.new("#{Dir.getwd}/logs/fix_sports_jacket_resque.log")
+    recharge_change_header = params['recharge_change_header']  
+    my_subs = SubscriptionsUpdated.where(updated: false)
+    my_now = Time.now
+    number_subs_to_fix = 0
+    my_subs.each do |sub|
+      #puts sub.inspect
+      puts "Checking #{sub.subscription_id}, #{sub.product_title}, #{sub.raw_line_items}"
+      my_props = sub.raw_line_items
+      top_size = ""
+      my_props.each do |myp|
+      if myp['name'] == "tops"
+        top_size = myp['value']
+        end
+      end
+      #use picked top size from above to set the sports-jacket size in the properties
+      my_props << { "name" => "sports-jacket", "value" => top_size}
+
+      puts "-------------------------------------"
+      puts "Sending this to ReCharge: #{my_props}"
+      puts "-------------------------------------"
+      send_to_recharge = { "properties" => my_props }.to_json
+
+      mybody = my_props.to_json
+      local_subscription_id = sub.subscription_id
+      puts "Updating Subscription #{local_subscription_id}"
+      
+       
+      my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{local_subscription_id}", :headers => recharge_change_header, :body => send_to_recharge)
+      puts my_update_sub.inspect
+      Resque.logger.info my_update_sub.inspect
+
+      if my_update_sub.code == 200
+        # set update flag and print success
+        sub.updated = true
+        time_updated = DateTime.now
+        time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
+        sub.processed_at = time_updated_str
+        sub.save
+        puts "Updated subscription id #{local_subscription_id}"
+        Resque.logger.info "Updated subscription id #{local_subscription_id}"
+      else
+        # echo out error message.
+        puts "WARNING -- COULD NOT UPDATE subscription #{local_subscription_id}"
+        Resque.logger.warn "WARNING -- COULD NOT UPDATE subscription #{local_subscription_id}"
+      end
+
+      #temp code to exit and check sub
+      #exit
+      puts "Sleeping 6 seconds"
+      Resque.logger.info "Sleeping 6 seconds"
+      sleep 6
+      my_current = Time.now
+      duration = (my_current - my_now).ceil
+      puts "Been running #{duration} seconds"
+      Resque.logger.info "Been running #{duration} seconds"
+     
+
+      if duration > 480
+        Resque.logger.info "Been running more than 8 minutes must exit"
+        exit
+      end
+
+
+
+    end
+
+    puts "All done updating subscriptions!"
+    Resque.logger.info "All done updating subscriptions!"
+
+  end
+
+
 end
