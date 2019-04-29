@@ -56,3 +56,7 @@ end
 class ToughLuxeSub < ActiveRecord::Base
   self.table_name = 'tough_luxe_subs'
 end
+
+class Subscription < ActiveRecord::Base
+  self.table_name = 'subscriptions'
+end

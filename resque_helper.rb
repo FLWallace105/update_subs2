@@ -9,6 +9,25 @@ require 'pry'
 Dotenv.load
 
 module ResqueHelper
+
+  def determine_limits(recharge_header, limit)
+    puts "recharge_header = #{recharge_header}"
+    my_numbers = recharge_header.split("/")
+    my_numerator = my_numbers[0].to_f
+    my_denominator = my_numbers[1].to_f
+    my_limits = (my_numerator/ my_denominator)
+    puts "We are using #{my_limits} % of our API calls"
+    if my_limits > limit
+        puts "Sleeping 15 seconds"
+        sleep 15
+    else
+        puts "not sleeping at all"
+    end
+
+  end
+
+
+
   def get_new_subs_properties(product_id, my_sub_id)
     # Get subscription and raw_line_item_properties
     puts "In this module"
@@ -30,7 +49,14 @@ module ResqueHelper
     found_collection = false
     found_unique_id = false
     found_sports_jacket = false
+    found_gloves = false
+    found_tops = false
+    found_sports_bra = false
+    found_leggings = false
     tops_size = ""
+    bra_size = ""
+    glove_size = ""
+    legging_size = ""
     my_unique_id = SecureRandom.uuid
 
 
@@ -50,7 +76,21 @@ module ResqueHelper
       if mystuff['name'] == "tops"
         tops_size = mystuff['value']
         puts "ATTENTION -- Tops SIZE = #{tops_size}"
+        found_tops = true
       end
+      if mystuff['name'] == "sports-bra"
+        found_sports_bra = true
+        bra_size = mystuff['value']
+      end
+      if mystuff['name'] == "leggings"
+        found_leggings = true
+        legging_size = mystuff['value']
+      end
+      if mystuff['name'] == "gloves"
+        found_gloves = true
+        glove_size = mystuff['value']
+      end
+
     end
     puts "my_line_items = #{my_line_items.inspect}"
     puts "---------"
@@ -62,16 +102,45 @@ module ResqueHelper
 
     end
 
-    if found_sports_jacket == false
-      puts "We are adding the sports-bra size for the sports-jacket size"
-      my_line_items << { "name" => "sports-jacket", "value" => tops_size}
-    end
+    #Floyd Wallace 4/29/2019 -- no longer adding sports-jacket
+    #if found_sports_jacket == false
+    #  puts "We are adding the sports-bra size for the sports-jacket size"
+    #  my_line_items << { "name" => "sports-jacket", "value" => tops_size}
+    #end
 
     if found_collection == false
       # only if I did not find the product_collection property in the line items do I need to add it
       puts "We are adding the product collection to the line item properties"
       my_line_items << { "name" => "product_collection", "value" => my_product_collection }
     end
+
+    if found_tops == false
+      my_line_items << { "name" => "tops", "value" => legging_size}
+
+    end
+
+    if found_sports_bra == false
+      my_line_items << { "name" => "sports-bra", "value" => legging_size}
+
+    end
+
+    #Floyd Wallace 4/29/2019 -- no longer adding gloves
+   # if found_gloves == false
+   #   if legging_size == "XS" || legging_size == "S"
+   #     glove_size = "S" 
+   #   elsif legging_size == "M" || legging_size == "L"
+   #     glove_size = "M"
+   #   elsif legging_size == "XL"
+   #     glove_size = "L"
+   #   else
+   #     glove_size = "M"
+   #     puts "Can't find the glove size off leggings, setting to M"
+
+   #   end
+   #   my_line_items << { "name" => "gloves", "value" => glove_size}
+
+   # end
+
 
     stuff_to_return =
       if my_prod.prepaid?
@@ -107,10 +176,16 @@ module ResqueHelper
       else
         puts "NEW PRODUCT INFO: #{new_prod_info}"
         Resque.logger.info "new prod info = #{new_prod_info}"
+        
         body = new_prod_info.to_json
 
         my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{my_sub_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
         puts my_update_sub.inspect
+        recharge_header = my_update_sub.response["x-recharge-limit"]
+        determine_limits(recharge_header, 0.65)
+
+
+
         Resque.logger.info my_update_sub.inspect
 
         if my_update_sub.code == 200
@@ -133,8 +208,8 @@ module ResqueHelper
       
       
 
-      Resque.logger.info "Sleeping 6 seconds"
-      sleep 6
+      #Resque.logger.info "Sleeping 6 seconds"
+      #sleep 6
       my_current = Time.now
       duration = (my_current - my_now).ceil
       puts "Been running #{duration} seconds"

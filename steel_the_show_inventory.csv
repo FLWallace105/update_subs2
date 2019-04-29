@@ -1,0 +1,230 @@
+created_at,updated_at,collection_name,product_type,size,variant_sku,size_count,delivered_count
+22:47.3,36:15.5,3 MONTHS,accessories,one size,7.64204E+11,7,0
+22:48.2,36:16.0,3 MONTHS,equipment,one size,7.64204E+11,7,0
+22:52.3,22:52.3,3 MONTHS,leggings,l,7.64204E+11,4,0
+22:50.2,36:16.6,3 MONTHS,leggings,m,7.64204E+11,4,0
+22:51.4,36:01.8,3 MONTHS,leggings,s,7.64204E+11,6,0
+22:49.3,22:49.3,3 MONTHS,leggings,xl,7.64204E+11,0,0
+22:53.3,36:17.1,3 MONTHS,sportsbra,l,7.64204E+11,3,0
+22:54.4,36:02.4,3 MONTHS,sportsbra,m,7.64204E+11,7,0
+22:55.3,22:55.3,3 MONTHS,sportsbra,s,7.64204E+11,3,0
+22:56.5,22:56.5,3 MONTHS,sportsbra,xl,7.64204E+11,1,0
+22:43.2,06:38.9,3 MONTHS,tops,l,7.64204E+11,4,0
+22:44.1,36:14.9,3 MONTHS,tops,m,7.64204E+11,4,0
+22:45.2,36:01.2,3 MONTHS,tops,s,7.64204E+11,5,0
+22:46.3,22:46.3,3 MONTHS,tops,xs,7.64204E+11,1,0
+57:16.4,35:29.9,Chill Mode - 3 Items,leggings,l,7.64204E+11,176,31
+57:15.3,35:29.4,Chill Mode - 3 Items,leggings,m,7.64204E+11,339,63
+57:14.3,35:28.9,Chill Mode - 3 Items,leggings,s,7.64204E+11,287,47
+57:17.4,36:45.1,Chill Mode - 3 Items,leggings,xl,7.64204E+11,68,11
+57:18.6,35:30.4,Chill Mode - 3 Items,leggings,xs,7.64204E+11,55,14
+18:50.1,35:32.0,Chill Mode - 3 Items,sportsbra,l,7.64204E+11,223,47
+18:49.1,35:32.6,Chill Mode - 3 Items,sportsbra,m,7.64204E+11,330,67
+18:48.2,35:30.9,Chill Mode - 3 Items,sportsbra,s,7.64204E+11,208,30
+19:01.1,35:31.4,Chill Mode - 3 Items,sportsbra,xl,7.64204E+11,82,14
+19:02.1,35:33.1,Chill Mode - 3 Items,sportsbra,xs,7.64204E+11,21,8
+56:00.4,35:25.6,Chill Mode - 3 Items,tops,l,7.64204E+11,203,38
+55:59.4,35:26.1,Chill Mode - 3 Items,tops,m,7.64204E+11,314,60
+55:58.4,35:25.0,Chill Mode - 3 Items,tops,s,7.64204E+11,280,46
+56:02.4,35:27.2,Chill Mode - 3 Items,tops,xl,7.64204E+11,85,13
+56:01.4,35:26.7,Chill Mode - 3 Items,tops,xs,7.64204E+11,43,9
+57:33.6,36:04.1,Chill Mode - 5 Items,leggings,l,7.64204E+11,65,4
+57:32.7,36:03.6,Chill Mode - 5 Items,leggings,m,7.64204E+11,85,6
+57:31.5,36:03.0,Chill Mode - 5 Items,leggings,s,7.64204E+11,63,5
+57:34.6,36:04.7,Chill Mode - 5 Items,leggings,xl,7.64204E+11,16,1
+57:35.6,35:52.8,Chill Mode - 5 Items,leggings,xs,7.64204E+11,11,0
+19:23.4,37:12.8,Chill Mode - 5 Items,sportsbra,l,7.64204E+11,61,0
+19:22.4,36:05.9,Chill Mode - 5 Items,sportsbra,m,7.64204E+11,81,0
+19:21.5,36:05.2,Chill Mode - 5 Items,sportsbra,s,7.64204E+11,36,0
+19:24.6,35:34.4,Chill Mode - 5 Items,sportsbra,xl,7.64204E+11,16,0
+19:25.6,35:53.7,Chill Mode - 5 Items,sportsbra,xs,7.64204E+11,5,0
+57:27.4,37:09.4,Chill Mode - 5 Items,tops,l,7.64204E+11,64,6
+57:25.4,36:00.4,Chill Mode - 5 Items,tops,m,7.64204E+11,92,5
+57:26.5,36:00.9,Chill Mode - 5 Items,tops,s,7.64204E+11,55,4
+57:28.4,36:01.4,Chill Mode - 5 Items,tops,xl,7.64204E+11,16,1
+57:29.4,35:50.3,Chill Mode - 5 Items,tops,xs,7.64204E+11,13,0
+06:35.8,06:35.8,Fierce & Floral - 3 Items,leggings,m,7.64204E+11,1,0
+06:36.9,06:36.9,Fierce & Floral - 3 Items,sportsbra,m,7.64204E+11,1,0
+06:34.8,06:34.8,Fierce & Floral - 3 Items,tops,m,7.64204E+11,1,0
+19:36.2,35:02.3,Flower Bud - 3 Items,leggings,l,7.64204E+11,210,43
+19:35.3,36:21.2,Flower Bud - 3 Items,leggings,m,7.64204E+11,475,87
+19:37.2,35:02.8,Flower Bud - 3 Items,leggings,s,7.64204E+11,393,86
+19:38.1,36:21.8,Flower Bud - 3 Items,leggings,xl,7.64204E+11,85,23
+19:39.1,35:03.2,Flower Bud - 3 Items,leggings,xs,7.64204E+11,76,17
+19:41.1,36:24.8,Flower Bud - 3 Items,sportsbra,l,7.64204E+11,282,64
+19:52.2,35:04.3,Flower Bud - 3 Items,sportsbra,m,7.64204E+11,480,89
+19:40.0,35:03.7,Flower Bud - 3 Items,sportsbra,s,7.64204E+11,280,70
+19:53.2,34:41.7,Flower Bud - 3 Items,sportsbra,xl,7.64204E+11,106,24
+19:54.1,35:04.8,Flower Bud - 3 Items,sportsbra,xs,7.64204E+11,43,9
+19:29.5,35:00.2,Flower Bud - 3 Items,tops,l,7.64204E+11,241,46
+19:30.7,34:59.1,Flower Bud - 3 Items,tops,m,7.64204E+11,435,76
+19:31.7,34:59.7,Flower Bud - 3 Items,tops,s,7.64204E+11,376,86
+19:33.4,34:36.4,Flower Bud - 3 Items,tops,xl,7.64204E+11,104,29
+19:32.5,35:00.7,Flower Bud - 3 Items,tops,xs,7.64204E+11,83,19
+20:51.8,35:12.0,Flower Bud - 5 Items,leggings,l,7.64204E+11,47,3
+20:50.9,35:10.9,Flower Bud - 5 Items,leggings,m,7.64204E+11,89,9
+20:52.8,35:11.5,Flower Bud - 5 Items,leggings,s,7.64204E+11,73,7
+21:03.9,35:10.9,Flower Bud - 5 Items,leggings,xl,7.64204E+11,20,2
+21:04.8,35:11.4,Flower Bud - 5 Items,leggings,xs,7.64204E+11,5,0
+21:05.8,35:13.0,Flower Bud - 5 Items,sportsbra,l,7.64204E+11,48,2
+21:06.9,35:12.5,Flower Bud - 5 Items,sportsbra,m,7.64204E+11,98,11
+21:07.9,35:14.0,Flower Bud - 5 Items,sportsbra,s,7.64204E+11,50,4
+21:08.9,35:13.6,Flower Bud - 5 Items,sportsbra,xl,7.64204E+11,29,3
+21:09.9,21:09.9,Flower Bud - 5 Items,sportsbra,xs,7.64204E+11,5,1
+20:46.0,35:09.4,Flower Bud - 5 Items,tops,l,7.64204E+11,50,0
+20:45.1,35:08.4,Flower Bud - 5 Items,tops,m,7.64204E+11,89,0
+20:47.8,35:08.9,Flower Bud - 5 Items,tops,s,7.64204E+11,49,0
+20:46.9,34:47.9,Flower Bud - 5 Items,tops,xl,7.64204E+11,20,0
+20:48.8,35:07.8,Flower Bud - 5 Items,tops,xs,7.64204E+11,5,0
+13:53.5,13:53.5,Knot Your Average - 3 Items,leggings,s,7.64204E+11,1,0
+13:54.5,13:54.5,Knot Your Average - 3 Items,sportsbra,s,7.22458E+11,1,0
+13:52.5,13:52.5,Knot Your Average - 3 Items,tops,s,7.64204E+11,1,0
+14:10.8,52:39.1,Knot Your Average - 5 Items,accessories,one size,7.64204E+11,2,1
+14:11.8,52:39.7,Knot Your Average - 5 Items,equipment,one size,7.64204E+11,2,1
+14:14.7,34:17.2,Knot Your Average - 5 Items,leggings,l,7.64204E+11,4,0
+14:13.7,33:59.6,Knot Your Average - 5 Items,leggings,m,7.64204E+11,13,1
+14:15.6,14:15.6,Knot Your Average - 5 Items,leggings,s,7.64204E+11,4,0
+14:12.8,33:59.1,Knot Your Average - 5 Items,leggings,xs,7.64204E+11,9,0
+14:29.4,14:29.4,Knot Your Average - 5 Items,sportsbra,l,7.22458E+11,2,0
+14:17.4,34:00.9,Knot Your Average - 5 Items,sportsbra,m,7.22458E+11,16,1
+14:16.5,34:00.2,Knot Your Average - 5 Items,sportsbra,s,7.22458E+11,9,0
+14:18.5,34:17.6,Knot Your Average - 5 Items,sportsbra,xl,7.22458E+11,2,0
+14:30.3,52:41.9,Knot Your Average - 5 Items,sportsbra,xs,7.22458E+11,1,0
+14:08.4,34:16.6,Knot Your Average - 5 Items,tops,l,7.64204E+11,2,0
+14:07.5,33:58.0,Knot Your Average - 5 Items,tops,m,7.64204E+11,12,1
+13:56.4,13:56.4,Knot Your Average - 5 Items,tops,s,7.64204E+11,9,0
+14:09.3,14:09.3,Knot Your Average - 5 Items,tops,xl,7.64204E+11,2,0
+13:55.4,33:57.5,Knot Your Average - 5 Items,tops,xs,7.64204E+11,5,0
+06:02.2,35:26.8,Morning Mantra - 3 Items,leggings,l,7.22458E+11,113,12
+06:03.2,35:54.6,Morning Mantra - 3 Items,leggings,m,7.22458E+11,171,33
+06:05.3,35:54.1,Morning Mantra - 3 Items,leggings,s,7.22458E+11,79,7
+06:04.2,35:55.3,Morning Mantra - 3 Items,leggings,xl,7.22458E+11,59,9
+06:06.2,06:06.2,Morning Mantra - 3 Items,leggings,xs,,2,0
+18:29.3,35:56.8,Morning Mantra - 3 Items,sportsbra,l,7.22458E+11,85,10
+18:27.5,35:55.9,Morning Mantra - 3 Items,sportsbra,m,7.22458E+11,198,34
+18:28.3,37:04.8,Morning Mantra - 3 Items,sportsbra,s,7.22458E+11,45,7
+18:26.4,35:56.3,Morning Mantra - 3 Items,sportsbra,xl,7.22458E+11,74,9
+55:43.4,37:04.3,Morning Mantra - 3 Items,sportsbra,xs,7.64204E+11,7,1
+18:20.9,35:52.1,Morning Mantra - 3 Items,tops,l,7.64204E+11,111,13
+18:22.7,35:52.6,Morning Mantra - 3 Items,tops,m,7.64204E+11,174,26
+18:23.6,35:53.6,Morning Mantra - 3 Items,tops,s,7.64204E+11,76,13
+18:21.8,35:53.1,Morning Mantra - 3 Items,tops,xl,7.64204E+11,63,9
+05:42.4,35:40.0,Morning Mantra - 5 Items,leggings,l,7.22458E+11,32,1
+05:44.5,35:41.1,Morning Mantra - 5 Items,leggings,m,7.22458E+11,25,1
+05:45.4,35:41.6,Morning Mantra - 5 Items,leggings,s,7.22458E+11,8,0
+05:43.4,35:40.6,Morning Mantra - 5 Items,leggings,xl,7.22458E+11,22,2
+20:30.4,35:42.6,Morning Mantra - 5 Items,sportsbra,l,7.22458E+11,22,2
+20:32.4,36:55.0,Morning Mantra - 5 Items,sportsbra,m,7.22458E+11,31,0
+20:31.5,35:43.1,Morning Mantra - 5 Items,sportsbra,s,7.22458E+11,3,0
+20:29.5,35:42.1,Morning Mantra - 5 Items,sportsbra,xl,7.22458E+11,24,2
+05:48.4,05:48.4,Morning Mantra - 5 Items,sportsbra,xs,7.64204E+11,1,0
+20:23.5,35:38.5,Morning Mantra - 5 Items,tops,l,7.64204E+11,28,0
+20:24.5,35:37.5,Morning Mantra - 5 Items,tops,m,7.64204E+11,23,0
+20:25.6,35:38.0,Morning Mantra - 5 Items,tops,s,7.64204E+11,8,0
+20:12.4,35:36.9,Morning Mantra - 5 Items,tops,xl,7.64204E+11,24,0
+13:44.1,13:44.1,Peace & Pastels - 3 Items,leggings,m,7.64204E+11,1,0
+13:43.2,13:43.2,Peace & Pastels - 3 Items,leggings,s,7.64204E+11,1,0
+13:46.0,13:46.0,Peace & Pastels - 3 Items,sportsbra,m,7.64204E+11,1,0
+13:45.0,13:45.0,Peace & Pastels - 3 Items,sportsbra,s,7.64204E+11,1,0
+13:42.3,13:42.3,Peace & Pastels - 3 Items,tops,m,7.64204E+11,1,0
+13:41.1,13:41.1,Peace & Pastels - 3 Items,tops,s,7.64204E+11,1,0
+15:41.7,34:34.1,Steel the Show - 3 Items,leggings,l,764204232659,300,44
+15:40.7,34:33.6,Steel the Show - 3 Items,leggings,m,764204232642,722,116
+15:39.7,34:33.1,Steel the Show - 3 Items,leggings,s,764204232635,488,73
+15:42.6,34:34.7,Steel the Show - 3 Items,leggings,xl,764204232666,93,17
+15:43.6,34:35.2,Steel the Show - 3 Items,leggings,xs,764204232628,126,34
+15:45.5,34:36.3,Steel the Show - 3 Items,sportsbra,l,764204230709,375,56
+15:44.5,34:35.8,Steel the Show - 3 Items,sportsbra,m,764204230693,640,118
+15:47.4,34:37.5,Steel the Show - 3 Items,sportsbra,s,764204230686,381,69
+15:46.5,34:37.0,Steel the Show - 3 Items,sportsbra,xl,764204230716,130,23
+15:48.3,35:58.7,Steel the Show - 3 Items,sportsbra,xs,764204230679,63,18
+14:36.0,34:30.9,Steel the Show - 3 Items,tops,l,722457936441,302,40
+14:35.0,34:30.4,Steel the Show - 3 Items,tops,m,722457936434,607,96
+14:34.0,35:52.0,Steel the Show - 3 Items,tops,s,722457936427,547,90
+14:37.0,35:53.5,Steel the Show - 3 Items,tops,xl,722457936458,132,27
+14:37.9,34:31.5,Steel the Show - 3 Items,tops,xs,722457936410,141,31
+16:58.4,34:28.6,Steel the Show - 5 Items,leggings,l,764204232659,90,2
+16:59.2,34:53.0,Steel the Show - 5 Items,leggings,m,764204232642,140,10
+17:01.2,34:52.5,Steel the Show - 5 Items,leggings,s,764204232635,121,4
+17:00.2,34:53.4,Steel the Show - 5 Items,leggings,xl,764204232666,17,1
+17:02.2,35:13.8,Steel the Show - 5 Items,leggings,xs,764204232628,35,2
+17:05.0,34:54.0,Steel the Show - 5 Items,sportsbra,l,764204230709,98,4
+17:03.2,34:54.5,Steel the Show - 5 Items,sportsbra,m,764204230693,120,5
+17:16.0,36:12.6,Steel the Show - 5 Items,sportsbra,s,764204230686,89,6
+17:04.1,34:55.0,Steel the Show - 5 Items,sportsbra,xl,764204230716,34,2
+17:17.0,35:03.8,Steel the Show - 5 Items,sportsbra,xs,764204230679,18,2
+16:54.2,34:50.9,Steel the Show - 5 Items,tops,l,722457936441,79,0
+16:53.2,34:50.3,Steel the Show - 5 Items,tops,m,722457936434,117,0
+16:55.1,34:25.5,Steel the Show - 5 Items,tops,s,722457936427,123,0
+16:52.2,34:49.8,Steel the Show - 5 Items,tops,xl,722457936458,37,0
+16:56.3,34:27.0,Steel the Show - 5 Items,tops,xs,722457936410,28,0
+13:38.3,13:38.3,Street Dreams - 3 Items,leggings,l,7.64204E+11,1,0
+13:37.3,13:37.3,Street Dreams - 3 Items,leggings,s,7.64204E+11,1,0
+13:40.2,13:40.2,Street Dreams - 3 Items,sportsbra,l,7.64204E+11,1,0
+13:39.2,13:39.2,Street Dreams - 3 Items,sportsbra,s,7.64204E+11,1,0
+13:36.4,13:36.4,Street Dreams - 3 Items,tops,l,7.64204E+11,1,0
+13:34.8,13:34.8,Street Dreams - 3 Items,tops,s,7.64204E+11,1,0
+13:50.1,13:50.1,Street Smarts - 3 Items,leggings,m,7.319E+11,2,0
+13:49.1,13:49.1,Street Smarts - 3 Items,leggings,s,7.319E+11,2,0
+04:12.7,04:12.7,Street Smarts - 3 Items,sportsjacket,m,7.64204E+11,2,0
+04:11.8,04:11.8,Street Smarts - 3 Items,sportsjacket,s,7.64204E+11,1,0
+04:13.7,04:13.7,Street Smarts - 3 Items,sportsjacket,xs,7.64204E+11,1,0
+13:48.2,13:48.2,Street Smarts - 3 Items,tops,m,7.64204E+11,2,0
+13:47.2,13:47.2,Street Smarts - 3 Items,tops,s,7.64204E+11,2,0
+20:04.3,35:19.7,The Jet Set - 3 Items,leggings,l,7.64204E+11,191,42
+20:03.4,35:19.2,The Jet Set - 3 Items,leggings,m,7.64204E+11,276,70
+20:02.5,35:20.2,The Jet Set - 3 Items,leggings,s,7.64204E+11,198,47
+20:05.2,35:20.7,The Jet Set - 3 Items,leggings,xl,7.64204E+11,58,11
+54:49.9,34:58.5,The Jet Set - 3 Items,leggings,xs,7.64204E+11,11,1
+20:07.3,35:21.7,The Jet Set - 3 Items,sportsbra,l,7.64204E+11,202,44
+20:06.3,35:21.2,The Jet Set - 3 Items,sportsbra,m,7.64204E+11,287,78
+20:08.2,35:22.2,The Jet Set - 3 Items,sportsbra,s,7.64204E+11,127,30
+20:09.1,36:38.6,The Jet Set - 3 Items,sportsbra,xl,7.64204E+11,77,18
+55:03.0,05:13.1,The Jet Set - 3 Items,sportsbra,xs,7.64204E+11,8,1
+20:00.4,35:17.7,The Jet Set - 3 Items,tops,l,7.22458E+11,176,34
+19:59.3,35:18.2,The Jet Set - 3 Items,tops,m,7.22458E+11,275,60
+19:58.3,35:18.7,The Jet Set - 3 Items,tops,s,7.22458E+11,175,47
+20:01.4,34:55.8,The Jet Set - 3 Items,tops,xl,7.22458E+11,86,25
+54:46.6,35:10.3,The Jet Set - 3 Items,tops,xs,7.22458E+11,22,5
+22:19.0,36:03.3,The Jet Set - 5 Items,leggings,l,7.64204E+11,25,2
+22:21.0,35:39.5,The Jet Set - 5 Items,leggings,m,7.64204E+11,47,4
+22:20.0,06:05.0,The Jet Set - 5 Items,leggings,s,7.64204E+11,29,2
+22:22.0,36:10.9,The Jet Set - 5 Items,leggings,xl,7.64204E+11,20,0
+59:35.3,59:35.3,The Jet Set - 5 Items,leggings,xs,7.64204E+11,1,0
+22:23.0,35:41.4,The Jet Set - 5 Items,sportsbra,l,7.64204E+11,33,0
+22:23.9,35:40.0,The Jet Set - 5 Items,sportsbra,m,7.64204E+11,41,0
+22:24.8,35:41.0,The Jet Set - 5 Items,sportsbra,s,7.64204E+11,17,0
+22:26.3,36:11.4,The Jet Set - 5 Items,sportsbra,xl,7.64204E+11,20,0
+22:17.2,36:01.3,The Jet Set - 5 Items,tops,l,7.22458E+11,27,1
+22:14.6,35:54.2,The Jet Set - 5 Items,tops,m,7.22458E+11,46,6
+22:15.6,35:37.9,The Jet Set - 5 Items,tops,s,7.22458E+11,24,0
+22:13.6,36:09.4,The Jet Set - 5 Items,tops,xl,7.22458E+11,21,1
+59:31.5,06:27.1,The Jet Set - 5 Items,tops,xs,7.22458E+11,4,0
+22:40.8,34:44.0,Wine & Roses - 3 Items,leggings,l,7.64204E+11,95,23
+53:10.9,34:43.5,Wine & Roses - 3 Items,leggings,m,7.64204E+11,174,39
+53:12.4,34:44.5,Wine & Roses - 3 Items,leggings,s,7.64204E+11,107,19
+53:13.4,04:36.0,Wine & Roses - 3 Items,leggings,xl,7.64204E+11,4,1
+53:14.4,04:35.5,Wine & Roses - 3 Items,leggings,xs,7.64204E+11,11,5
+53:16.8,34:46.2,Wine & Roses - 3 Items,sportsbra,l,7.22458E+11,92,19
+22:41.7,34:45.0,Wine & Roses - 3 Items,sportsbra,m,7.22458E+11,181,40
+53:15.3,34:45.5,Wine & Roses - 3 Items,sportsbra,s,7.22458E+11,70,18
+53:17.8,34:20.4,Wine & Roses - 3 Items,sportsbra,xl,7.22458E+11,21,6
+53:19.0,36:07.1,Wine & Roses - 3 Items,sportsbra,xs,7.22458E+11,7,4
+52:57.9,34:41.5,Wine & Roses - 3 Items,tops,l,7.64204E+11,93,20
+22:39.9,34:40.9,Wine & Roses - 3 Items,tops,m,7.64204E+11,183,45
+53:08.9,36:03.5,Wine & Roses - 3 Items,tops,s,7.64204E+11,95,17
+04:32.7,34:50.8,Wine & Roses - 3 Items,tops,xl,7.64204E+11,4,1
+53:09.8,34:41.9,Wine & Roses - 3 Items,tops,xs,7.64204E+11,16,4
+59:09.8,05:34.4,Wine & Roses - 5 Items,leggings,l,7.64204E+11,18,0
+58:58.8,35:47.8,Wine & Roses - 5 Items,leggings,m,7.64204E+11,35,1
+59:10.8,05:34.9,Wine & Roses - 5 Items,leggings,s,7.64204E+11,12,0
+35:45.4,36:02.0,Wine & Roses - 5 Items,leggings,xs,7.64204E+11,2,0
+59:11.8,05:55.7,Wine & Roses - 5 Items,sportsbra,l,7.22458E+11,17,0
+59:14.0,35:48.3,Wine & Roses - 5 Items,sportsbra,m,7.22458E+11,31,1
+59:15.9,36:02.5,Wine & Roses - 5 Items,sportsbra,s,7.22458E+11,10,0
+59:12.9,35:47.5,Wine & Roses - 5 Items,sportsbra,xl,7.22458E+11,6,0
+59:14.9,35:46.9,Wine & Roses - 5 Items,sportsbra,xs,7.22458E+11,2,0
+58:54.6,05:31.3,Wine & Roses - 5 Items,tops,l,7.64204E+11,15,0
+58:55.6,35:46.3,Wine & Roses - 5 Items,tops,m,7.64204E+11,33,1
+58:56.6,35:37.6,Wine & Roses - 5 Items,tops,s,7.64204E+11,15,0
+58:57.6,36:00.4,Wine & Roses - 5 Items,tops,xs,7.64204E+11,4,0

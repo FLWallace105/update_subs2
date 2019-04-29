@@ -16,6 +16,12 @@ task :current_products do |t|
     FixSubInfo::SubUpdater.new.get_current_products
 end
 
+#load Laura Rhaney Fierce_Floral changes
+desc 'load Laura Rhaney Fierce_Floral subs to be changed'
+task :fierce_floral do |t|
+    FixSubInfo::SubUpdater.new.load_fierce_floral
+end
+
 #setup_subscription_update_table
 desc 'set up subscription update table'
 task :setup_subs_table do |t|
