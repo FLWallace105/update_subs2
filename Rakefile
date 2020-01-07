@@ -22,6 +22,12 @@ task :fierce_floral do |t|
     FixSubInfo::SubUpdater.new.load_fierce_floral
 end
 
+#Load July 2019 Feels Like Summer short customers to move to Simple Life
+desc 'load Feels Like Summer short csv tables'
+task :load_feels_like_summer do |t|
+    FixSubInfo::SubUpdater.new.load_feels_like_summer
+end
+
 #setup_subscription_update_table
 desc 'set up subscription update table'
 task :setup_subs_table do |t|
@@ -112,6 +118,24 @@ end
 desc 'fix FILTERED missing sports-jacket size in subscriptions'
 task :fix_filtered_missing_sports_jacket do |t|
     FixSubInfo::SubUpdater.new.fix_filtered_missing_sports_jacket
+end
+
+#load bad_gloves
+desc 'load bad gloves no sizes'
+task :load_bad_gloves do |t|
+    FixSubInfo::SubUpdater.new.load_bad_gloves
+end
+
+#fix bad_gloves
+desc 'fix bad gloves no sizes'
+task :fix_bad_gloves do |t|
+    FixSubInfo::SubUpdater.new.update_bad_gloves_subs
+end
+
+#filter out prepaid already assigned
+desc 'filter out prepaid already assigned'
+task :filter_out_prepaid do |t|
+    FixSubInfo::SubUpdater.new.filter_out_prepaid_already_assigned
 end
 
 end

@@ -4,6 +4,7 @@ require 'active_support/core_ext'
 require 'sinatra/activerecord'
 require 'httparty'
 require_relative 'models/model'
+require_relative 'lib/order_size'
 require 'pry'
 
 Dotenv.load
@@ -176,6 +177,20 @@ module ResqueHelper
       else
         puts "NEW PRODUCT INFO: #{new_prod_info}"
         Resque.logger.info "new prod info = #{new_prod_info}"
+        puts "Fixing any missing sizes with library"
+        Resque.logger.info "Fixing any missing sizes with library"
+        if new_prod_info['product_title'] =~ /2\sitem/i
+          #do nothing, don't add sizes
+        else
+          new_json = OrderSize.add_missing_sub_size(new_prod_info['properties'])
+          new_prod_info['properties'] = new_json
+        end
+      puts "now sizes reflect:"
+      puts new_prod_info.inspect
+      Resque.logger.info "Now sizes reflect:"
+      Resque.logger.info new_prod_info.inspect
+      
+
         
         body = new_prod_info.to_json
 
@@ -460,6 +475,78 @@ module ResqueHelper
     end
 
     puts "We have #{number_subs_to_fix} subscriptions to fix missing sports-jacket size"
+  end
+
+
+  def update_bad_gloves(params)
+    my_now = Time.now
+    recharge_change_header = params['recharge_change_header']  
+    my_subs = SubscriptionsUpdated.where(updated: false)
+    my_now = Time.now
+    number_subs_to_fix = 0
+    my_subs.each do |sub|
+      puts "------"
+      puts sub.inspect
+      puts "-----"
+      line_items = sub.raw_line_items
+      #delete gloves here
+      my_index = 0
+      
+      line_items.map do |mystuff|
+        if mystuff['name'] == "gloves"
+          line_items.delete_at(my_index)
+
+        end
+        my_index += 1
+
+      end
+      puts "********"
+      puts line_items.inspect
+      puts "********"
+      send_to_recharge = { "properties" => line_items }
+
+      body = send_to_recharge.to_json
+      
+
+      my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{sub.subscription_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
+      puts my_update_sub.inspect
+      recharge_header = my_update_sub.response["x-recharge-limit"]
+      determine_limits(recharge_header, 0.65)
+      
+
+      if my_update_sub.code == 200
+        # set update flag and print success
+        sub.updated = true
+        time_updated = DateTime.now
+        time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
+        sub.processed_at = time_updated_str
+        sub.save
+        puts "Updated subscription id #{sub.subscription_id}"
+        #Resque.logger.info "Updated subscription id #{my_sub_id}"
+      else
+        # echo out error message.
+        puts "WARNING -- COULD NOT UPDATE subscription #{sub.subscription_id}"
+        #Resque.logger.warn "WARNING -- COULD NOT UPDATE subscription #{my_sub_id}"
+      end
+
+      #exit
+     
+      my_current = Time.now
+      duration = (my_current - my_now).ceil
+      puts "Been running #{duration} seconds"
+      
+
+      if duration > 480
+        puts "Been running more than 8 minutes must exit"
+        exit
+      end
+    
+      
+
+      
+    end
+    puts "All done updating subscriptions!"
+
   end
 
 
