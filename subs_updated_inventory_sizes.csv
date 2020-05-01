@@ -1,0 +1,16 @@
+product_type,product_size,inventory_avail,inventory_assigned
+tops,XS,200,0
+tops,S,800,0
+tops,M,1260,0
+tops,L,600,0
+tops,XL,450,0
+sports-bra,XS,30,0
+sports-bra,S,750,0
+sports-bra,M,1150,0
+sports-bra,L,525,0
+sports-bra,XL,275,0
+leggings,XS,120,0
+leggings,S,715,0
+leggings,M,1511,0
+leggings,L,600,0
+leggings,XL,450,0

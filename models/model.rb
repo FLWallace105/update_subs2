@@ -60,3 +60,11 @@ end
 class Subscription < ActiveRecord::Base
   self.table_name = 'subscriptions'
 end
+
+class SubCollectionSizes < ActiveRecord::Base
+  self.table_name = 'sub_collection_sizes'
+end
+
+class SubsUpdatedInventorySize < ActiveRecord::Base
+  self.table_name = 'subs_updated_inventory_sizes'
+end

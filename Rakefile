@@ -16,6 +16,29 @@ task :current_products do |t|
     FixSubInfo::SubUpdater.new.get_current_products
 end
 
+desc 'back figure inventory adjustments'
+task :backfigure_inventory do |t|
+    FixSubInfo::SubUpdater.new.back_figure_inventory
+end
+
+
+desc 'load inventory sizes for single collection assignment'
+task :load_subs_updated_inventory_sizes do |t|
+    FixSubInfo::SubUpdater.new.load_inventory_sizes
+end
+
+#Load March Subs from Laura
+desc 'load March 2020 subs from Laura'
+task :load_march2020_subs do |t|
+    FixSubInfo::SubUpdater.new.load_march_subs
+end
+
+#Load and fix March bad 2 Months subs
+desc 'load bad March 202 subs from Laura'
+task :load_bad2item_subs do |t|
+    FixSubInfo::SubUpdater.new.fix_bad_two_months_march
+end
+
 #load Laura Rhaney Fierce_Floral changes
 desc 'load Laura Rhaney Fierce_Floral subs to be changed'
 task :fierce_floral do |t|

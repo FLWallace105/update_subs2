@@ -39,325 +39,20 @@ module FixSubInfo
     def setup_subscription_update_table
       # sets up subscription update tables
       # first delete all records
-      SubscriptionsUpdated.delete_all
+      #SubscriptionsUpdated.delete_all
       # Now reset index
-      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-      bad_prod_id1 = "69026938898"
-      bad_prod_id2 = "69026316306"
-      bad_prod_id3 = "52386037778"
-      bad_prod_id4 = "78480408594"
-      bad_prod_id5 = "78541520914"
-      bad_prod_id6 = "78657093650"
-      bad_prod_id7 = "91049066514"
-      bad_prod_id8 = "91049230354"
-      bad_prod_id9 = "91049197586"
-      bad_prod_id10 = "91236171794"
-      bad_prod_id11 = "126714937362"
-      bad_prod_id12 = "91235975186"
-      bad_prod_id13 = "126713757714"
-      bad_prod_id14 = "91236466706"
-      bad_prod_id15 = "126717034514"
-      bad_prod_id15 = "91236368402"
-      bad_prod_id16 = "126715920402"
-      bad_prod_id17 = "109303332882"
-      bad_prod_id18 = "126723686418"
-      bad_prod_id19 = "109301366802"
-      bad_prod_id20 = "126718771218"
+      #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+      
 
-      bad_prod_id21 = "138427301906"
-      bad_prod_id22 = "159581274130"
-      bad_prod_id23 = "138427203602"
-      bad_prod_id24 = "159580848146"
-      bad_prod_id25 = "138427596818"
-      bad_prod_id26 = "159587827730"
-      bad_prod_id27 = "138427465746"
-      bad_prod_id28 = "159586746386"
-      bad_prod_id29 = "138427793426"
-      bad_prod_id30 = "159593693202"
-      bad_prod_id31 = "138427695122"
-      bad_prod_id32 = "163444719634"
+      
 
-      monthly_box1 = "23729012754"
-      monthly_box2 = "9175678162"
-      monthly_box3 = "9109818066"
-
-      #in the zone
-      bad_prod_id33 = "175540207634"
-      bad_prod_id34 = "175535685650"
-      bad_prod_id35 = "187757723666"
-      bad_prod_id36 = "187802026002"
-
-      #set the pace
-      bad_prod_id37 = "175541518354"
-      bad_prod_id38 = "175541026834"
-      bad_prod_id39 = "187809366034"
-      bad_prod_id40 = "187809988626"
-
-      #all star
-      bad_prod_id41 = "175542632466"
-      bad_prod_id42 = "175542304786"
-      bad_prod_id43 = "187810512914"
-      bad_prod_id44 = "187810971666"
-
-
-      #desert sage
-      bad_prod_id45 = "197985992722"
-      bad_prod_id46 = "210212388882"
-      bad_prod_id47 = "197983830034"
-      bad_prod_id48 = "210212356114"
-
-      #running wild
-      bad_prod_id49 = "197986877458"
-      bad_prod_id50 = "210212519954"
-      bad_prod_id51 = "197986385938"
-      bad_prod_id52 = "210212454418"
-
-      #after dark
-      bad_prod_id53 = "197987074066"
-      bad_prod_id54 = "210212618258"
-      bad_prod_id55 = "197986910226"
-      bad_prod_id56 = "210212585490"
-
-      #May Flowers
-      bad_prod_id57 = "207131443218"
-      bad_prod_id58 = "219709145106"
-      bad_prod_id59 = "207131279378"
-      bad_prod_id60 = "219709276178"
-
-      #Wild Orchid
-      bad_prod_id61 = "207131803666"
-      bad_prod_id62 = "219709407250"
-      bad_prod_id63 = "207131705362"
-      bad_prod_id64 = "219709538322"
-
-      #skys the limit
-      bad_prod_id65 = "207132033042"
-      bad_prod_id66 = "219709702162"
-      bad_prod_id67 = "207131967506"
-      bad_prod_id68 = "219709767698"
-
-      #Rose All Day
-      bad_prod_id69 = "224674119698"
-      bad_prod_id70 = "224674086930"
-      bad_prod_id71 = "224675037202"
-      bad_prod_id72 = "224674971666"
-
-      #Weekend Warrior
-      bad_prod_id73 = "224674447378"
-      bad_prod_id74 = "224675364882"
-      bad_prod_id75 = "224674381842"
-      bad_prod_id76 = "224675299346"
-
-      #Back to Black
-      bad_prod_id77 = "224674316306"
-      bad_prod_id78 = "224675233810"
-      bad_prod_id79 = "224674283538"
-      bad_prod_id80 = "224675135506"
-
-      #Print Paradise
-      bad_prod_id81 = "1446651330618"
-      bad_prod_id82 = "1508549427258"
-      bad_prod_id83 = "1446647234618"
-      bad_prod_id84 = "1508553392186"
-
-      #Seeing Stars
-      bad_prod_id85 = "1446660702266"
-      bad_prod_id86 = "1508540219450"
-      bad_prod_id87 = "1446656999482"
-      bad_prod_id88 = "1508544643130"
-
-      #Vitamin Sea
-      bad_prod_id89 = "1446669287482"
-      bad_prod_id90 = "1508523147322"
-      bad_prod_id91 = "1446664306746"
-      bad_prod_id92 = "1508537106490"
-
-      #Meet Your Match
-      bad_prod_id93 = "1719732535354"
-      bad_prod_id94 = "1719728111674"
-      bad_prod_id95 = "1778624921658"
-      bad_prod_id96 = "1778619449402"
-
-      #Tough Luxe
-      bad_prod_id97 = "1719724507194"
-      bad_prod_id98 = "1719720935482"
-      bad_prod_id99 = "1778637897786"
-      bad_prod_id100 = "1778635964474"
-
-      #Power Surge
-      bad_prod_id101 = "1719715201082"
-      bad_prod_id102 = "1719710810170"
-      bad_prod_id103 = "1778644779066"
-      bad_prod_id104 = "1778643304506"
-
-      #Vinyasa Vibes
-      bad_prod_id105 = "1828555587642"
-      bad_prod_id106 = "1828595367994"
-      bad_prod_id107 = "1828550213690"
-      bad_prod_id108 = "1828594090042"
-
-      #Give Me Zen
-      bad_prod_id109 = "1828557127738"
-      bad_prod_id110 = "1828596514874"
-      bad_prod_id111 = "1828556308538"
-      bad_prod_id112 = "1828595990586"
-
-      #Love and Light
-      bad_prod_id113 = "1828559061050"
-      bad_prod_id114 = "1828598218810"
-      bad_prod_id115 = "1828558078010"
-      bad_prod_id116 = "1828596645946"
-
-      #Think Pink
-      bad_prod_id117 = "1918032609338"
-      bad_prod_id118 = "1918033133626"
-      bad_prod_id119 = "1930401415226"
-      bad_prod_id120 = "1924814274618"
-
-
-      #Lounge Life
-      bad_prod_id121 = "1918047453242"
-      bad_prod_id122 = "1918045159482"
-      bad_prod_id123 = "1924849664058"
-      bad_prod_id124 = "1930396663866"
-
-
-      #Street Dreams
-      bad_prod_id125 = "1918042636346"
-      bad_prod_id126 = "1918039687226"
-      bad_prod_id127 = "1924806180922"
-      bad_prod_id128 = "1924801101882"
-
-      #EllieStaging testing products
-      #bad_prod_id129 = "1494850863155"
-      #bad_prod_id130 = "1494851289139"
-      #bad_prod_id131 = "1494833725491"
-      #bad_prod_id132 = "1452468994099"
-      #bad_prod_id133 = "1478518636595"
-      #bad_prod_id134 = "1452468076595"
-      #bad_prod_id135 = "1452467978291"
-      #bad_prod_id136 = "1452468731955"
-      #bad_prod_id137 = "1452469321779"
-      #bad_prod_id138 = "1401707069491"
-      #bad_prod_id139 = "1479235829811"
-      #end Elliestaging testing products -- remove for production
-
-
-      #November Products
-
-      #Wrap Me up
-      bad_prod_id129 = "2076469657658"
-      bad_prod_id130 = "2089102573626"
-      bad_prod_id131 = "2076477653050"
-      bad_prod_id132 = "2089102114874"
-
-      #Color Theory
-      bad_prod_id133 = "2089364193338"
-      bad_prod_id134 = "2076342452282"
-      bad_prod_id135 = "2089098313786"
-      bad_prod_id136 = "2076357886010"
-
-      #Wine & Roses
-      bad_prod_id137 = "2076495052858"
-      bad_prod_id138 = "2092149178426"
-      bad_prod_id139 = "2076520939578"
-      bad_prod_id140 = "2092150227002"
-
-      #December Products
-      #Street Smarts
-      bad_prod_id141 = "2154512613434"
-      bad_prod_id142 = "2144938426426"
-      bad_prod_id143 = "2156332908602"
-      bad_prod_id144 = "2188207980602"
-
-      #Street Smarts2
-      bad_prod_id145 = "2188530778170"
-      bad_prod_id146 = "2188532875322"
-      bad_prod_id147 = "2196272807994"
-      bad_prod_id148 = "2188543328314"
-
-      #Snug Life
-      bad_prod_id149 = "2163296698426"
-      bad_prod_id150 = "2154515857466"
-      bad_prod_id151 = "2188491882554"
-      bad_prod_id152 = "2188496666682"
-
-      #Never Basic
-      bad_prod_id153 = "2185227010106"
-      bad_prod_id154 = "2185229860922"
-      bad_prod_id155 = "2188525928506"
-      bad_prod_id156 = "2188527599674"
-
-      #Blush Crush
-      bad_prod_id157 = "2154559995962"
-      bad_prod_id158 = "2154524049466"
-      bad_prod_id159 = "2188518850618"
-      bad_prod_id160 = "2188520521786"
-
-      #Jan 2019 products
-
-      #Fierce and Floral
-      bad_prod_id161 = "2227262881850"
-      bad_prod_id162 = "2236718448698"
-      bad_prod_id163 = "2227259342906"
-      bad_prod_id164 = "2237890625594"
-
-      #Knot Your Average
-      bad_prod_id165 = "2227252559930"
-      bad_prod_id166 = "2237892132922"
-      bad_prod_id167 = "2227246661690"
-      bad_prod_id168 = "2237892952122"
-
-      #Street Dreams
-      bad_prod_id167 = "1918042636346"
-      bad_prod_id168 = "1924806180922"
-      bad_prod_id169 = "1918039687226"
-      bad_prod_id170 = "1924801101882"
-
-      #True Blue
-      bad_prod_id171 = "2226409963578"
-      bad_prod_id172 = "2237897441338"
-      bad_prod_id173 = "2226391941178"
-      bad_prod_id174 = "2237898391610"
-
-      #Peace & Pastels
-      bad_prod_id175 = "2226413174842"
-      bad_prod_id176 = "2237902815290"
-      bad_prod_id177 = "2226411667514"
-      bad_prod_id178 = "2237903110202"
-
-      #Street Smarts
-      bad_prod_id179 = "2188530778170"
-      bad_prod_id180 = "2188532875322"
-
-      #Alternate Street Smarts
-      bad_prod_id181 = "2154512613434"
-
-      #Street Smarts 2
-      bad_prod_id182 = "2188530778170"
-      bad_prod_id183 = "2188532875322"
-
-
-      alt_subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' "
-
-      subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > '2019-01-31' and next_charge_scheduled_at is not null)  and (shopify_product_id = \'#{bad_prod_id1}\' or shopify_product_id = \'#{bad_prod_id2}\' or shopify_product_id = \'#{bad_prod_id3}\' or shopify_product_id = \'#{bad_prod_id4}\' or shopify_product_id = \'#{bad_prod_id5}\' or shopify_product_id = \'#{bad_prod_id6}\' or shopify_product_id = \'#{bad_prod_id7}\' or shopify_product_id = \'#{bad_prod_id8}\' or shopify_product_id = \'#{bad_prod_id9}\' or shopify_product_id = \'#{bad_prod_id10}\' or  shopify_product_id = \'#{bad_prod_id11}\' or shopify_product_id = \'#{bad_prod_id12}\'  or shopify_product_id = \'#{bad_prod_id13}\' or shopify_product_id = \'#{bad_prod_id14}\' or shopify_product_id = \'#{bad_prod_id15}\' or shopify_product_id = \'#{bad_prod_id16}\' or shopify_product_id = \'#{bad_prod_id17}\' or shopify_product_id = \'#{bad_prod_id18}\' or shopify_product_id = \'#{bad_prod_id19}\' or shopify_product_id = \'#{bad_prod_id20}\' or shopify_product_id = \'#{bad_prod_id21}\' or shopify_product_id = \'#{bad_prod_id22}\' or shopify_product_id = \'#{bad_prod_id23}\' or shopify_product_id = \'#{bad_prod_id24}\' or shopify_product_id = \'#{bad_prod_id25}\' or shopify_product_id = \'#{bad_prod_id26}\' or shopify_product_id = \'#{bad_prod_id27}\' or shopify_product_id = \'#{bad_prod_id28}\' or shopify_product_id = \'#{bad_prod_id29}\' or shopify_product_id = \'#{bad_prod_id30}\'  or shopify_product_id = \'#{bad_prod_id31}\' or shopify_product_id = \'#{bad_prod_id32}\' or shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\'  or   shopify_product_id = \'#{bad_prod_id33}\' or  shopify_product_id = \'#{bad_prod_id34}\' or  shopify_product_id = \'#{bad_prod_id35}\' or  shopify_product_id = \'#{bad_prod_id36}\' or  shopify_product_id = \'#{bad_prod_id37}\' or  shopify_product_id = \'#{bad_prod_id38}\' or  shopify_product_id = \'#{bad_prod_id39}\' or  shopify_product_id = \'#{bad_prod_id40}\' or  shopify_product_id = \'#{bad_prod_id41}\' or  shopify_product_id = \'#{bad_prod_id42}\' or  shopify_product_id = \'#{bad_prod_id43}\' or  shopify_product_id = \'#{bad_prod_id44}\' or  shopify_product_id = \'#{bad_prod_id45}\' or  shopify_product_id = \'#{bad_prod_id46}\' or  shopify_product_id = \'#{bad_prod_id47}\' or  shopify_product_id = \'#{bad_prod_id48}\' or  shopify_product_id = \'#{bad_prod_id49}\' or  shopify_product_id = \'#{bad_prod_id50}\' or  shopify_product_id = \'#{bad_prod_id51}\' or  shopify_product_id = \'#{bad_prod_id52}\' or  shopify_product_id = \'#{bad_prod_id53}\' or  shopify_product_id = \'#{bad_prod_id54}\' or  shopify_product_id = \'#{bad_prod_id55}\' or  shopify_product_id = \'#{bad_prod_id56}\' or shopify_product_id = \'#{bad_prod_id57}\' or shopify_product_id = \'#{bad_prod_id58}\' or shopify_product_id = \'#{bad_prod_id59}\' or shopify_product_id = \'#{bad_prod_id60}\' or shopify_product_id = \'#{bad_prod_id61}\' or shopify_product_id = \'#{bad_prod_id62}\' or shopify_product_id = \'#{bad_prod_id63}\' or shopify_product_id = \'#{bad_prod_id64}\' or shopify_product_id = \'#{bad_prod_id65}\' or shopify_product_id = \'#{bad_prod_id66}\' or shopify_product_id = \'#{bad_prod_id67}\' or shopify_product_id = \'#{bad_prod_id69}\' or shopify_product_id = \'#{bad_prod_id70}\' or shopify_product_id = \'#{bad_prod_id71}\' or shopify_product_id = \'#{bad_prod_id72}\' or shopify_product_id = \'#{bad_prod_id73}\' or shopify_product_id = \'#{bad_prod_id74}\' or shopify_product_id = \'#{bad_prod_id75}\' or shopify_product_id = \'#{bad_prod_id76}\' or shopify_product_id = \'#{bad_prod_id77}\' or shopify_product_id = \'#{bad_prod_id78}\' or shopify_product_id = \'#{bad_prod_id79}\' or shopify_product_id = \'#{bad_prod_id80}\' or shopify_product_id = \'#{bad_prod_id81}\' or shopify_product_id = \'#{bad_prod_id82}\' or shopify_product_id = \'#{bad_prod_id83}\' or shopify_product_id = \'#{bad_prod_id84}\' or shopify_product_id = \'#{bad_prod_id85}\' or shopify_product_id = \'#{bad_prod_id86}\' or shopify_product_id = \'#{bad_prod_id87}\' or shopify_product_id = \'#{bad_prod_id88}\' or shopify_product_id = \'#{bad_prod_id89}\' or shopify_product_id = \'#{bad_prod_id90}\' or shopify_product_id = \'#{bad_prod_id91}\' or shopify_product_id = \'#{bad_prod_id92}\' or shopify_product_id = \'#{bad_prod_id93}\' or shopify_product_id = \'#{bad_prod_id94}\' or shopify_product_id = \'#{bad_prod_id95}\' or shopify_product_id = \'#{bad_prod_id96}\' or shopify_product_id = \'#{bad_prod_id97}\' or shopify_product_id = \'#{bad_prod_id98}\' or shopify_product_id = \'#{bad_prod_id99}\' or shopify_product_id = \'#{bad_prod_id100}\' or shopify_product_id = \'#{bad_prod_id101}\' or shopify_product_id = \'#{bad_prod_id102}\' or shopify_product_id = \'#{bad_prod_id103}\' or shopify_product_id = \'#{bad_prod_id104}\' or shopify_product_id = \'#{bad_prod_id105}\' or shopify_product_id = \'#{bad_prod_id106}\' or shopify_product_id = \'#{bad_prod_id107}\' or shopify_product_id = \'#{bad_prod_id108}\' or shopify_product_id = \'#{bad_prod_id109}\' or shopify_product_id = \'#{bad_prod_id110}\' or shopify_product_id = \'#{bad_prod_id111}\' or shopify_product_id = \'#{bad_prod_id112}\' or shopify_product_id = \'#{bad_prod_id113}\' or shopify_product_id = \'#{bad_prod_id114}\' or shopify_product_id = \'#{bad_prod_id115}\' or shopify_product_id = \'#{bad_prod_id116}\' or shopify_product_id = \'#{bad_prod_id117}\' or shopify_product_id = \'#{bad_prod_id118}\' or shopify_product_id = \'#{bad_prod_id119}\' or shopify_product_id = \'#{bad_prod_id120}\' or shopify_product_id = \'#{bad_prod_id121}\' or shopify_product_id = \'#{bad_prod_id122}\' or shopify_product_id = \'#{bad_prod_id123}\' or shopify_product_id = \'#{bad_prod_id124}\' or shopify_product_id = \'#{bad_prod_id125}\' or shopify_product_id = \'#{bad_prod_id126}\' or shopify_product_id = \'#{bad_prod_id127}\' or shopify_product_id = \'#{bad_prod_id128}\' or shopify_product_id = \'#{bad_prod_id129}\' or shopify_product_id = \'#{bad_prod_id130}\' or shopify_product_id = \'#{bad_prod_id131}\' or shopify_product_id = \'#{bad_prod_id132}\' or shopify_product_id = \'#{bad_prod_id133}\' or shopify_product_id = \'#{bad_prod_id134}\' or shopify_product_id = \'#{bad_prod_id135}\' or shopify_product_id = \'#{bad_prod_id136}\' or shopify_product_id = \'#{bad_prod_id137}\' or shopify_product_id = \'#{bad_prod_id138}\' or shopify_product_id = \'#{bad_prod_id139}\' or shopify_product_id = \'#{bad_prod_id140}\' or shopify_product_id = \'#{bad_prod_id141}\' or shopify_product_id = \'#{bad_prod_id142}\' or shopify_product_id = \'#{bad_prod_id143}\' or shopify_product_id = \'#{bad_prod_id144}\' or shopify_product_id = \'#{bad_prod_id145}\' or shopify_product_id = \'#{bad_prod_id146}\' or shopify_product_id = \'#{bad_prod_id147}\' or shopify_product_id = \'#{bad_prod_id148}\' or shopify_product_id = \'#{bad_prod_id149}\' or shopify_product_id = \'#{bad_prod_id150}\' or shopify_product_id = \'#{bad_prod_id151}\' or shopify_product_id = \'#{bad_prod_id152}\' or shopify_product_id = \'#{bad_prod_id153}\' or shopify_product_id = \'#{bad_prod_id154}\' or shopify_product_id = \'#{bad_prod_id155}\' or shopify_product_id = \'#{bad_prod_id156}\' or shopify_product_id = \'#{bad_prod_id157}\' or shopify_product_id = \'#{bad_prod_id158}\' or shopify_product_id = \'#{bad_prod_id159}\' or shopify_product_id = \'#{bad_prod_id160}\' or shopify_product_id = \'#{bad_prod_id161}\' or shopify_product_id = \'#{bad_prod_id162}\' or shopify_product_id = \'#{bad_prod_id163}\' or shopify_product_id = \'#{bad_prod_id164}\' or shopify_product_id = \'#{bad_prod_id165}\' or shopify_product_id = \'#{bad_prod_id166}\' or shopify_product_id = \'#{bad_prod_id167}\' or shopify_product_id = \'#{bad_prod_id168}\' or shopify_product_id = \'#{bad_prod_id169}\' or shopify_product_id = \'#{bad_prod_id170}\' or shopify_product_id = \'#{bad_prod_id171}\' or shopify_product_id = \'#{bad_prod_id172}\' or shopify_product_id = \'#{bad_prod_id173}\' or shopify_product_id = \'#{bad_prod_id174}\' or shopify_product_id = \'#{bad_prod_id175}\' or shopify_product_id = \'#{bad_prod_id176}\' or shopify_product_id = \'#{bad_prod_id177}\' or shopify_product_id = \'#{bad_prod_id178}\' or shopify_product_id = \'#{bad_prod_id179}\' or shopify_product_id = \'#{bad_prod_id180}\' or shopify_product_id = \'#{bad_prod_id181}\' or shopify_product_id = \'#{bad_prod_id182}\' or shopify_product_id = \'#{bad_prod_id183}\')"
-
-      staging_bad_prod_id1 = "1401707069491"
-      staging_bad_prod_id2 = "1401707135027"
-      staging_subs_update =  "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > '2018-10-31' or next_charge_scheduled_at is null)  and (shopify_product_id = \'#{staging_bad_prod_id1}\' or shopify_product_id = \'#{staging_bad_prod_id2}\')"
-
-      #my_end_month = Date.today.end_of_month
-      #my_end_month_str = my_end_month.strftime("%Y-%m-%d")
-      #puts "End of the month = #{my_end_month_str}"
       my_end_month = Date.today.end_of_month
       my_end_month_str = my_end_month.strftime("%Y-%m-%d")
 
       straggler_subs_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > \'#{my_end_month_str}\' and next_charge_scheduled_at is not null)  and (shopify_product_id = \'23729012754\' or shopify_product_id = \'9175678162\' or shopify_product_id = \'2209786298426\' or shopify_product_id = \'2209789771834\' or shopify_product_id = \'2267626373178\' or shopify_product_id = \'2227259342906\' or shopify_product_id = \'2267630239802\' or shopify_product_id = \'2267632697402\'  or shopify_product_id = \'2267637678138\' or shopify_product_id = \'2227252559930\' or shopify_product_id = \'2267641151546\' or shopify_product_id = \'2267641872442\' or shopify_product_id = \'2267622539322\' or shopify_product_id = \'2267625160762\' or shopify_product_id = \'2267638857786\' or shopify_product_id = \'2267639349306\' or shopify_product_id = \'1719720935482\' or shopify_product_id = \'2076495052858\' or shopify_product_id = \'2076520939578\')"
 
-      starstruck_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and ( next_charge_scheduled_at is not null)  and (shopify_product_id = \'2294132539450\') "
-
       
-      march_2019_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and (next_charge_scheduled_at > \'#{my_end_month_str}\' and next_charge_scheduled_at is not null)  and (shopify_product_id = \'2294130999354\' or shopify_product_id = \'2226391941178\' or shopify_product_id = \'2294128738362\' or shopify_product_id = \'2188532875322\' or shopify_product_id = \'2294123954234\' or shopify_product_id = \'2076495052858\' or shopify_product_id = \'2267638857786\' or shopify_product_id = \'2294131458106\'  or shopify_product_id = \'2294131458106\' or shopify_product_id = \'207131443218\' or shopify_product_id = \'2294127558714\' or shopify_product_id = \'23729012754\' or shopify_product_id = \'2209789771834\' or shopify_product_id = \'2294128738362\' or shopify_product_id = \'2076342452282\' or shopify_product_id = \'2294135029818\' or shopify_product_id = \'2294132539450\' or shopify_product_id = \'2294123954234\' or shopify_product_id = \'2188530778170\' or shopify_product_id = \'2226409963578\' or shopify_product_id = \'2209786298426\' or shopify_product_id = \'2209789771834\' or shopify_product_id = \'9175678162\' or shopify_product_id = \'2076357886010\' or shopify_product_id = \'2294132932666\' or shopify_product_id = \'2294135029818\' or shopify_product_id = \'2294132539450\' or shopify_product_id = \'2294132932666\')"
+
 
       my_end_month = Date.today.end_of_month
       my_end_month_str = my_end_month.strftime("%Y-%m-%d")
@@ -375,87 +70,154 @@ module FixSubInfo
 
       jan_2020_nulls_monthly = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and  ( next_charge_scheduled_at is  null )  and product_title not ilike \'3%month%\' "
 
-      #SubscriptionsUpdated.delete_all
-      # Now reset index
-      #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-      #puts "Setting up Jan2020 nulls monthly"
-      #ActiveRecord::Base.connection.execute(jan_2020_nulls_monthly)
-      #puts "all done ..."
+      
 
-      ellie_staging_monthly = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and product_title not ilike \'3%month%\'"
-
-      SubscriptionsUpdated.delete_all
-      # Now reset index
-      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-      puts "Setting up Jan2020 nulls monthly"
-      ActiveRecord::Base.connection.execute(ellie_staging_monthly)
-      puts "all done ..."
-
-
-
-
-
-
+      ellie_staging_monthly = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and ( product_title  ilike \'boss%babe%2%\'  or product_title ilike \'gear%up%2%\') and next_charge_scheduled_at > '2020-03-24' and next_charge_scheduled_at < '2020-04-01' limit 2200"
 
       #SubscriptionsUpdated.delete_all
       # Now reset index
       #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-      #puts "Setting up Jan2020 overflow"
-      #ActiveRecord::Base.connection.execute(jan_2020_update)
+      #puts "Setting up Ellie Staging for Ellie picks monthly"
+      #ActiveRecord::Base.connection.execute(ellie_staging_monthly)
       #puts "all done ..."
+      #exit
+
+      ellie_feb_new_subs_dec_2019 = " insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and  ( next_charge_scheduled_at is not null and next_charge_scheduled_at < \'2020-03-01\' and next_charge_scheduled_at > \'2020-01-31\' and created_at < \'2020-01-01\' and created_at > \'2019-11-30\' and product_title not ilike \'3%month%\') "
+
+      ellie_feb_new_subs_jan_2020 = " insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and  ( next_charge_scheduled_at is not null and next_charge_scheduled_at < \'2020-03-01\' and next_charge_scheduled_at > \'2020-01-31\' and created_at < \'2020-02-01\' and created_at > \'2019-12-31\' and product_title not ilike \'3%month%\') "
+
+      ellie_mar_new_subs_feb_2020 = " insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and  ( next_charge_scheduled_at is not null and next_charge_scheduled_at < \'2020-04-01\' and next_charge_scheduled_at > \'2020-02-29\' and created_at < \'2020-03-01\' and created_at > \'2020-01-31\' and product_title not ilike \'3%month%\' and product_title not ilike \'%2%item\') "
+
+      #SubscriptionsUpdated.delete_all
+      # Now reset index
+      #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+      #puts "Setting up New created Feb monthly"
+      #ActiveRecord::Base.connection.execute(ellie_mar_new_subs_feb_2020)
+      #puts "all done ..."
+
+
 
       #move Berry Crush, Paradise Cove, City Limits, Clean Slate, Ivy League, and Crunch Time to Canyon Sunset
       jan_2020_move_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and  ( next_charge_scheduled_at is not null and next_charge_scheduled_at < \'2020-02-01\' and next_charge_scheduled_at > \'2019-12-31\')   and (shopify_product_id = \'4366057209914\' or shopify_product_id = \'4366057406522\' or shopify_product_id = \'4366057963578\' or shopify_product_id = \'4366060453946\' or shopify_product_id = \'4366061174842\'  or shopify_product_id = \'4366066024506\' or shopify_product_id = \'4373264597050\' or shopify_product_id = \'4373264957498\' or shopify_product_id = \'4373306998842\' or shopify_product_id = \'4366079459386\' or shopify_product_id = \'4366079787066\'  or shopify_product_id = \'4366080311354\' or shopify_product_id = \'4366077132858\' or shopify_product_id = \'4366077591610\'  or shopify_product_id = \'4366079098938\' or shopify_product_id = \'4366058225722\' or shopify_product_id = \'4366058782778\' or shopify_product_id = \'4366059143226\'  ) and created_at > \'2019-11-30\'"
 
 
-      nov_2019_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and  (( next_charge_scheduled_at is not null and next_charge_scheduled_at < \'2019-12-01\' and next_charge_scheduled_at > \'2019-10-31\') or next_charge_scheduled_at is null)  and (shopify_product_id = \'2477581697082\' or shopify_product_id = \'2514826788922\' or shopify_product_id = \'2514833440826\' or shopify_product_id = \'2477581959226\'    )"
+      
 
       #jan_2020_prepaid_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at >= '2020-01-01'   and (product_title ilike \'3%month%\' )"
 
-      jan_2020_prepaid_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at is null   and (product_title ilike \'3%month%\' )"
+      #Null Prepaids
+      feb_2020_prepaid_update_null = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at is null   and (product_title ilike \'3%month%\' )"
 
-      #SubscriptionsUpdated.delete_all
-      # Now reset index
-      #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-      #puts "Setting up Jan2020 overflow"
-      #ActiveRecord::Base.connection.execute(jan_2020_prepaid_update)
-      #puts "all done ..."
+      #Charging next month prepaid, no pending orders until charged
+      feb_2020_prepaid_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-02-29' and next_charge_scheduled_at < '2020-04-01'   and (product_title ilike \'3%month%\' )"
+
+      #prepaid charging past Feb
+      feb_2020_prepaid_future = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-03-31'  and (product_title ilike \'3%month%\' )"
 
 
-      nov_2019_prepaid_update_late = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items)select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_line_items where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2019-10-31'   and (subscriptions.product_title ilike '3%month%' ) and sub_line_items.name = 'product_collection' and sub_line_items.value not ilike 'second%skin%' and sub_line_items.subscription_id = subscriptions.subscription_id"
+      #puts "Setting up Mar Prepaid Null"
+      #ActiveRecord::Base.connection.execute(feb_2020_prepaid_update_null)
+     # ActiveRecord::Base.connection.execute(feb_2020_prepaid_update)
+      #ActiveRecord::Base.connection.execute(feb_2020_prepaid_future)
+     # puts "all done ..."
+
+     #Non 2 item overflow Month to Month
+     feb_2020_non2_item_overflow = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > \'2020-01-31\' and next_charge_scheduled_at < \'2020-03-01\'  and (product_title not ilike \'3%month%\'  and product_title not ilike \'%2%item%\' and product_title not ilike \'second%skin%\' and product_title not ilike \'boss%babe%\' and product_title not ilike \'supernova%\'  and product_title not ilike \'hidden%gem%\' and product_title not ilike \'bayside%breeze%\' and product_title not ilike \'cupids%kiss%\' and product_title not ilike \'knockout%\' and product_title not ilike \'ready%set%go%\' and product_title not ilike \'out%of%the%blue%\') "
+
+     #puts "Setting up Feb Non 2 Item overflow month to month"
+     #ActiveRecord::Base.connection.execute(feb_2020_non2_item_overflow)
+     
+     #puts "all done ..."
+
+     #Non 2 item nulls Month to Month
+     feb_2020_non2_item_nulls = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at is null  and (product_title not ilike \'3%month%\'  and product_title not ilike \'%2%item%\' and product_title not ilike \'second%skin%\' and product_title not ilike \'boss%babe%\' and product_title not ilike \'supernova%\'  and product_title not ilike \'hidden%gem%\' and product_title not ilike \'bayside%breeze%\' and product_title not ilike \'cupids%kiss%\' and product_title not ilike \'knockout%\' and product_title not ilike \'ready%set%go%\' and product_title not ilike \'out%of%the%blue%\') "
+
+     #puts "Setting up Feb Non 2 Item overflow month to month NULLS"
+     #ActiveRecord::Base.connection.execute(feb_2020_non2_item_nulls)
+     
+     #puts "all done ..." 
+
+     #Non 2 item late Jan rollover
+     feb_2020_non2_item_late = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at =\'2020-02-29'  and (product_title not ilike \'3%month%\'  and product_title not ilike \'%2%item%\' and product_title not ilike \'second%skin%\' and product_title not ilike \'boss%babe%\' and product_title not ilike \'supernova%\'  and product_title not ilike \'hidden%gem%\' and product_title not ilike \'bayside%breeze%\' and product_title not ilike \'cupids%kiss%\' and product_title not ilike \'knockout%\' and product_title not ilike \'ready%set%go%\' and product_title not ilike \'out%of%the%blue%\') "
+
+     #puts "Setting up Feb Non 2 Item late to month "
+     #ActiveRecord::Base.connection.execute(feb_2020_non2_item_late)
+     
+     #puts "all done ..." 
+
+
+     #March 2020 Overflow
+     # first delete all records
+     #SubscriptionsUpdated.delete_all
+     #Now reset index
+     #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+     march_2020_overflow = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and ( next_charge_scheduled_at > \'2020-02-29\' and next_charge_scheduled_at < \'2020-04-01\')  and (product_title not ilike \'3%month%\')   and ( product_title  ilike \'bayside%breeze%\' or product_title ilike \'boss%babe%\' or product_title ilike \'clean%slate%\' or product_title ilike \'comfort%zone%\' or product_title ilike \'crunch%time%\' or product_title ilike \'cupid%kiss%\' or product_title ilike \'gear%up%\' or product_title ilike \'hidden%gem%\' or product_title ilike \'ivy%league%\' or product_title ilike \'knockout%\' or product_title ilike \'out%blue%\' or product_title ilike \'paradise%\' or product_title ilike \'ready%set%\' or product_title ilike \'second%skin%\' or product_title ilike \'supernova%\' or product_title ilike \'ultraviolet%\') "
+
+     march_2020_overflow_nulls = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and ( next_charge_scheduled_at is null )  and (product_title not ilike \'3%month%\')   and ( product_title  ilike \'bayside%breeze%\' or product_title ilike \'boss%babe%\' or product_title ilike \'clean%slate%\' or product_title ilike \'comfort%zone%\' or product_title ilike \'crunch%time%\' or product_title ilike \'cupid%kiss%\' or product_title ilike \'gear%up%\' or product_title ilike \'hidden%gem%\' or product_title ilike \'ivy%league%\' or product_title ilike \'knockout%\' or product_title ilike \'out%blue%\' or product_title ilike \'paradise%\' or product_title ilike \'ready%set%\' or product_title ilike \'second%skin%\' or product_title ilike \'supernova%\' or product_title ilike \'ultraviolet%\') "
+
+
+     #ActiveRecord::Base.connection.execute(march_2020_overflow)
+     #ActiveRecord::Base.connection.execute(march_2020_overflow_nulls)
+
+     #puts "all done with overflow March..." 
+
+     #April 2020 Ghost Allocation
+     april2020_ghost2 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title not ilike \'3%month%\')  and ( product_title not ilike \'back%basic%\' and product_title not ilike \'dream%on%\' and product_title not ilike \'kaleidoscope%\' and product_title not ilike \'violet%rhapsody%\' and product_title not ilike \'glow%getter%\' and product_title not ilike \'matcha%cha%\' ) and   created_at < \'2020-03-01\' and next_charge_scheduled_at > \'2020-04-19\' and next_charge_scheduled_at < \'2020-04-30\' limit 233 "
+
+     april2020_ghost = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title not ilike \'3%month%\')  and ( product_title  ilike \'back%basic%\' or product_title  ilike \'dream%on%\' or product_title  ilike \'kaleidoscope%\' or product_title  ilike \'violet%rhapsody%\' or product_title  ilike \'glow%getter%\' or product_title  ilike \'matcha%cha%\' ) and   created_at < \'2020-03-01\' and next_charge_scheduled_at > \'2020-04-19\' and next_charge_scheduled_at < \'2020-04-30\'  "
+
+     april2020_new_march_fix = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title not ilike \'3%month%\')  and ( product_title  ilike \'back%basic%\' or product_title  ilike \'dream%on%\' or product_title  ilike \'kaleidoscope%\' or product_title  ilike \'violet%rhapsody%\' or product_title  ilike \'glow%getter%\' or product_title  ilike \'matcha%cha%\' ) and   created_at < \'2020-04-01\' and created_at > \'2020-02-29\' and next_charge_scheduled_at > \'2020-03-31\' and next_charge_scheduled_at < \'2020-05-01\'  "
+
+     april2020_new_march = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title not ilike \'3%month%\' and product_title not ilike \'city%limit%\' )  and    created_at < \'2020-04-01\' and created_at > \'2020-02-29\' and next_charge_scheduled_at > \'2020-03-31\' and next_charge_scheduled_at < \'2020-05-01\' limit 1000 "
+
+     april2020_straggler = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title not ilike \'3%month%\' and product_title not ilike \'back%basic%\' and product_title not ilike \'dream%on%\' and product_title not ilike \'kaleidoscope%\' and product_title not ilike \'violet%rhapsody%\' and product_title not ilike \'glow%getter%\' and product_title not ilike \'matcha%cha%\'  and product_title not ilike \'cupid%kiss%\' and product_title not ilike \'city%limit%\'  and product_title not ilike \'ellie%pick%\' and  (next_charge_scheduled_at > \'2020-03-31\' or next_charge_scheduled_at is null)  ) "
+
+     may2020_march_new_subs = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title not ilike \'3%month%\' and  created_at > \'2020-02-29\' and created_at < \'2020-04-01\' and (next_charge_scheduled_at > \'2020-04-30\' and next_charge_scheduled_at < \'2020-06-01\' )  ) "
+
+     may2020_prepaid_not_billing_next_month = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title ilike \'3%month%\'  and ( next_charge_scheduled_at > \'2020-05-31\' and next_charge_scheduled_at is not null )  )"
+
+     may2020_prepaid_billing_in_may = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title ilike \'3%month%\'  and ( next_charge_scheduled_at > \'2020-04-30\' and next_charge_scheduled_at < \'2020-06-01\' )  )"
+
+     may_2020_nulls = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\' and ( next_charge_scheduled_at is null )   "
+
+     may_2020_may5_may6_unallocated = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\' and  product_title not ilike \'paradise%cove%\' and product_title not ilike \'pacific%mist%\' and product_title not ilike \'citrus%\' and product_title not ilike \'natural%\' and product_title not ilike \'calypso%\' and product_title not ilike \'pinky%\' and product_title not ilike \'tie%game%\' and product_title not ilike \'golden%girl%\' and product_title not ilike \'spring%action%\' and ( next_charge_scheduled_at > \'2020-05-04\' and next_charge_scheduled_at < \'2020-05-07\' )   "
+
+
+     may_2020_may7_later_unallocated = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\' and  product_title not ilike \'paradise%cove%\' and product_title not ilike \'pacific%mist%\' and product_title not ilike \'citrus%\' and product_title not ilike \'natural%\' and product_title not ilike \'calypso%\' and product_title not ilike \'pinky%\' and product_title not ilike \'tie%game%\' and product_title not ilike \'golden%girl%\' and product_title not ilike \'spring%action%\' and ( next_charge_scheduled_at > \'2020-05-06\' and next_charge_scheduled_at < \'2020-06-01\' )   "
+
+
+     # first delete all records
+     SubscriptionsUpdated.delete_all
+     #Now reset index
+     ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+     ActiveRecord::Base.connection.execute(may_2020_may7_later_unallocated)
+     #ActiveRecord::Base.connection.execute(april2020_ghost2)
+     #ActiveRecord::Base.connection.execute(april2020_new_march_fix)
+     #ActiveRecord::Base.connection.execute(april2020_new_march)
+     puts "All done with april2020 straggler set up"
+
+
+     april_2020_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-03-31'  and (product_title ilike \'3%month%\' )"
+     #SubscriptionsUpdated.delete_all
+     #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+     #ActiveRecord::Base.connection.execute(april_2020_prepaid)
+     #puts "All done with april2020 prepaid set up"
+
+
+
+     #Feb 2020 Overflow non 2 item
+     feb_2020_non_2_item_overflow = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > \'2020-01-31\' and next_charge_scheduled_at < \'2020-03-01\'  and (product_title not ilike \'3%month%\'  and product_title not ilike \'%2%item%\' and product_title not ilike \'second%skin%\' and product_title not ilike \'boss%babe%\') "
+
+
+
+      
 
       dec_2019_late_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items)select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions where (subscription_id = \'49398229\' or subscription_id = \'49351767\' or subscription_id = \'49343544\'
       or subscription_id = \'49335559\' or subscription_id = \'49331336\' or subscription_id = \'48165224\' or subscription_id = \'47573227\' or subscription_id = \'55826719\' or subscription_id = \'55785609\' or subscription_id = \'55762085\' or subscription_id = \'55760703\' or subscription_id = \'55748148\' or subscription_id = \'55746968\' or subscription_id = \'55744054\' or subscription_id = \'55742379\' or subscription_id = \'53251436\' or subscription_id = \'51490664\')"
 
 
-      fix_beach_bash = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at is null   and (shopify_product_id = \'2457951502394\' )"
-
-      testing_price_increase_justin = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where subscription_id = \'35731431\'"
-
-      fix_old_product_titles = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and ( next_charge_scheduled_at is not null and next_charge_scheduled_at < \'2019-11-01')  and (shopify_product_id = \'2405031280698\' or shopify_product_id = \'2477581959226\' or shopify_product_id = \'2294128738362\' or shopify_product_id = \'2294131458106\' or shopify_product_id = \'2477583401018\'  or shopify_product_id = \'2267637678138\' or shopify_product_id = \'2477583237178\' or shopify_product_id = \'2405033902138\' or shopify_product_id = \'2457952026682\' or shopify_product_id = \'2477579173946\' or shopify_product_id = \'2340063969338\'  or shopify_product_id = \'2372783145018\' or shopify_product_id = \'2339789013050\' or shopify_product_id = \'2372786290746\'  or shopify_product_id = \'2477581959226\' or shopify_product_id = \'2477579599930\' or shopify_product_id = \'2372786290746\' or shopify_product_id = \'2267622539322\' or shopify_product_id = \'2477583040570\' or shopify_product_id = \'2457953271866\' or shopify_product_id = \'2267625160762\' )"
     
       
-      # three_months_update = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2018-01-31' and (shopify_product_id = \'#{monthly_box1}\' or shopify_product_id = \'#{monthly_box2}\' or shopify_product_id = \'#{monthly_box3}\' )"
-
-      # This creates SubscriptionsUpdated records from normal subscriptions and
-      # prepaid subscriptions NOT set to cancel:
-
-      #ActiveRecord::Base.connection.execute(staging_subs_update)
-      #ActiveRecord::Base.connection.execute(subs_update)
-      #ActiveRecord::Base.connection.execute(fix_beach_bash)
-      #ActiveRecord::Base.connection.execute(aug_2019_update)
-
-      #ActiveRecord::Base.connection.execute(oct_2019_update)
-      #ActiveRecord::Base.connection.execute(nov_2019_prepaid_update)
-      #ActiveRecord::Base.connection.execute(dec_2019_prepaid_update)
-
-      #ActiveRecord::Base.connection.execute(dec_2019_update)
-      #ActiveRecord::Base.connection.execute(dec_2019_late_prepaid)
-      #SubscriptionsUpdated.delete_all
-      # Now reset index
-      #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-      #puts "Setting up Jan2020 move"
-      #ActiveRecord::Base.connection.execute(jan_2020_move_update)
 
      # 15 Medium tops, 15 large tops, 15 XL tops customers from Clean slate to Good Karma
 #   15 Medium tops, 15 large tops, 15 XL tops customers from City Limits to Good Karma
@@ -495,6 +257,24 @@ module FixSubInfo
 
       sql_move1 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions, sub_collection_sizes where status = 'ACTIVE' and  ( subscriptions.next_charge_scheduled_at is not null and subscriptions.next_charge_scheduled_at < \'2020-02-01\' and subscriptions.next_charge_scheduled_at > \'2019-12-31\')   and sub_collection_sizes.product_collection ilike \'berry%crush%\' and sub_collection_sizes.tops = \'L\' and sub_collection_sizes.leggings = \'L\' and sub_collection_sizes.sports_bra = \'L\' and sub_collection_sizes.subscription_id = subscriptions.subscription_id limit 250"
       #ActiveRecord::Base.connection.execute(sql_move1)
+
+      sql_move2 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions, sub_collection_sizes where status = 'ACTIVE' and  ( subscriptions.next_charge_scheduled_at is not null and subscriptions.next_charge_scheduled_at < \'2020-04-01\' and subscriptions.next_charge_scheduled_at > \'2020-02-29\')   and sub_collection_sizes.product_collection ilike \'under%radar%\' and sub_collection_sizes.tops = \'XS\' and sub_collection_sizes.leggings = \'XS\' and sub_collection_sizes.sports_bra = \'XS\' and sub_collection_sizes.subscription_id = subscriptions.subscription_id limit 15"
+
+      sql_move3 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions, sub_collection_sizes where status = 'ACTIVE' and  ( subscriptions.next_charge_scheduled_at is not null and subscriptions.next_charge_scheduled_at < \'2020-04-01\' and subscriptions.next_charge_scheduled_at > \'2020-02-29\')   and sub_collection_sizes.product_collection ilike \'bahama%babe%\' and sub_collection_sizes.tops = \'XS\' and sub_collection_sizes.leggings = \'XS\' and sub_collection_sizes.sports_bra = \'XS\' and sub_collection_sizes.subscription_id = subscriptions.subscription_id limit 10"
+
+      sql_move4 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions, sub_collection_sizes where status = 'ACTIVE' and  ( subscriptions.next_charge_scheduled_at is not null and subscriptions.next_charge_scheduled_at < \'2020-04-01\' and subscriptions.next_charge_scheduled_at > \'2020-02-29\')   and sub_collection_sizes.product_collection ilike \'blue%skie%\' and  sub_collection_sizes.sports_bra = \'M\' and sub_collection_sizes.subscription_id = subscriptions.subscription_id limit 500"
+
+      sql_move4 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions, sub_collection_sizes where status = 'ACTIVE' and  ( subscriptions.next_charge_scheduled_at is not null and subscriptions.next_charge_scheduled_at < \'2020-04-01\' and subscriptions.next_charge_scheduled_at > \'2020-02-29\')   and sub_collection_sizes.product_collection ilike \'blue%skie%\' and  sub_collection_sizes.sports_bra = \'XS\' and sub_collection_sizes.subscription_id = subscriptions.subscription_id limit 65"
+
+      sql_move5 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions, sub_collection_sizes where status = 'ACTIVE' and  ( subscriptions.next_charge_scheduled_at is not null and subscriptions.next_charge_scheduled_at < \'2020-04-01\' and subscriptions.next_charge_scheduled_at > \'2020-02-29\')   and sub_collection_sizes.product_collection ilike \'blue%skie%\' and  sub_collection_sizes.sports_bra = \'XL\' and sub_collection_sizes.subscription_id = subscriptions.subscription_id limit 200"
+
+      #SubscriptionsUpdated.delete_all
+      # Now reset index
+      #ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+      #puts "Setting up move 15 XS bras under the radar"
+      #ActiveRecord::Base.connection.execute(sql_move4)
+      #puts "all done ..."
+
       
       #ActiveRecord::Base.connection.execute(july_2019_update)
       #ActiveRecord::Base.connection.execute(starstruck_update)
@@ -524,6 +304,26 @@ module FixSubInfo
       #end
     end
 
+    def fix_bad_two_months_march
+      SubscriptionsUpdated.delete_all
+      # Now reset index
+      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+      CSV.foreach('more_bad_2item_subs_march.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+        #puts row.inspect
+        my_sub_id = row['subscription id']
+        puts my_sub_id
+        my_local_sub = Subscription.find_by_subscription_id(my_sub_id)
+        puts my_local_sub.inspect
+
+        #insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items
+
+        new_sub_updated = SubscriptionsUpdated.create(subscription_id: my_local_sub.subscription_id, customer_id: my_local_sub.customer_id, updated_at: my_local_sub.updated_at,next_charge_scheduled_at:  my_local_sub.next_charge_scheduled_at, product_title: my_local_sub.product_title, status: my_local_sub.status, sku: my_local_sub.sku, shopify_product_id: my_local_sub.shopify_product_id, shopify_variant_id: my_local_sub.shopify_variant_id, raw_line_items: my_local_sub.raw_line_item_properties  )
+
+      end
+      
+
+
+    end
 
     def load_fierce_floral
       SubscriptionsUpdated.delete_all
@@ -585,9 +385,141 @@ module FixSubInfo
       bad_gloves = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_line_items where subscriptions.status = 'ACTIVE' and sub_line_items.name = 'gloves' and sub_line_items.value = '' and subscriptions.subscription_id = sub_line_items.subscription_id"
       ActiveRecord::Base.connection.execute(bad_gloves)
 
+    end
 
+    def back_figure_inventory
+      #
+      back_basics_tops = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      back_basics_leggings = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      back_basics_bras = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+
+      dream_tops = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      dream_leggings = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      dream_bras = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+
+      k_tops = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      k_leggings = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      k_bras = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+
+      v_tops = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      v_leggings = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      v_bras = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+
+      glow_tops = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      glow_leggings = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      glow_bras = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+
+      matcha_tops = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      matcha_leggings = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+      matcha_bras = {"XS" => 0, "S" => 0, "M" => 0, "L" => 0, "XL" => 0}
+
+      #CSV.foreach('april_subs_updated.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+        #puts row.inspect
+      mysub = SubscriptionsUpdated.all.each do |mysub|
+        #subscription_id = row['subscription_id']
+        #product_title = row['product_title']
+        subscription_id = mysub.subscription_id
+        product_title = mysub.product_title
+        if (product_title =~ /back\s/i) || (product_title =~ /dream\s/i) || (product_title =~ /kaleidoscope\s/i) || (product_title =~ /violet\s/i) || (product_title =~ /glow\s/i) || (product_title =~ /matcha\s/i)
+          puts "#{subscription_id}, #{product_title}"
+          my_collection_info = SubCollectionSizes.find_by_subscription_id(subscription_id)
+          puts my_collection_info.inspect
+          case my_collection_info.product_collection
+          when /back\s/i
+            back_basics_tops[my_collection_info.tops] = back_basics_tops[my_collection_info.tops] += 1
+            back_basics_leggings[my_collection_info.leggings] = back_basics_leggings[my_collection_info.leggings] += 1
+            back_basics_bras[my_collection_info.sports_bra] = back_basics_bras[my_collection_info.sports_bra] += 1
+
+          when /dream\s/i
+            dream_tops[my_collection_info.tops] = dream_tops[my_collection_info.tops] += 1
+            dream_leggings[my_collection_info.leggings] = dream_leggings[my_collection_info.leggings] += 1
+            dream_bras[my_collection_info.sports_bra] = dream_bras[my_collection_info.sports_bra] += 1
+
+          when /kaleidoscope\s/i
+            k_tops[my_collection_info.tops] = k_tops[my_collection_info.tops] += 1
+            k_leggings[my_collection_info.leggings] = k_leggings[my_collection_info.leggings] += 1
+            k_bras[my_collection_info.sports_bra] = k_bras[my_collection_info.sports_bra] += 1
+
+          when /violet\s/i
+            v_tops[my_collection_info.tops] = v_tops[my_collection_info.tops] += 1
+            v_leggings[my_collection_info.leggings] = v_leggings[my_collection_info.leggings] += 1
+            v_bras[my_collection_info.sports_bra] = v_bras[my_collection_info.sports_bra] += 1
+
+          when /glow\s/i
+            glow_tops[my_collection_info.tops] = glow_tops[my_collection_info.tops] += 1
+            glow_leggings[my_collection_info.leggings] = glow_leggings[my_collection_info.leggings] += 1
+            glow_bras[my_collection_info.sports_bra] = glow_bras[my_collection_info.sports_bra] += 1
+
+          when /matcha\s/i
+            matcha_tops[my_collection_info.tops] = matcha_tops[my_collection_info.tops] += 1
+            matcha_leggings[my_collection_info.leggings] = matcha_leggings[my_collection_info.leggings] += 1
+            matcha_bras[my_collection_info.sports_bra] = matcha_bras[my_collection_info.sports_bra] += 1
+
+          else
+            #Do nothing
+
+
+          end
+
+        end
+
+      end
+      puts "Back to Basics"
+      puts "tops: #{back_basics_tops.inspect}"
+      puts "leggings: #{back_basics_leggings.inspect}"
+      puts "bras: #{back_basics_bras.inspect}"
+      puts "Dream On"
+      puts "tops: #{dream_tops.inspect}"
+      puts "leggings: #{dream_leggings.inspect}"
+      puts "bras: #{dream_bras.inspect}"
+      puts "Kaleidoscope"
+      puts "tops: #{k_tops.inspect}"
+      puts "leggings: #{k_leggings.inspect}"
+      puts "bras: #{k_bras.inspect}"
+      puts "Violet Rhapsody"
+      puts "tops: #{v_tops.inspect}"
+      puts "leggings: #{v_leggings.inspect}"
+      puts "bras: #{v_bras.inspect}"
+      puts "Glow Getter"
+      puts "tops: #{glow_tops.inspect}"
+      puts "leggings: #{glow_leggings.inspect}"
+      puts "bras: #{glow_bras.inspect}"
+      puts "Matcha Cha Cha"
+      puts "tops: #{matcha_tops.inspect}"
+      puts "leggings: #{matcha_leggings.inspect}"
+      puts "bras: #{matcha_bras.inspect}"
 
     end
+
+
+
+    def load_march_subs
+      num_nils = 0
+      num_non_nils = 0
+      line = 0
+      SubscriptionsUpdated.delete_all
+      # Now reset index
+      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
+      CSV.foreach('more_bad_2item_subs_march.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+        puts row.inspect
+        line += 1
+        sub_id = row['subscription id']
+        puts sub_id
+        my_local_sub = Subscription.find_by_subscription_id(sub_id)
+        puts my_local_sub.inspect
+        if my_local_sub.nil?
+          num_nils += 1
+        else
+          num_non_nils += 1
+        
+        temp_updated = SubscriptionsUpdated.create(subscription_id: my_local_sub.subscription_id, customer_id: my_local_sub.customer_id, updated_at: my_local_sub.updated_at,next_charge_scheduled_at:  my_local_sub.next_charge_scheduled_at, product_title: my_local_sub.product_title, status: my_local_sub.status, sku: my_local_sub.sku, shopify_product_id: my_local_sub.shopify_product_id, shopify_variant_id: my_local_sub.shopify_variant_id, raw_line_items: my_local_sub.raw_line_item_properties)
+        end
+
+      end
+      puts "We have #{num_nils} nils and #{num_non_nils} non nils and #{line} lines"
+
+    end
+
 
     def filter_out_prepaid_already_assigned
       my_prepaid = 0
@@ -626,16 +558,18 @@ module FixSubInfo
       # @conn.exec(my_reorder)
       my_insert = "insert into update_products (sku, product_title, shopify_product_id, shopify_variant_id, product_collection) values ($1, $2, $3, $4, $5)"
       @conn.prepare('statement1', "#{my_insert}")
-      CSV.foreach('elliestaging_monthly_update.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+      CSV.foreach('update_products_may2020_ellie_picks.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
          puts row.inspect
         sku = row['sku']
         product_title = row['product_title']
         shopify_product_id = row['shopify_product_id']
         shopify_variant_id = row['shopify_variant_id']
         product_collection = row['product_collection']
+        UpdateProduct.create(sku: sku, product_title: product_title, shopify_product_id: shopify_product_id, shopify_variant_id: shopify_variant_id, product_collection: product_collection)
 
-        @conn.exec_prepared('statement1', [sku, product_title, shopify_product_id, shopify_variant_id, product_collection])
+        #@conn.exec_prepared('statement1', [sku, product_title, shopify_product_id, shopify_variant_id, product_collection])
       end
+      puts "Done with update_products table!"
       @conn.close
     end
 
@@ -650,7 +584,7 @@ module FixSubInfo
       # @conn.exec(my_reorder)
       my_insert = "insert into current_products (prod_id_key, prod_id_value, next_month_prod_id, prepaid) values ($1, $2, $3, $4)"
       @conn.prepare('statement1', "#{my_insert}")
-      CSV.foreach('elliestaging_current_products.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+      CSV.foreach('may2020_may_ellie_picks.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
          puts row.inspect
         prod_id_key = row['prod_id_key']
         prod_id_value = row['prod_id_value']
@@ -659,6 +593,19 @@ module FixSubInfo
         @conn.exec_prepared('statement1', [prod_id_key, prod_id_value, next_month_prod_id, prepaid])
       end
       @conn.close
+    end
+
+    def load_inventory_sizes
+      SubsUpdatedInventorySize.delete_all
+      ActiveRecord::Base.connection.reset_pk_sequence!('subs_updated_inventory_sizes')
+
+      CSV.foreach('subs_updated_inventory_sizes.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+        puts row.inspect
+        SubsUpdatedInventorySize.create(product_type: row['product_type'], product_size: row['product_size'], inventory_avail: row['inventory_avail'], inventory_assigned: row['inventory_assigned'])
+
+      end
+      puts "All done"
+
     end
 
     def update_subscription_product

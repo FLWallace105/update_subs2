@@ -2,19 +2,19 @@ development:
   #adapter: postgresql
   encoding: unicode
   #database: ellieactive_production
-  pool: 2
+  pool: 5
   url: <%= ENV['DATABASE_URL'] %>
 
 test:
   #adapter: postgresql
   encoding: unicode
   #database: ellieactive_production
-  pool: 2
+  pool: 5
   url: <%= ENV['DATABASE_URL'] %>
 
 production:
   #adapter: postgresql
   encoding: unicode
   #database: ellieactive_production
-  pool: 2
+  pool: 5
   url: <%= ENV['DATABASE_URL'] %>

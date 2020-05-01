@@ -27,6 +27,175 @@ module ResqueHelper
 
   end
 
+  def determine_allocation(my_local_sub)
+    #Handling 2 Item stuff
+    my_temp_title = my_local_sub.product_title
+    
+    is_two_item = false
+
+    if my_temp_title =~ /2\sitem/i
+      is_two_item = true
+
+    end
+
+    my_line_items = my_local_sub.raw_line_items
+    leggings = my_line_items.select{|x| x['name'] == 'leggings'}
+    tops = my_line_items.select{|x| x['name'] == 'tops'}
+    if is_two_item == false
+      sports_bra = my_line_items.select{|x| x['name'] == 'sports-bra'}
+    end
+    #fix for missing sports-bra
+    if sports_bra == []
+      puts "oops no sports bra fixing ..."
+
+      sports_bra << {"name" => "sports-bra", "value" => tops.first['value'] }
+    end
+
+
+    puts leggings.inspect
+    puts tops.inspect
+    if is_two_item == false
+      puts sports_bra.inspect
+    end
+
+    temp_leggings = leggings.first['value']
+    temp_tops = tops.first['value']
+    if is_two_item == false
+      temp_sports_bra = sports_bra.first['value']
+      if temp_sports_bra == ""
+        temp_sports_bra = temp_tops
+      end
+    end
+    puts temp_leggings
+    puts temp_tops
+    if is_two_item == false
+      puts temp_sports_bra
+    end
+
+    
+
+    can_proceed = true
+
+    leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
+    tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
+    if is_two_item == false
+      sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
+    end
+
+    puts leggings_avail_inventory.inventory_avail
+    puts tops_avail_inventory.inventory_avail
+    if is_two_item == false
+      puts sports_bra_avail_inventory.inventory_avail
+    end
+
+
+    if (leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 &&  is_two_item == false)
+      if (sports_bra_avail_inventory.inventory_avail > 0)
+      can_proceed = true
+      else
+        can_proceed = false
+      end
+      #Do inventory adjustment stuff here?
+
+    elsif (is_two_item == true && leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 )
+      can_proceed = true
+    else
+      can_proceed = false
+    end
+
+    puts "Returning to calling method!"
+    return can_proceed
+
+
+  end
+
+  def adjust_inventory(my_local_sub)
+    #Handling 2 Item stuff
+    my_temp_title = my_local_sub.product_title
+    
+    is_two_item = false
+
+    if my_temp_title =~ /2\sitem/i
+      is_two_item = true
+
+    end
+
+    my_line_items = my_local_sub.raw_line_items
+    leggings = my_line_items.select{|x| x['name'] == 'leggings'}
+    tops = my_line_items.select{|x| x['name'] == 'tops'}
+    if !is_two_item
+      sports_bra = my_line_items.select{|x| x['name'] == 'sports-bra'}
+    end
+    puts leggings.inspect
+    puts tops.inspect
+    #fix for missing sports-bra
+    if sports_bra == []
+      puts "oops no sports bra fixing ..."
+
+      sports_bra << {"name" => "sports-bra", "value" => tops.first['value'] }
+    end
+
+
+
+    if !is_two_item
+      puts sports_bra.inspect
+
+    end
+
+    temp_leggings = leggings.first['value']
+    temp_tops = tops.first['value']
+    if !is_two_item
+      temp_sports_bra = sports_bra.first['value']
+      if temp_sports_bra == ""
+        temp_sports_bra = temp_tops
+      end
+    end
+    puts temp_leggings
+    puts temp_tops
+    if !is_two_item
+      puts temp_sports_bra
+    end
+
+    
+    leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
+    tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
+    if !is_two_item
+      sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
+    end
+
+    puts "Before Adjustment:"
+    puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
+    puts "tops qty: #{tops_avail_inventory.inventory_avail}"
+    if !is_two_item
+      puts "bra qty: #{sports_bra_avail_inventory.inventory_avail}"
+    end
+    puts "======================"
+    leggings_avail_inventory.inventory_avail -= 1
+    tops_avail_inventory.inventory_avail -= 1
+    leggings_avail_inventory.inventory_assigned += 1
+    tops_avail_inventory.inventory_assigned += 1
+
+    if !is_two_item
+      sports_bra_avail_inventory.inventory_avail -= 1
+      sports_bra_avail_inventory.inventory_assigned += 1
+    end
+    leggings_avail_inventory.save!
+    tops_avail_inventory.save!
+    if !is_two_item
+      sports_bra_avail_inventory.save!
+    end
+    puts "After Adjustment:"
+    puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
+    puts "tops qty: #{tops_avail_inventory.inventory_avail}"
+    if !is_two_item
+      puts "bra qty: #{sports_bra_avail_inventory.inventory_avail}"
+    end
+
+
+
+
+  end
+
 
 
   def get_new_subs_properties(product_id, my_sub_id)
@@ -39,7 +208,24 @@ module ResqueHelper
     my_prod = CurrentProduct.find_by_prod_id_value(product_id)
     if my_prod.nil?
       stuff_to_return = {"skip" => true}
+      return stuff_to_return
     end
+
+    #Here add size fix for allocation. If can allocate, proceed.
+    #If can allocate, deduct from table inventory by size
+    #Otherwise, set above to true as for my_prod.nil?
+    #can_allocate = determine_allocation(my_local_sub)
+    #puts "Can we allocate: #{can_allocate}"
+
+    #if can_allocate == false
+    #  stuff_to_return = {"skip" => true}
+    #  return stuff_to_return
+
+    #end
+
+    
+
+
     
     next_month_product_id = my_prod.next_month_prod_id
     my_new_product_info = UpdateProduct.find_by_shopify_product_id(next_month_product_id)
@@ -156,6 +342,7 @@ module ResqueHelper
   def update_subscriptions_next_month(params)
     puts params.inspect
     puts "Got here"
+    
     recharge_change_header = params['recharge_change_header']
     Resque.logger = Logger.new("#{Dir.getwd}/logs/update_subs_resque.log")
     Resque.logger.info "For updating subscriptions Got params #{params.inspect}"
@@ -173,6 +360,8 @@ module ResqueHelper
       Resque.logger.info sub.inspect
       new_prod_info = get_new_subs_properties(my_product_id, my_sub_id)
       if new_prod_info['skip'] == true
+        puts "Skipping"
+        #exit
         next
       else
         puts "NEW PRODUCT INFO: #{new_prod_info}"
@@ -190,6 +379,7 @@ module ResqueHelper
       Resque.logger.info "Now sizes reflect:"
       Resque.logger.info new_prod_info.inspect
       
+      #exit
 
         
         body = new_prod_info.to_json
@@ -203,8 +393,13 @@ module ResqueHelper
 
         Resque.logger.info my_update_sub.inspect
 
+        #if 7 > 3
         if my_update_sub.code == 200
           # set update flag and print success
+          #Adjust inventory only here
+          #adjust_inventory(sub)
+
+
           sub.updated = true
           time_updated = DateTime.now
           time_updated_str = time_updated.strftime("%Y-%m-%d %H:%M:%S")
