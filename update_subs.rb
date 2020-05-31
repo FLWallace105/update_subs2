@@ -185,16 +185,41 @@ module FixSubInfo
 
      may_2020_may7_later_unallocated = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\' and  product_title not ilike \'paradise%cove%\' and product_title not ilike \'pacific%mist%\' and product_title not ilike \'citrus%\' and product_title not ilike \'natural%\' and product_title not ilike \'calypso%\' and product_title not ilike \'pinky%\' and product_title not ilike \'tie%game%\' and product_title not ilike \'golden%girl%\' and product_title not ilike \'spring%action%\' and ( next_charge_scheduled_at > \'2020-05-06\' and next_charge_scheduled_at < \'2020-06-01\' )   "
 
+     elliestaging_may2020_fix = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\' and  (subscription_id = \'74965859\'  ) and ( next_charge_scheduled_at > \'2020-05-13\' and next_charge_scheduled_at < \'2020-06-01\' )   "
+
+     elliestaging_may2020_fix2 = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.subscription_id = sub_collection_sizes.subscription_id and  subscriptions.status = 'ACTIVE' and subscriptions.product_title not ilike \'3%month%\' and sub_collection_sizes.product_collection = 'ELLIE PICKS - 3 ITEMS'    "
+
+     funk = "select count(subscriptions.id), subscriptions.product_title, subscriptions.shopify_product_id from subscriptions, sub_collection_sizes where subscriptions.subscription_id = sub_collection_sizes.subscription_id and sub_collection_sizes.product_collection = 'ELLIE PICKS - 5 ITEMS' group by subscriptions.product_title, subscriptions.shopify_product_id; "
+
+     elliestaging_may2020_test_reserve = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\' and  (product_title = \'Floral Bliss - 5 Items\'  ) and ( next_charge_scheduled_at > \'2020-05-15\' and next_charge_scheduled_at < \'2020-06-01\' )   "
+
+     elliestaging_may2020_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and   (product_title = \'3 Months - 5 Items\'  ) and ( next_charge_scheduled_at > \'2020-05-15\' and next_charge_scheduled_at < \'2020-06-01\' )   "
+
+
+     elliestaging_may2020_prepaid_ellie_pics = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, update_prepaid, order_line_items_fixed where order_line_items_fixed.order_id = update_prepaid.order_id and subscriptions.subscription_id = order_line_items_fixed.subscription_id  "
+
+     elliestaging_may2020_test_elliepicks = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title not ilike \'3%month%\'  and product_title not ilike \'ellie%pick%\' and ( next_charge_scheduled_at > \'2020-05-20\' and next_charge_scheduled_at < \'2020-06-01\' ) limit 440  "
+
+     elliestaging_may2020_test_elliepicks = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and product_title  ilike \'3%month%\'  and product_title not ilike \'ellie%pick%\' and ( next_charge_scheduled_at > \'2020-05-21\' and next_charge_scheduled_at < \'2020-06-01\' )  "
+
+
+     june2020_prepaid_billing_next_month = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE'   and (product_title ilike \'3%month%\'  and ( next_charge_scheduled_at > \'2020-05-31\' and next_charge_scheduled_at < \'2020-07-01\' )  )"
+
+     june2020_ghost_noxs = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.created_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2020-05-31'  and  subscriptions.next_charge_scheduled_at < '2020-07-01' and sub_collection_sizes.subscription_id = subscriptions.subscription_id  and ( sub_collection_sizes.leggings != 'XS' and sub_collection_sizes.tops != 'XS'  and sub_collection_sizes.sports_bra != 'XS') and subscriptions.product_title not ilike '3%month%' and subscriptions.product_title not ilike 'making%move%' and subscriptions.product_title not ilike 'back%basic%' and subscriptions.product_title not ilike 'show%stripe%' and subscriptions.product_title not ilike 'fresh%tone%' and subscriptions.product_title not ilike 'mineral%love%' and subscriptions.product_title not ilike 'coastal%cool%' and subscriptions.product_title not ilike 'off%grid%' and subscriptions.product_title not ilike 'papaya%sum%' and subscriptions.product_title not ilike 'cloud%nine%' and subscriptions.product_title not ilike 'roll%dye%' and subscriptions.product_title not ilike 'wind%break%' and subscriptions.product_title not ilike 'peachy%keen%' and subscriptions.product_title not ilike 'emerald%tide%' "
+
+
+     #3 Months - 5 Items
+
 
      # first delete all records
      SubscriptionsUpdated.delete_all
      #Now reset index
      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-     ActiveRecord::Base.connection.execute(may_2020_may7_later_unallocated)
+     ActiveRecord::Base.connection.execute(june2020_ghost_noxs)
      #ActiveRecord::Base.connection.execute(april2020_ghost2)
      #ActiveRecord::Base.connection.execute(april2020_new_march_fix)
      #ActiveRecord::Base.connection.execute(april2020_new_march)
-     puts "All done with april2020 straggler set up"
+     puts "All done with June 2020 Ghost set up"
 
 
      april_2020_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-03-31'  and (product_title ilike \'3%month%\' )"
@@ -558,7 +583,7 @@ module FixSubInfo
       # @conn.exec(my_reorder)
       my_insert = "insert into update_products (sku, product_title, shopify_product_id, shopify_variant_id, product_collection) values ($1, $2, $3, $4, $5)"
       @conn.prepare('statement1', "#{my_insert}")
-      CSV.foreach('update_products_may2020_ellie_picks.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+      CSV.foreach('update_products_ghost_june2020.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
          puts row.inspect
         sku = row['sku']
         product_title = row['product_title']
@@ -584,7 +609,7 @@ module FixSubInfo
       # @conn.exec(my_reorder)
       my_insert = "insert into current_products (prod_id_key, prod_id_value, next_month_prod_id, prepaid) values ($1, $2, $3, $4)"
       @conn.prepare('statement1', "#{my_insert}")
-      CSV.foreach('may2020_may_ellie_picks.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+      CSV.foreach('june2020_ghost.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
          puts row.inspect
         prod_id_key = row['prod_id_key']
         prod_id_value = row['prod_id_value']
