@@ -228,8 +228,9 @@ module ResqueHelper
 
     
     next_month_product_id = my_prod.next_month_prod_id
+    puts "next_month_product_id = #{next_month_product_id}"
     my_new_product_info = UpdateProduct.find_by_shopify_product_id(next_month_product_id)
-    # puts my_new_product_info.inspect
+    puts my_new_product_info.inspect
 
     # Now get product_collection property and loop through my_raw_line_items to set or add
     my_product_collection = my_new_product_info.product_collection

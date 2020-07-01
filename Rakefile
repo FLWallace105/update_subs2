@@ -161,4 +161,15 @@ task :filter_out_prepaid do |t|
     FixSubInfo::SubUpdater.new.filter_out_prepaid_already_assigned
 end
 
+desc 'SUB SETUP emergency june assignment ellie picks'
+task :emergency_june_ellie_picks_sub_setup do |t|
+    FixSubInfo::SubUpdater.new.setup_emergence_ellie_picks
+
+end
+
+desc 'Get subscriptions from updated prepaid orders'
+task :get_subs_from_updated_prepaid_orders do |t|
+    FixSubInfo::SubUpdater.new.setup_subscriptions_update_from_prepaid_orders
+end
+
 end
