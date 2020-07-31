@@ -16,9 +16,25 @@ task :current_products do |t|
     FixSubInfo::SubUpdater.new.get_current_products
 end
 
+desc 'setup employee subs for ghost'
+task :setup_employee_ghost do |t|
+    FixSubInfo::SubUpdater.new.setup_employee_ghost
+end
+
+desc 'Check prepaid subs child orders for product collection'
+task :check_prepaid_subs_orders do |t|
+    FixSubInfo::SubUpdater.new.check_prepaid_subscription_orders
+
+end
+
 desc 'back figure inventory adjustments'
 task :backfigure_inventory do |t|
     FixSubInfo::SubUpdater.new.back_figure_inventory
+end
+
+desc 'set up non allocated prepaid july2020'
+task :setup_non_allocated_july2020 do |t|
+    FixSubInfo::SubUpdater.new.setup_subscriptions_update_from_csv
 end
 
 
