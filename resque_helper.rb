@@ -420,7 +420,7 @@ module ResqueHelper
         if my_update_sub.code == 200
           # set update flag and print success
           #Adjust inventory only here
-          adjust_inventory(sub)
+          #adjust_inventory(sub)
 
 
           sub.updated = true
