@@ -64,7 +64,7 @@ module FixSubInfo
         #puts row.inspect
         customer_id = row['customer_id']
         puts customer_id
-        my_subs = Subscription.where("status = ? and customer_id = ? and next_charge_scheduled_at > \'2020-07-31\' ", "ACTIVE", customer_id)
+        my_subs = Subscription.where("status = ? and customer_id = ? and next_charge_scheduled_at > \'2020-08-31\' ", "ACTIVE", customer_id)
         #puts my_subs.inspect
         my_subs&.each do |mysub|
           puts mysub.inspect
@@ -305,7 +305,15 @@ module FixSubInfo
 
       null_subs_all = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where next_charge_scheduled_at is null "
 
-      aug2020_ghost_remainder = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-07-31'  and  next_charge_scheduled_at < '2020-09-01'  and product_title not ilike \'3%month%\' and  product_title not ilike 'second%skin%' and product_title not ilike 'city%limit%' and product_title not ilike 'gear%up%' and product_title not ilike 'nightfall%' and product_title not ilike 'olive%grove%' and product_title not ilike 'a%new%gray%' and product_title not ilike 'sweet%spot%' and product_title not ilike 'feel%beet%' and product_title not ilike 'trail%blazer%' and product_title not ilike 'blush%dreams%' and product_title not ilike 'silver%lining%' and product_title not ilike 'color%pop%' "
+      aug2020_ghost_remainder = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-07-31'  and  next_charge_scheduled_at < '2020-09-01'  and product_title not ilike \'3%month%\' and  product_title not ilike 'second%skin%' and product_title not ilike 'city%limit%' and product_title not ilike 'gear%up%' and product_title not ilike 'nightfall%' and product_title not ilike 'olive%grove%' and product_title not ilike 'a%new%gray%' and product_title not ilike 'sweet%spot%' and product_title not ilike 'feel%beet%' and product_title not ilike 'trail%blazer%' and product_title not ilike 'blush%dreams%' and product_title not ilike 'silver%lining%' and product_title not ilike 'color%pop%' and product_title not ilike 'ellie%pick%' "
+
+      gcastro = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and subscription_id = '21255093' "
+
+      sept2020_prepaid_charging = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-08-31'  and  next_charge_scheduled_at < '2020-09-07'  and product_title  ilike \'3%month%\' "
+
+      all_nulls = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at is null  "
+
+      sep2020_ghost_remainder = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-08-31'  and  next_charge_scheduled_at < '2020-10-01'  and product_title not ilike \'3%month%\' and  product_title not ilike 'urban%instinct%' and product_title not ilike 'free%fall%' and product_title not ilike 'solar%flare%' and product_title not ilike 'lunar%flare%' and product_title not ilike 'heart%felt%' and product_title not ilike '&%chill%' and product_title not ilike 'press%paws%' and product_title not ilike 'wine%not%' and product_title not ilike 'pacific%crest%' and product_title not ilike 'mint%condition%' and product_title not ilike 'ellie%pick%' "
 
 
      #3 Months - 5 Items
@@ -315,12 +323,12 @@ module FixSubInfo
      SubscriptionsUpdated.delete_all
      #Now reset index
      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-     ActiveRecord::Base.connection.execute(aug2020_ghost_remainder)
+     ActiveRecord::Base.connection.execute(sep2020_ghost_remainder)
      #ActiveRecord::Base.connection.execute(my_delete)
      #ActiveRecord::Base.connection.execute(april2020_ghost2)
      #ActiveRecord::Base.connection.execute(april2020_new_march_fix)
      #ActiveRecord::Base.connection.execute(april2020_new_march)
-     puts "All done with June 2020 Ghost set up"
+     puts "All done with Sept 2020 Prepaid bill Sep 1-6 set up"
 
 
      april_2020_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-03-31'  and (product_title ilike \'3%month%\' )"

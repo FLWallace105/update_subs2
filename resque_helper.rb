@@ -237,13 +237,14 @@ module ResqueHelper
     #If can allocate, deduct from table inventory by size
     #Otherwise, set above to true as for my_prod.nil?
     #can_allocate = determine_allocation(my_local_sub)
-    #puts "Can we allocate: #{can_allocate}"
+    can_allocate = true
+    puts "Can we allocate: #{can_allocate}"
 
-    #if can_allocate == false
-    #  stuff_to_return = {"skip" => true}
-    #  return stuff_to_return
+    if can_allocate == false
+      stuff_to_return = {"skip" => true}
+      return stuff_to_return
 
-   # end
+    end
 
     
 
@@ -254,6 +255,8 @@ module ResqueHelper
     my_new_product_info = UpdateProduct.find_by_shopify_product_id(next_month_product_id)
     puts my_new_product_info.inspect
 
+    
+
     # Now get product_collection property and loop through my_raw_line_items to set or add
     my_product_collection = my_new_product_info.product_collection
     found_collection = false
@@ -263,11 +266,13 @@ module ResqueHelper
     found_tops = false
     found_sports_bra = false
     found_leggings = false
+    found_outfit_id = false
     tops_size = ""
     bra_size = ""
     glove_size = ""
     legging_size = ""
     my_unique_id = SecureRandom.uuid
+    my_outfit_id = my_new_product_info.shopify_product_id
 
 
     my_line_items.map do |mystuff|
@@ -299,6 +304,10 @@ module ResqueHelper
       if mystuff['name'] == "gloves"
         found_gloves = true
         glove_size = mystuff['value']
+      end
+      if mystuff['name'] == "outfit_id"
+        mystuff['value'] = my_outfit_id
+        found_outfit_id = true
       end
 
     end
@@ -332,6 +341,10 @@ module ResqueHelper
     if found_sports_bra == false
       my_line_items << { "name" => "sports-bra", "value" => legging_size}
 
+    end
+
+    if found_outfit_id == false
+      my_line_items << { "name" => "oufit_id", "value" => my_outfit_id}
     end
 
     #Floyd Wallace 4/29/2019 -- no longer adding gloves
@@ -402,10 +415,12 @@ module ResqueHelper
       Resque.logger.info "Now sizes reflect:"
       Resque.logger.info new_prod_info.inspect
       
-      #exit
+      
 
         
         body = new_prod_info.to_json
+        puts body.inspect
+        
 
         my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{my_sub_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
         puts my_update_sub.inspect
