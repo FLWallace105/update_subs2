@@ -27,6 +27,16 @@ task :check_prepaid_subs_orders do |t|
 
 end
 
+desc 'load montly sep 2020 subs from CSV'
+task :load_monthly_sep2020_from_csv do |t|
+    FixSubInfo::SubUpdater.new.load_monthly_subs_from_csv
+end
+
+desc 'load prepaid subs sep 2020 in ellie picks from CSV'
+task :load_prepaid_subs_sep2020_ellie_picks do |t|
+    FixSubInfo::SubUpdater.new.load_prepaid_subs_ellie_picks
+end
+
 desc 'back figure inventory adjustments'
 task :backfigure_inventory do |t|
     FixSubInfo::SubUpdater.new.back_figure_inventory
