@@ -90,21 +90,21 @@ module ResqueHelper
     can_proceed = true
 
     leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
-    tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
-    #sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
+    #tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
+    sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
     if is_two_item == false
       sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
     end
 
     puts leggings_avail_inventory.inventory_avail
-    puts tops_avail_inventory.inventory_avail
-    #puts sports_jacket_avail_inventory.inventory_avail
+    #puts tops_avail_inventory.inventory_avail
+    puts sports_jacket_avail_inventory.inventory_avail
     if is_two_item == false
       puts sports_bra_avail_inventory.inventory_avail
     end
     #puts "Got here"
 
-    if (leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 &&  is_two_item == false)
+    if (leggings_avail_inventory.inventory_avail > 0 && sports_jacket_avail_inventory.inventory_avail > 0 &&  is_two_item == false)
       if (sports_bra_avail_inventory.inventory_avail > 0)
       can_proceed = true
       else
@@ -112,7 +112,7 @@ module ResqueHelper
       end
       #Do inventory adjustment stuff here?
 
-    elsif (is_two_item == true && leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 )
+    elsif (is_two_item == true && leggings_avail_inventory.inventory_avail > 0 && sports_jacket_avail_inventory.inventory_avail > 0 )
       can_proceed = true
     else
       can_proceed = false
@@ -194,41 +194,41 @@ module ResqueHelper
 
     
     leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
-    tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
-    #sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
+    #tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
+    sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
     if !is_two_item
       sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
     end
 
     puts "Before Adjustment:"
     puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
-    puts "tops qty: #{tops_avail_inventory.inventory_avail}"
-    #puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
+    #puts "tops qty: #{tops_avail_inventory.inventory_avail}"
+    puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
     if !is_two_item
       puts "bra qty: #{sports_bra_avail_inventory.inventory_avail}"
     end
     puts "======================"
     leggings_avail_inventory.inventory_avail -= 1
-    tops_avail_inventory.inventory_avail -= 1
-    #sports_jacket_avail_inventory.inventory_avail -= 1
+    #tops_avail_inventory.inventory_avail -= 1
+    sports_jacket_avail_inventory.inventory_avail -= 1
     leggings_avail_inventory.inventory_assigned += 1
-    tops_avail_inventory.inventory_assigned += 1
-    #sports_jacket_avail_inventory.inventory_assigned += 1
+    #tops_avail_inventory.inventory_assigned += 1
+    sports_jacket_avail_inventory.inventory_assigned += 1
 
     if !is_two_item
       sports_bra_avail_inventory.inventory_avail -= 1
       sports_bra_avail_inventory.inventory_assigned += 1
     end
     leggings_avail_inventory.save!
-    tops_avail_inventory.save!
-    #sports_jacket_avail_inventory.save!
+    #tops_avail_inventory.save!
+    sports_jacket_avail_inventory.save!
     if !is_two_item
       sports_bra_avail_inventory.save!
     end
     puts "After Adjustment:"
     puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
-    puts "tops qty: #{tops_avail_inventory.inventory_avail}"
-    #puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
+    #puts "tops qty: #{tops_avail_inventory.inventory_avail}"
+    puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
     if !is_two_item
       puts "bra qty: #{sports_bra_avail_inventory.inventory_avail}"
     end
@@ -367,6 +367,42 @@ module ResqueHelper
       my_line_items << { "name" => "sports-bra", "value" => legging_size}
 
     end
+
+    #10/13/2020 -- Add to EllieStging only the Mix and Match Skus
+    
+
+
+
+    #skus_for_tops = [722457990948, 764204207466, 764204207473, 764204207480, 764204112531, 764204099450, 764204099467, 764204099474, 764204099481, 764204112548, 764204099535, 764204099542, 764204099559, 764204099566].sample
+    #skus_for_leggings = [764204295937, 764204295944, 764204295951, 764204295968, 764204296088, 764204296095, 764204296101, 764204296118, 764204295982, 764204295999, 764204296002, 764204296019].sample
+    #skus_for_bras = [722457854059, 722457854066, 722457854073, 722457854080, 764204475001, 764204475018, 764204475025, 764204475032, 764204475049, 764204126927, 764204126934, 764204126941, 764204126958, 764204126965].sample
+    #skus_for_accessories = [722457706419, 722457833986, 764204325917, 764204368143, 764204380930, 722457921331, 764204242665, 764204243839].sample
+    #skus_for_equipment = [745934207032, 764204359745, 764204134199, 764204376841, 764204243822, 764204241460, 731899210309, 764204161799].sample
+
+    #mylist = ""
+
+
+    #case my_product_collection
+    #when /\s2\sitem/i
+    #  mylist = "#{skus_for_tops}, #{skus_for_leggings}"
+    #when /\s3\sitem/i
+    #  mylist = "#{skus_for_tops}, #{skus_for_leggings}, #{skus_for_bras}"
+    #when /\s5\sitem/i
+    #  mylist = "#{skus_for_tops}, #{skus_for_leggings}, #{skus_for_bras}, #{skus_for_accessories}, #{skus_for_equipment}"
+    #when "3 MONTHS"
+    #  mylist = "#{skus_for_tops}, #{skus_for_leggings}, #{skus_for_bras}, #{skus_for_accessories}, #{skus_for_equipment}"
+    #else
+    #  mylist = "#{skus_for_tops}, #{skus_for_leggings}, #{skus_for_bras}, #{skus_for_accessories}, #{skus_for_equipment}"
+    #end
+
+
+
+
+    #my_line_items << { "name" => "raw_skus", "value" => mylist}
+
+    puts "Now my_line_items = #{my_line_items}"
+    
+
 
     #if found_outfit_id == false
     #  my_line_items << { "name" => "oufit_id", "value" => my_outfit_id}
