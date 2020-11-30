@@ -90,21 +90,21 @@ module ResqueHelper
     can_proceed = true
 
     leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
-    #tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
-    sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
+    tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
+    #sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
     if is_two_item == false
       sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
     end
 
     puts leggings_avail_inventory.inventory_avail
-    #puts tops_avail_inventory.inventory_avail
-    puts sports_jacket_avail_inventory.inventory_avail
+    puts tops_avail_inventory.inventory_avail
+    #puts sports_jacket_avail_inventory.inventory_avail
     if is_two_item == false
       puts sports_bra_avail_inventory.inventory_avail
     end
     #puts "Got here"
 
-    if (leggings_avail_inventory.inventory_avail > 0 && sports_jacket_avail_inventory.inventory_avail > 0 &&  is_two_item == false)
+    if (leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 &&  is_two_item == false)
       if (sports_bra_avail_inventory.inventory_avail > 0)
       can_proceed = true
       else
@@ -112,7 +112,7 @@ module ResqueHelper
       end
       #Do inventory adjustment stuff here?
 
-    elsif (is_two_item == true && leggings_avail_inventory.inventory_avail > 0 && sports_jacket_avail_inventory.inventory_avail > 0 )
+    elsif (is_two_item == true && leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 )
       can_proceed = true
     else
       can_proceed = false
@@ -194,41 +194,41 @@ module ResqueHelper
 
     
     leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
-    #tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
-    sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
+    tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
+    #sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
     if !is_two_item
       sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
     end
 
     puts "Before Adjustment:"
     puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
-    #puts "tops qty: #{tops_avail_inventory.inventory_avail}"
-    puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
+    puts "tops qty: #{tops_avail_inventory.inventory_avail}"
+    #puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
     if !is_two_item
       puts "bra qty: #{sports_bra_avail_inventory.inventory_avail}"
     end
     puts "======================"
     leggings_avail_inventory.inventory_avail -= 1
-    #tops_avail_inventory.inventory_avail -= 1
-    sports_jacket_avail_inventory.inventory_avail -= 1
+    tops_avail_inventory.inventory_avail -= 1
+    #sports_jacket_avail_inventory.inventory_avail -= 1
     leggings_avail_inventory.inventory_assigned += 1
-    #tops_avail_inventory.inventory_assigned += 1
-    sports_jacket_avail_inventory.inventory_assigned += 1
+    tops_avail_inventory.inventory_assigned += 1
+    #sports_jacket_avail_inventory.inventory_assigned += 1
 
     if !is_two_item
       sports_bra_avail_inventory.inventory_avail -= 1
       sports_bra_avail_inventory.inventory_assigned += 1
     end
     leggings_avail_inventory.save!
-    #tops_avail_inventory.save!
-    sports_jacket_avail_inventory.save!
+    tops_avail_inventory.save!
+    #sports_jacket_avail_inventory.save!
     if !is_two_item
       sports_bra_avail_inventory.save!
     end
     puts "After Adjustment:"
     puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
-    #puts "tops qty: #{tops_avail_inventory.inventory_avail}"
-    puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
+    puts "tops qty: #{tops_avail_inventory.inventory_avail}"
+    #puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
     if !is_two_item
       puts "bra qty: #{sports_bra_avail_inventory.inventory_avail}"
     end

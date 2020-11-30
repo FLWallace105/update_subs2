@@ -372,6 +372,11 @@ module FixSubInfo
 
       oct2020_ghost = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.created_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2020-10-31' and subscriptions.next_charge_scheduled_at < '2020-12-01' and sub_collection_sizes.subscription_id = subscriptions.subscription_id and subscriptions.product_title  not ilike \'3%month%\' and  ( sub_collection_sizes.product_collection not ilike 'balanced%beige%' and  sub_collection_sizes.product_collection not ilike 'purple%haze%' and sub_collection_sizes.product_collection not ilike 'glamazon%' and sub_collection_sizes.product_collection not ilike 'gold%rush%' and sub_collection_sizes.product_collection not ilike 'wine%down%' and sub_collection_sizes.product_collection not ilike 'ellie%pick%') and subscriptions.is_prepaid = \'f\' "
 
+      dec2020_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.created_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2020-11-30' and subscriptions.next_charge_scheduled_at < '2020-12-08' and sub_collection_sizes.subscription_id = subscriptions.subscription_id and   ( sub_collection_sizes.product_collection not ilike 'test%value%' ) and subscriptions.is_prepaid = \'t\' "
+
+      dec2020_monthly = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.created_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2020-11-30' and subscriptions.next_charge_scheduled_at < '2021-01-01' and sub_collection_sizes.subscription_id = subscriptions.subscription_id and   ( sub_collection_sizes.product_collection not ilike 'polar%perfection%' and  sub_collection_sizes.product_collection not ilike 'winter%bloom%' and  sub_collection_sizes.product_collection not ilike 'midnight%sky%' and  sub_collection_sizes.product_collection not ilike 'elemental%' and  sub_collection_sizes.product_collection not ilike 'posies%paris%' and  sub_collection_sizes.product_collection not ilike 'malibu%moment%' and  sub_collection_sizes.product_collection not ilike 'mauve%noir%' ) and subscriptions.is_prepaid = \'f\' "
+
+
 
      #3 Months - 5 Items
 
@@ -380,12 +385,12 @@ module FixSubInfo
      SubscriptionsUpdated.delete_all
      #Now reset index
      ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions_updated')
-     ActiveRecord::Base.connection.execute(oct2020_ghost)
+     ActiveRecord::Base.connection.execute(dec2020_monthly)
      #ActiveRecord::Base.connection.execute(my_delete)
      #ActiveRecord::Base.connection.execute(april2020_ghost2)
      #ActiveRecord::Base.connection.execute(april2020_new_march_fix)
      #ActiveRecord::Base.connection.execute(april2020_new_march)
-     puts "All done with Nov 2020 Prepaid bill Nov 1-6 set up"
+     puts "All done with Dec 2020 Monthly set up"
 
 
      april_2020_prepaid = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscription_id, customer_id, updated_at, created_at, next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_item_properties from subscriptions where status = 'ACTIVE' and next_charge_scheduled_at > '2020-03-31'  and (product_title ilike \'3%month%\' )"
