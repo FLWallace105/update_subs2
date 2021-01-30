@@ -33,6 +33,7 @@ class OrderSize
         tops = my_json.select{|x| x['name'] == 'tops'}
         sports_bra = my_json.select{|x| x['name'] == 'sports-bra'}
         sports_jacket = my_json.select{|x| x['name'] == 'sports-jacket'}
+        gloves = my_json.select{|x| x['name'] == 'gloves'}
 
         #puts "sports_bra = #{sports_bra}"
         #puts "tops = #{tops}"
@@ -49,6 +50,21 @@ class OrderSize
 
         if tops == [] && sports_bra != []
             my_json << { "name" => "tops", "value" => sports_bra.first['value'].upcase }
+        end
+
+        if gloves == [] and leggings != []
+            leggings_size = leggings.first['value'].upcase
+            case leggings_size
+            when 'XS', 'S'
+                my_json << { "name" => "gloves", "value" => "S" }  
+            when 'M'
+                my_json << { "name" => "gloves", "value" => "M" } 
+            when 'L', 'XL'
+                my_json << { "name" => "gloves", "value" => "L" }
+
+            else
+                my_json << { "name" => "gloves", "value" => "M" }
+            end
         end
 
         return my_json

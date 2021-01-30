@@ -43,41 +43,43 @@ module ResqueHelper
     leggings = my_line_items.select{|x| x['name'] == 'leggings'}
     tops = my_line_items.select{|x| x['name'] == 'tops'}
     #sports_jacket = my_line_items.select{|x| x['name'] == 'sports-jacket'}
-    sports_jacket = ""
+    sports_bra = ""
+    #puts "I am here now"
     if is_two_item == false
-      sports_jacket = my_line_items.select{|x| x['name'] == 'sports-jacket'}
+      sports_bra = my_line_items.select{|x| x['name'] == 'sports-bra'}
     end
     #fix for missing sports-bra
     #if sports_bra == []
-    if sports_jacket == []
-      puts "oops no sports bra/jacket fixing ..."
+    puts "I am here now"
+    #if sports_jacket == []
+    #  puts "oops no sports bra/jacket fixing ..."
 
-      sports_jacket << {"name" => "sports-jacket", "value" => tops.first['value'] }
-    end
-
+     # sports_jacket << {"name" => "sports-jacket", "value" => tops.first['value'] }
+    #end
+    #puts "Now Here"
     if tops == []
       puts "oops no tops fixing ..."
 
-      tops << {"name" => "tops", "value" => sports_jacket.first['value'] }
+      tops << {"name" => "tops", "value" => leggings.first['value'] }
 
     end
-
+    puts "Now Here too"
 
     puts leggings.inspect
-    puts sports_jacket.inspect
+    #puts sports_jacket.inspect
     puts is_two_item
     if is_two_item == false
-      puts sports_jacket.inspect
+      puts sports_bra.inspect
     end
     puts tops.inspect
 
     temp_leggings = leggings.first['value']
-    temp_sports_jacket = sports_jacket.first['value']
+    #temp_sports_jacket = sports_jacket.first['value']
     temp_tops = tops.first['value']
     if is_two_item == false
-      temp_sports_jacket = sports_jacket.first['value']
-      if temp_sports_jacket == ""
-        temp_sports_jacket = temp_tops
+      temp_sports_bra = sports_bra.first['value']
+      if temp_sports_bra == ""
+        temp_sports_bra = temp_tops
       end
     end
     puts "tops then leggings"
@@ -85,30 +87,31 @@ module ResqueHelper
     puts temp_tops
     puts "-------"
     if is_two_item == false
-      puts temp_sports_jacket
+      puts temp_sports_bra
     end
 
     
 
     can_proceed = true
+    puts "At inventory"
 
     leggings_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "leggings", temp_leggings).first
     tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
     #sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
     if is_two_item == false
-      sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
+      sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
     end
-
+    puts "Part way through"
     puts leggings_avail_inventory.inventory_avail
     puts tops_avail_inventory.inventory_avail
     #puts sports_jacket_avail_inventory.inventory_avail
     if is_two_item == false
-      puts sports_jacket_avail_inventory.inventory_avail
+      puts sports_bra_avail_inventory.inventory_avail
     end
-    #puts "Got here"
+    puts "Got here"
 
     if (leggings_avail_inventory.inventory_avail > 0 && tops_avail_inventory.inventory_avail > 0 &&  is_two_item == false)
-      if (sports_jacket_avail_inventory.inventory_avail > 0)
+      if (sports_bra_avail_inventory.inventory_avail > 0)
       can_proceed = true
       else
         can_proceed = false
@@ -146,11 +149,11 @@ module ResqueHelper
     tops = my_line_items.select{|x| x['name'] == 'tops'}
     #sports_jacket = my_line_items.select{|x| x['name'] == 'sports-jacket'}
     if !is_two_item
-      sports_jacket = my_line_items.select{|x| x['name'] == 'sports-jacket'}
+      sports_bra = my_line_items.select{|x| x['name'] == 'sports-bra'}
     end
     puts leggings.inspect
     puts tops.inspect
-    puts sports_jacket.inspect
+    puts sports_bra.inspect
     
 
     #fix for missing sports-bra
@@ -175,7 +178,7 @@ module ResqueHelper
     
 
     if !is_two_item
-      puts sports_jacket.inspect
+      puts sports_bra.inspect
 
     end
 
@@ -184,17 +187,17 @@ module ResqueHelper
     #temp_sports_jacket = sports_jacket.first['value']
     temp_sports_jacket = ""
     if !is_two_item
-      temp_sports_jacket = sports_jacket.first['value']
+      temp_sports_bra = sports_bra.first['value']
       if temp_sports_bra == ""
         temp_sports_bra = temp_tops
       end
     end
     puts temp_leggings
     puts temp_tops
-    puts temp_sports_jacket
+    #puts temp_sports_jacket
     puts temp_sports_bra
     if !is_two_item
-      puts temp_sports_jacket
+      puts temp_sports_bra
     end
 
     
@@ -202,7 +205,7 @@ module ResqueHelper
     tops_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "tops", temp_tops).first
     #sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-jacket", temp_sports_jacket).first
     if !is_two_item
-      sports_jacket_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_jacket).first
+      sports_bra_avail_inventory = SubsUpdatedInventorySize.where("product_type = ? and product_size = ?", "sports-bra", temp_sports_bra).first
     end
 
     puts "Before Adjustment:"
@@ -221,21 +224,21 @@ module ResqueHelper
     #sports_jacket_avail_inventory.inventory_assigned += 1
 
     if !is_two_item
-      sports_jacket_avail_inventory.inventory_avail -= 1
-      sports_jacket_avail_inventory.inventory_assigned += 1
+      sports_bra_avail_inventory.inventory_avail -= 1
+      sports_bra_avail_inventory.inventory_assigned += 1
     end
     leggings_avail_inventory.save!
     tops_avail_inventory.save!
     #sports_jacket_avail_inventory.save!
     if !is_two_item
-      sports_jacket_avail_inventory.save!
+      sports_bra_avail_inventory.save!
     end
     puts "After Adjustment:"
     puts "leggings qty: #{leggings_avail_inventory.inventory_avail}"
     puts "tops qty: #{tops_avail_inventory.inventory_avail}"
     #puts "sports-jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
     if !is_two_item
-      puts "sports_jacket qty: #{sports_jacket_avail_inventory.inventory_avail}"
+      puts "sports_bra qty: #{sports_bra_avail_inventory.inventory_avail}"
     end
 
 
@@ -252,6 +255,8 @@ module ResqueHelper
     my_local_sub = SubscriptionsUpdated.find_by_subscription_id(my_sub_id)
     puts "my_local_sub = #{my_local_sub.inspect}"
     my_line_items = my_local_sub.raw_line_items
+    #my_line_items = OrderSize.add_missing_sub_size(my_line_items)
+
     my_prod = CurrentProduct.find_by_prod_id_value(product_id)
     if my_prod.nil?
       stuff_to_return = {"skip" => true}
@@ -486,6 +491,7 @@ module ResqueHelper
         
         body = new_prod_info.to_json
         puts body.inspect
+        
         
         
 
