@@ -16,6 +16,14 @@ class Customer < ActiveRecord::Base
   self.table_name = 'customers'
 end
 
+class MonthlySubNull < ActiveRecord::Base
+  self.table_name = 'monthly_sub_nulls'
+end
+
+class MonthlySubNullConfig < ActiveRecord::Base
+  self.table_name = 'monthly_sub_nulls_config'
+end
+
 class Order < ActiveRecord::Base
   self.primary_key = :order_id
   self.inheritance_column = nil

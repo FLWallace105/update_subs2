@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200331165336) do
+ActiveRecord::Schema.define(version: 20210430034748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20200331165336) do
   create_table "allocation_matching_products", force: :cascade do |t|
     t.string "product_title"
     t.string "incoming_product_id"
-    t.boolean "threepk", default: false
     t.string "outgoing_product_id"
+    t.integer "prod_type"
   end
 
   create_table "allocation_size_types", force: :cascade do |t|
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(version: 20200331165336) do
   create_table "allocation_switchable_products", force: :cascade do |t|
     t.string "product_title"
     t.string "shopify_product_id"
-    t.boolean "threepk", default: false
     t.boolean "prepaid", default: false
+    t.integer "prod_type"
   end
 
   create_table "alternate_products", force: :cascade do |t|
@@ -103,6 +103,41 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.boolean "updated"
     t.datetime "processed_at"
     t.jsonb "raw_line_items"
+  end
+
+  create_table "bad_five_alternate_products", force: :cascade do |t|
+    t.string "original_product_title"
+    t.string "new_product_title"
+    t.string "new_product_id"
+    t.string "new_variant_id"
+    t.string "new_sku"
+    t.string "new_product_collection"
+  end
+
+  create_table "bad_five_item_subs", force: :cascade do |t|
+    t.string "subscription_id"
+    t.string "address_id"
+    t.string "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "next_charge_scheduled_at"
+    t.datetime "cancelled_at"
+    t.string "product_title"
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "quantity"
+    t.string "status"
+    t.string "shopify_product_id"
+    t.string "shopify_variant_id"
+    t.string "sku"
+    t.string "order_interval_unit"
+    t.integer "order_interval_frequency"
+    t.integer "charge_interval_frequency"
+    t.integer "order_day_of_month"
+    t.integer "order_day_of_week"
+    t.jsonb "raw_line_item_properties"
+    t.integer "expire_after_specific_number_charges"
+    t.datetime "sub_adjusted_at"
+    t.boolean "sub_adjusted", default: false
   end
 
   create_table "bad_monthly_box", force: :cascade do |t|
@@ -355,6 +390,27 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.datetime "order_date"
   end
 
+  create_table "ellie_picks_subs_config", force: :cascade do |t|
+    t.string "product_collection"
+    t.string "product_title"
+    t.string "shopify_product_id"
+    t.string "shopify_variant_id"
+    t.string "sku"
+  end
+
+  create_table "ellie_shopify_orders", force: :cascade do |t|
+    t.string "order_name"
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at"
+    t.string "billing_address1"
+    t.string "billing_address2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "email"
+  end
+
   create_table "fix_bad_sub_properties", force: :cascade do |t|
     t.string "subscription_id"
     t.jsonb "raw_line_item_properties"
@@ -385,6 +441,21 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.boolean "threepk", default: false
     t.string "outgoing_product_id"
     t.index ["incoming_product_id"], name: "index_matching_products_on_incoming_product_id"
+  end
+
+  create_table "monthly_sub_nulls", force: :cascade do |t|
+    t.string "subscription_id"
+    t.string "old_product_id"
+    t.string "old_product_title"
+  end
+
+  create_table "monthly_sub_nulls_config", force: :cascade do |t|
+    t.string "old_product_id"
+    t.string "old_product_title"
+    t.string "old_variant_id"
+    t.string "old_sku"
+    t.string "old_product_collection"
+    t.boolean "prod_info_updated", default: false
   end
 
   create_table "multi_line_item_products", force: :cascade do |t|
@@ -433,6 +504,8 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.integer "quantity"
     t.string "shopify_product_id"
     t.string "product_title"
+    t.boolean "is_line_item_price_present", default: false
+    t.decimal "line_item_price", precision: 10, scale: 2
     t.index ["order_id"], name: "index_order_line_items_fixed_on_order_id"
     t.index ["order_id"], name: "ord_fixed", unique: true
     t.index ["subscription_id"], name: "index_order_line_items_fixed_on_subscription_id"
@@ -535,11 +608,49 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.boolean "bad_order", default: false
   end
 
+  create_table "orders_updated_inventory_sizes", force: :cascade do |t|
+    t.string "product_type"
+    t.string "product_size"
+    t.integer "inventory_avail"
+    t.integer "inventory_assigned"
+  end
+
   create_table "pending_people", id: false, force: :cascade do |t|
     t.serial "id", null: false
     t.string "first_name", limit: 125
     t.string "last_name", limit: 125
     t.string "email", limit: 125
+  end
+
+  create_table "prepaid_late", force: :cascade do |t|
+    t.string "order_id"
+    t.datetime "scheduled_at"
+    t.string "product_collection"
+    t.string "title"
+    t.string "product_title"
+  end
+
+  create_table "prepaid_subscriptions_config", force: :cascade do |t|
+    t.string "product_title"
+    t.string "shopify_product_id"
+    t.string "product_collection"
+  end
+
+  create_table "prepaid_subscriptions_updated", force: :cascade do |t|
+    t.string "subscription_id"
+    t.string "customer_id"
+    t.datetime "updated_at"
+    t.datetime "next_charge_scheduled_at"
+    t.string "product_title"
+    t.string "status"
+    t.string "sku"
+    t.string "shopify_product_id"
+    t.string "shopify_variant_id"
+    t.boolean "updated", default: false
+    t.datetime "processed_at"
+    t.jsonb "raw_line_items"
+    t.datetime "created_at"
+    t.string "product_collection"
   end
 
   create_table "product_tags", force: :cascade do |t|
@@ -651,6 +762,29 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.index ["subscription_id"], name: "index_sub_line_items_on_subscription_id"
   end
 
+  create_table "subs_next_month_dry_run", force: :cascade do |t|
+    t.string "subscription_id"
+    t.string "customer_id"
+    t.datetime "updated_at"
+    t.datetime "next_charge_scheduled_at"
+    t.string "product_title"
+    t.string "status"
+    t.string "sku"
+    t.string "shopify_product_id"
+    t.string "shopify_variant_id"
+    t.jsonb "raw_line_items"
+    t.boolean "updated", default: false
+    t.boolean "bad_subscription", default: false
+    t.datetime "processed_at"
+  end
+
+  create_table "subs_updated_inventory_sizes", force: :cascade do |t|
+    t.string "product_type"
+    t.string "product_size"
+    t.integer "inventory_avail"
+    t.integer "inventory_assigned"
+  end
+
   create_table "subscription_update", force: :cascade do |t|
     t.string "subscription_id"
     t.string "customer_id"
@@ -689,6 +823,7 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.jsonb "raw_line_item_properties"
     t.datetime "synced_at"
     t.integer "expire_after_specific_number_charges"
+    t.boolean "is_prepaid", default: false
     t.index ["address_id"], name: "index_subscriptions_on_address_id"
     t.index ["customer_id"], name: "index_subscriptions_on_customer_id"
     t.index ["expire_after_specific_number_charges"], name: "index_subscriptions_on_expire_after_specific_number_charges"
@@ -738,6 +873,7 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.boolean "updated", default: false
     t.boolean "bad_subscription", default: false
     t.datetime "processed_at"
+    t.datetime "created_at"
     t.index ["subscription_id"], name: "index_subscriptions_next_month_updated_on_subscription_id"
   end
 
@@ -755,6 +891,7 @@ ActiveRecord::Schema.define(version: 20200331165336) do
     t.datetime "processed_at"
     t.jsonb "raw_line_items"
     t.datetime "created_at"
+    t.string "product_collection"
     t.index ["customer_id"], name: "index_subscriptions_updated_on_customer_id"
     t.index ["subscription_id"], name: "index_subscriptions_updated_on_subscription_id"
   end

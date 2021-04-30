@@ -16,6 +16,30 @@ task :current_products do |t|
     FixSubInfo::SubUpdater.new.get_current_products
 end
 
+desc 'read in and create list of nulls prepaid subs'
+task :read_in_create_list do |t|
+    FixSubInfo::SubUpdater.new.nulls_prepaid_subs
+end
+
+desc 'read in and create for updating list of nulls monthly subs'
+task :read_in_monthly_nulls do |t|
+    FixSubInfo::SubUpdater.new.nulls_monthly_subs
+
+end
+
+desc 'get Shopify configuration information'
+task :get_shopify_config_sub_nulls do |t|
+    FixSubInfo::SubUpdater.new.get_shopify_config_sub_nulls
+
+end
+
+desc 'setup monthly null subs to be updated on Recharge'
+task :setup_monthly_sub_nulls_updated do |t|
+    FixSubInfo::SubUpdater.new.setup_subs_update_monthly_nulls
+end
+
+
+
 desc 'setup employee subs for ghost'
 task :setup_employee_ghost do |t|
     FixSubInfo::SubUpdater.new.setup_employee_ghost
