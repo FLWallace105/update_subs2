@@ -110,7 +110,7 @@ module DownloadSubs
                     sports_jacket = my_data['sports_jacket']
                     gloves = my_data['gloves']
 
-                    sub_collection_sizes_array << {"subscription_id" => subscription_id, "product_collection" => product_collection, "leggings" => leggings, "sports_bra" => sports_bra, "tops" => tops, "sports_jacket" => sports_jacket, "gloves" => gloves, "prepaid" => is_prepaid, "next_charge_scheduled_at" => next_charge_scheduled_at}
+                    sub_collection_sizes_array << {"subscription_id" => subscription_id, "product_collection" => product_collection, "leggings" => leggings, "sports_bra" => sports_bra, "tops" => tops, "sports_jacket" => sports_jacket, "gloves" => gloves, "prepaid" => is_prepaid, "next_charge_scheduled_at" => next_charge_scheduled_at, "create_at" => created_at, "updated_at" => "updated_at"}
 
                     #SubCollectionSizes.create(subscription_id: subscription_id,
                     #    product_collection: product_collection,
@@ -148,6 +148,15 @@ module DownloadSubs
             ActiveRecord::Base.connection.reset_pk_sequence!('orders')
             ActiveRecord::Base.connection.reset_pk_sequence!('order_line_items_fixed')
             ActiveRecord::Base.connection.reset_pk_sequence!('order_collection_sizes')
+            min_max = get_min_max
+            min = min_max['min']
+            max = min_max['max']
+
+            orders_count = HTTParty.get("https://api.rechargeapps.com/orders/count?scheduled_at_min=\'#{min}\'&scheduled_at_max=\'#{max}\'", :headers => my_header)
+            #my_response = JSON.parse(subscriptions)
+            my_response = orders_count
+            my_count = my_response['count'].to_i
+            puts "We have #{my_count} orders for this month"
 
 
         end
@@ -220,6 +229,18 @@ module DownloadSubs
             stuff_to_return = {"product_collection" => product_collection, "leggings" => leggings, "tops" => tops, "sports_bra" => sports_bra, "sports_jacket" => sports_jacket, "gloves" => gloves}
             return stuff_to_return
     
+        end
+
+        def get_min_max
+            my_yesterday = Date.today - 3
+            my_yesterday_str = my_yesterday.strftime("%Y-%m-%d")
+            my_four_months = Date.today >> 2
+            my_four_months = my_four_months.end_of_month
+            my_four_months_str = my_four_months.strftime("%Y-%m-%d")
+            my_hash = Hash.new
+            my_hash = {"min" => my_yesterday_str, "max" => my_four_months_str}
+            return my_hash
+
         end
 
         def determine_limits(recharge_header, limit)
