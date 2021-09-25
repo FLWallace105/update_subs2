@@ -5,7 +5,7 @@ require 'sinatra/activerecord'
 require 'httparty'
 require_relative 'models/model'
 require_relative 'lib/order_size'
-require 'pry'
+#require 'pry'
 
 Dotenv.load
 
@@ -503,6 +503,9 @@ module ResqueHelper
 
 
         Resque.logger.info my_update_sub.inspect
+        puts "************************"
+        puts "update_info = #{my_update_sub.inspect}"
+        puts "*************************"
 
         #if 7 > 3
         if my_update_sub.code == 200

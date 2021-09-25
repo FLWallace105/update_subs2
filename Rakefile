@@ -8,7 +8,25 @@ require 'active_record'
 require 'sinatra/activerecord/rake'
 require 'resque/tasks'
 require_relative 'update_subs'
-require 'pry'
+require_relative 'download_subs'
+#require 'pry'
+
+
+namespace :download_subs do 
+    desc 'get all active recharge subs'
+    task :download_all_subs do |t|
+        DownloadSubs::GetSubs.new.get_all_active_subs
+
+    end
+
+    desc 'get all orders'
+    task :download_all_orders do |t|
+        DownloadSubs::GetSubs.new.get_all_orders
+
+    end
+
+
+end
 
 namespace :sub_update do
 desc 'list current products'
@@ -36,6 +54,17 @@ end
 desc 'setup monthly null subs to be updated on Recharge'
 task :setup_monthly_sub_nulls_updated do |t|
     FixSubInfo::SubUpdater.new.setup_subs_update_monthly_nulls
+end
+
+desc 'send to Recharge monthly null subs old info'
+task :send_recharge_monthly_subs_changes do |t|
+    FixSubInfo::SubUpdater.new.recharge_update_monthly_nulls
+
+end
+
+desc 'fix sendgrid skip emails csv'
+task :fix_sendgrid_skip_csv do |t|
+    FixSubInfo::SubUpdater.new.sendgrid_csv
 end
 
 
