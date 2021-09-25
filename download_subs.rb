@@ -110,7 +110,7 @@ module DownloadSubs
                     sports_jacket = my_data['sports_jacket']
                     gloves = my_data['gloves']
 
-                    sub_collection_sizes_array << {"subscription_id" => subscription_id, "product_collection" => product_collection, "leggings" => leggings, "sports_bra" => sports_bra, "tops" => tops, "sports_jacket" => sports_jacket, "gloves" => gloves, "prepaid" => is_prepaid, "next_charge_scheduled_at" => next_charge_scheduled_at, "created_at" => created_at, "updated_at" => "updated_at"}
+                    sub_collection_sizes_array << {"subscription_id" => subscription_id, "product_collection" => product_collection, "leggings" => leggings, "sports_bra" => sports_bra, "tops" => tops, "sports_jacket" => sports_jacket, "gloves" => gloves, "prepaid" => is_prepaid, "next_charge_scheduled_at" => next_charge_scheduled_at, "created_at" => created_at, "updated_at" => updated_at}
 
                     #SubCollectionSizes.create(subscription_id: subscription_id,
                     #    product_collection: product_collection,
