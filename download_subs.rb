@@ -152,11 +152,102 @@ module DownloadSubs
             min = min_max['min']
             max = min_max['max']
 
-            orders_count = HTTParty.get("https://api.rechargeapps.com/orders/count?scheduled_at_min=\'#{min}\'&scheduled_at_max=\'#{max}\'", :headers => my_header)
+            order_array = Array.new
+            order_collection_sizes_array = Array.new
+            order_fixed_line_items_array = Array.new
+
+            orders_count = HTTParty.get("https://api.rechargeapps.com/orders/count?scheduled_at_min=\'#{min}\'&scheduled_at_max=\'#{max}\'", :headers => @my_header)
             #my_response = JSON.parse(subscriptions)
             my_response = orders_count
             my_count = my_response['count'].to_i
             puts "We have #{my_count} orders for this month"
+
+            start = Time.now
+            page_size = 250
+            num_pages = (my_count/page_size.to_f).ceil
+            1.upto(num_pages) do |page|
+                orders = HTTParty.get("https://api.rechargeapps.com/orders?scheduled_at_min=\'#{min}\'&scheduled_at_max=\'#{max}\'&limit=250&page=#{page}", :headers => @my_header)
+                my_orders = orders.parsed_response['orders']
+                recharge_limit = orders.response["x-recharge-limit"]
+                puts "Here recharge_limit = #{recharge_limit}"
+
+                my_orders.each do |order|
+
+                    puts order.inspect
+                    order_id = order['id'] 
+                    transaction_id = order['id']
+                    charge_status = order['charge_status']
+                    payment_processor = order['payment_processor']
+                    address_is_active = order['address_is_active'].to_i
+                    status = order['status']
+                    type = order['type']
+                    charge_id = order['charge_id']
+                    address_id = order['address_id']
+                    shopify_id = order['shopify_id']
+                    shopify_order_id = order['shopify_order_id']
+                    shopify_order_number = order['shopify_order_number']
+                    shopify_cart_token = order['shopify_cart_token']
+                    shipping_date = order['shipping_date']
+                    scheduled_at = order['scheduled_at']
+                    shipped_date = order['shipped_date']
+                    processed_at = order['processed_at']
+                    customer_id = order['customer_id']
+                    first_name = order['first_name']
+                    last_name = order['last_name']
+                    is_prepaid = order['is_prepaid'].to_i
+                    created_at = order['created_at']
+                    updated_at = order['updated_at']
+                    email = order['email']
+                    line_items = order['line_items'].to_json
+                    raw_line_items = order['line_items'][0]
+
+                    shipping_address = order['shipping_address'].to_json
+                    billing_address = order['billing_address'].to_json
+
+                    total_price = order['total_price']
+
+                    order_array << { "order_id" => order_id, "transaction_id" => transaction_id, "charge_status" => charge_status, "payment_processor" => payment_processor, "address_is_active" => address_is_active, "status" => status, "order_type" => type, "charge_id" => charge_id, "address_id" => address_id, "shopify_id" => shopify_id, "shopify_order_id" => shopify_order_id, "shopify_order_number" => shopify_order_number, "shopify_cart_token" => shopify_cart_token, "shipping_date" => shipping_date, "scheduled_at" => scheduled_at, "shipped_date" => shipped_date, "processed_at" => processed_at, "customer_id" => customer_id, "first_name" => first_name, "last_name" => last_name, "is_prepaid" => is_prepaid, "created_at" => created_at, "updated_at" => updated_at, "email" => email, "line_items" => line_items, "total_price" => total_price, "shipping_address" => shipping_address, "billing_address" => billing_address }
+
+                    
+
+
+                    if raw_line_items != nil 
+    
+                        shopify_variant_id = raw_line_items['shopify_variant_id']
+                        title = raw_line_items['title']
+                        variant_title = raw_line_items['variant_title']
+                        subscription_id = raw_line_items['subscription_id']
+                        quantity = raw_line_items['quantity'].to_i
+                        shopify_product_id = raw_line_items['shopify_product_id']
+                        product_title = raw_line_items['product_title']
+
+                        order_fixed_line_items_array << { "order_id" => order_id, "shopify_variant_id" => shopify_variant_id, "title" => title, "variant_title" => variant_title, "subscription_id" => subscription_id, "quantity" => quantity, "shopify_product_id" => shopify_product_id, "product_title" => product_title}
+
+                        my_props = create_order_properties(line_items)
+
+                        order_collection_sizes_array << {"order_id" => order_id, "product_collection" => my_props['product_collection'], "leggings" => my_props['leggings'], "tops" => my_props['tops'], "sports_bra" => my_props['sports_bra'], "sports_jacket" => my_props['sports_jacket'], "gloves" => my_props['gloves'], "prepaid" => is_prepaid, "scheduled_at" => scheduled_at, "created_at" => created_at, "updated_at" => updated_at}
+
+                        #OrderCollectionSize.create(order_id: order_id, product_collection: my_props['product_collection'], leggings: my_props['leggings'], tops: my_props['tops'], sports_bra: my_props['sports_bra'], sports_jacket: my_props['sports_bra'], gloves: my_props['gloves'], prepaid: is_prepaid, scheduled_at: scheduled_at )
+        
+                        
+                    end
+
+            end
+
+
+            puts "Done with page #{page} of #{num_pages}"
+            current = Time.now
+            duration = (current - start).ceil
+            puts "Been running #{duration} seconds"
+            determine_limits(recharge_limit, 0.65)
+            end
+            puts "All done with orders"
+            order_array.uniq!
+            Order.upsert_all(order_array, unique_by: :order_id)
+            order_fixed_line_items_array.uniq!
+            OrderLineItemsFixed.upsert_all(order_fixed_line_items_array, unique_by: :order_id)
+            order_collection_sizes_array.uniq!
+            OrderCollectionSize.upsert_all(order_collection_sizes_array)
 
 
         end
@@ -230,6 +321,86 @@ module DownloadSubs
             return stuff_to_return
     
         end
+
+        def create_order_properties(my_json)
+            temp_json = JSON.parse(my_json)
+            #puts temp_json
+            temp_props = temp_json.first['properties']
+            #puts temp_props
+    
+            product_collection = temp_props.select{|x| x['name'] == 'product_collection'}
+            leggings = temp_props.select{|x| x['name'] == 'leggings'}
+            tops = temp_props.select{|x| x['name'] == 'tops'}
+            sports_bra = temp_props.select{|x| x['name'] == 'sports-bra'}
+            sports_jacket = temp_props.select{|x| x['name'] == 'sports-jacket'}
+            gloves = temp_props.select{|x| x['name'] == 'gloves'}
+
+            #puts "sports_jacket is #{sports_jacket}"
+    
+            if product_collection != []
+                product_collection = product_collection.first['value']
+            else
+                product_collection = nil
+            end
+    
+            if leggings != []
+                if !leggings.first['value'].nil?
+                leggings = leggings.first['value'].upcase
+                else
+                    leggings = nil
+                end 
+            else
+                leggings = nil
+            end
+    
+            if tops != []
+                if !tops.first['value'].nil?
+                    tops = tops.first['value'].upcase
+                else
+                    tops = nil
+                end
+            else
+                tops = nil
+            end
+    
+            if sports_bra != []
+                if !sports_bra.first['value'].nil?
+                    sports_bra = sports_bra.first['value'].upcase
+                else
+                    sports_bra = nil
+                end
+            else
+                sports_bra = nil
+            end
+
+            if sports_jacket != []
+                if !sports_jacket.first['value'].nil?
+                    sports_jacket = sports_jacket.first['value'].upcase
+                else
+                    sports_jacket = nil
+                end
+            else
+                sports_jacket = nil
+            end
+    
+            if gloves != []
+                if !gloves.first['value'].nil?
+                    gloves = gloves.first['value'].upcase
+                else
+                    gloves = nil
+                end
+            else
+                gloves = nil
+            end
+    
+            stuff_to_return = {"product_collection" => product_collection, "leggings" => leggings, "tops" => tops, "sports_bra" => sports_bra, "sports_jacket" => sports_jacket, "gloves" => gloves}
+            return stuff_to_return
+    
+    
+        end
+
+
+
 
         def get_min_max
             my_yesterday = Date.today - 3
