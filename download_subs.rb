@@ -6,6 +6,7 @@ require 'resque'
 #require 'sinatra'
 require 'active_record'
 require "sinatra/activerecord"
+require 'json'
 require_relative 'models/model'
 
 
@@ -85,7 +86,7 @@ module DownloadSubs
                     order_day_of_month = sub['order_day_of_month']
                     order_day_of_week = sub['order_day_of_week']
                     raw_properties = sub['properties']
-                    properties = sub['properties'].to_json
+                    properties = sub['properties']
                     expire_after = sub['expire_after_specific_number_charges']
                     is_prepaid = sub['is_prepaid']
                     email = sub['email']
@@ -198,7 +199,7 @@ module DownloadSubs
                     created_at = order['created_at']
                     updated_at = order['updated_at']
                     email = order['email']
-                    line_items = order['line_items'].to_json
+                    line_items = order['line_items']
                     raw_line_items = order['line_items'][0]
 
                     shipping_address = order['shipping_address'].to_json
@@ -207,6 +208,9 @@ module DownloadSubs
                     total_price = order['total_price']
 
                     order_array << { "order_id" => order_id, "transaction_id" => transaction_id, "charge_status" => charge_status, "payment_processor" => payment_processor, "address_is_active" => address_is_active, "status" => status, "order_type" => type, "charge_id" => charge_id, "address_id" => address_id, "shopify_id" => shopify_id, "shopify_order_id" => shopify_order_id, "shopify_order_number" => shopify_order_number, "shopify_cart_token" => shopify_cart_token, "shipping_date" => shipping_date, "scheduled_at" => scheduled_at, "shipped_date" => shipped_date, "processed_at" => processed_at, "customer_id" => customer_id, "first_name" => first_name, "last_name" => last_name, "is_prepaid" => is_prepaid, "created_at" => created_at, "updated_at" => updated_at, "email" => email, "line_items" => line_items, "total_price" => total_price, "shipping_address" => shipping_address, "billing_address" => billing_address }
+
+                    #puts "order_array = #{order_array.inspect}"
+                    #exit
 
                     
 
@@ -323,8 +327,9 @@ module DownloadSubs
         end
 
         def create_order_properties(my_json)
-            temp_json = JSON.parse(my_json)
+            #temp_json = JSON.parse(my_json)
             #puts temp_json
+            temp_json = my_json
             temp_props = temp_json.first['properties']
             #puts temp_props
     
