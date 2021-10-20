@@ -34,6 +34,8 @@ module DownloadSubs
             ActiveRecord::Base.connection.reset_pk_sequence!('subscriptions')
             SubCollectionSizes.delete_all
             ActiveRecord::Base.connection.reset_pk_sequence!('sub_collection_sizes')
+            SubLineItem.delete_all
+            ActiveRecord::Base.connection.reset_pk_sequence!('sub_line_items')
 
             subscriptions = HTTParty.get("https://api.rechargeapps.com/subscriptions/count?status=ACTIVE", :timeout => 80, :headers => @my_header)
             #my_response = JSON.parse(subscriptions)
@@ -48,8 +50,7 @@ module DownloadSubs
             #puts "Sleeping 3 secs"
             #sleep 3
 
-            sub_array = Array.new
-            sub_collection_sizes_array = Array.new
+            
 
             1.upto(num_pages) do |page|
                 mysubs = HTTParty.get("https://api.rechargeapps.com/subscriptions?status=ACTIVE&limit=250&page=#{page}", :timeout => 120, :headers => @my_header)
@@ -57,11 +58,15 @@ module DownloadSubs
                 recharge_limit = mysubs.response["x-recharge-limit"]
                 puts "Here recharge_limit = #{recharge_limit}"
 
+                sub_array = Array.new
+                sub_collection_sizes_array = Array.new
+                sub_line_sizes_array = Array.new
+
                 local_sub = mysubs['subscriptions']
                 local_sub.each do |sub|
                     puts "-------------------"
                     puts sub['id']
-                    puts sub.inspect
+                    #puts sub.inspect
                     puts "------------------"
                 
 
@@ -94,6 +99,16 @@ module DownloadSubs
                     #Subscription.create(subscription_id: subscription_id, address_id: address_id, customer_id: customer_id, created_at: created_at, updated_at: updated_at, next_charge_scheduled_at: next_charge_scheduled_at, cancelled_at: cancelled_at, product_title: product_title, price: price, quantity: quantity, status: status, shopify_product_id: shopify_product_id, shopify_variant_id: shopify_variant_id, sku: sku, order_interval_unit: order_interval_unit, order_interval_frequency: order_interval_frequency, charge_interval_frequency: charge_interval_frequency, order_day_of_month: order_day_of_month, order_day_of_week: order_day_of_week, raw_line_item_properties: properties, expire_after_specific_number_charges: expire_after, is_prepaid: is_prepaid, email: email)
                     sub_array << { "subscription_id" => subscription_id, "address_id" => address_id, "customer_id" => customer_id, "created_at" => created_at, "updated_at" => updated_at, "next_charge_scheduled_at" => next_charge_scheduled_at, "cancelled_at" => cancelled_at, "product_title" => product_title, "price" => price, "quantity" =>  quantity, "status" => status, "shopify_product_id" => shopify_product_id, "shopify_variant_id" => shopify_variant_id, "sku" => sku, "order_interval_unit" => order_interval_unit, "order_interval_frequency" => order_interval_frequency, "charge_interval_frequency" => charge_interval_frequency, "order_day_of_month" => order_day_of_month, "order_day_of_week" => order_day_of_week, "raw_line_item_properties" => properties, "expire_after_specific_number_charges" => expire_after, "is_prepaid" => is_prepaid, "email" => email}
 
+                    properties.each do |temp|
+                        temp_name = temp['name']
+                        temp_value = temp['value']
+                        #puts "#{temp_name}, #{temp_value}"
+                        if !temp_value.nil? && !temp_name.nil?
+                            sub_line_sizes_array << {"subscription_id" => subscription_id, "name" => temp_name, "value" => temp_value}
+
+                        end
+                    end
+
 
                     
                     
@@ -119,9 +134,18 @@ module DownloadSubs
                     #    sports_bra: sports_bra,
                     #    sports_jacket: sports_jacket,
                     #    gloves: gloves, prepaid: is_prepaid, next_charge_scheduled_at: next_charge_scheduled_at)
+
+                    
                 end
 
-
+                sub_array.uniq!
+                sub_collection_sizes_array.uniq!
+                
+                result = Subscription.insert_all(sub_array, unique_by: :subscription_id)
+                puts result.inspect
+                result2 = SubCollectionSizes.insert_all(sub_collection_sizes_array)
+                puts result2.inspect
+                result3 = SubLineItem.insert_all(sub_line_sizes_array)
 
             puts "Done with page #{page} of #{num_pages} pages"
             determine_limits(recharge_limit, 0.65)
@@ -129,12 +153,7 @@ module DownloadSubs
             duration = (current - start).ceil
             puts "Been running #{duration} seconds"
             end
-            sub_array.uniq!
-            sub_collection_sizes_array.uniq!
-            result = Subscription.upsert_all(sub_array, unique_by: :subscription_id)
-            puts result.inspect
-            result2 = SubCollectionSizes.upsert_all(sub_collection_sizes_array)
-            puts result2.inspect
+            
             puts "All done with subs"
 
             
@@ -149,6 +168,10 @@ module DownloadSubs
             ActiveRecord::Base.connection.reset_pk_sequence!('orders')
             ActiveRecord::Base.connection.reset_pk_sequence!('order_line_items_fixed')
             ActiveRecord::Base.connection.reset_pk_sequence!('order_collection_sizes')
+
+            OrderLineItemsVariable.delete_all
+            ActiveRecord::Base.connection.reset_pk_sequence!('order_line_items_variable')
+
             min_max = get_min_max
             min = min_max['min']
             max = min_max['max']
@@ -156,6 +179,7 @@ module DownloadSubs
             order_array = Array.new
             order_collection_sizes_array = Array.new
             order_fixed_line_items_array = Array.new
+            order_line_items_variable_array = Array.new
 
             orders_count = HTTParty.get("https://api.rechargeapps.com/orders/count?scheduled_at_min=\'#{min}\'&scheduled_at_max=\'#{max}\'", :headers => @my_header)
             #my_response = JSON.parse(subscriptions)
@@ -232,6 +256,21 @@ module DownloadSubs
                         order_collection_sizes_array << {"order_id" => order_id, "product_collection" => my_props['product_collection'], "leggings" => my_props['leggings'], "tops" => my_props['tops'], "sports_bra" => my_props['sports_bra'], "sports_jacket" => my_props['sports_jacket'], "gloves" => my_props['gloves'], "prepaid" => is_prepaid, "scheduled_at" => scheduled_at, "created_at" => created_at, "updated_at" => updated_at}
 
                         #OrderCollectionSize.create(order_id: order_id, product_collection: my_props['product_collection'], leggings: my_props['leggings'], tops: my_props['tops'], sports_bra: my_props['sports_bra'], sports_jacket: my_props['sports_bra'], gloves: my_props['gloves'], prepaid: is_prepaid, scheduled_at: scheduled_at )
+
+                        my_properties = raw_line_items['properties']
+
+                        if my_properties != nil && my_properties != []
+
+                            my_properties.each do |myprop|
+                            myname = myprop['name']
+                            myvalue = myprop['value']
+                            
+                            
+                            order_line_items_variable_array << {"order_id" => order_id, "name" => myname, "value" => myvalue}
+
+                            end
+                        end
+                        
         
                         
                     end
@@ -252,6 +291,7 @@ module DownloadSubs
             OrderLineItemsFixed.upsert_all(order_fixed_line_items_array, unique_by: :order_id)
             order_collection_sizes_array.uniq!
             OrderCollectionSize.upsert_all(order_collection_sizes_array)
+            OrderLineItemsVariable.insert_all(order_line_items_variable_array)
 
 
         end

@@ -27,9 +27,15 @@ end
 class Order < ActiveRecord::Base
   self.table_name = 'orders'
 end
-  
 
+class SubLineItem < ActiveRecord::Base
+  self.table_name = 'sub_line_items' 
 
+end
+
+class OrderLineItemsVariable < ActiveRecord::Base
+  self.table_name = 'order_line_items_variable' 
+end
 
 
 class OrderLineItemsFixed < ActiveRecord::Base
