@@ -37,7 +37,7 @@ module DownloadSubs
             SubLineItem.delete_all
             ActiveRecord::Base.connection.reset_pk_sequence!('sub_line_items')
 
-            subscriptions = HTTParty.get("https://api.rechargeapps.com/subscriptions/count?status=CANCELLED", :timeout => 80, :headers => @my_header)
+            subscriptions = HTTParty.get("https://api.rechargeapps.com/subscriptions/count?status=ACTIVE", :timeout => 80, :headers => @my_header)
             #my_response = JSON.parse(subscriptions)
             my_response = subscriptions
             my_count = my_response['count'].to_i
@@ -53,7 +53,7 @@ module DownloadSubs
             
 
             1.upto(num_pages) do |page|
-                mysubs = HTTParty.get("https://api.rechargeapps.com/subscriptions?status=CANCELLED&limit=250&page=#{page}", :timeout => 120, :headers => @my_header)
+                mysubs = HTTParty.get("https://api.rechargeapps.com/subscriptions?status=ACTIVE&limit=250&page=#{page}", :timeout => 120, :headers => @my_header)
                 #puts mysubs.inspect
                 recharge_limit = mysubs.response["x-recharge-limit"]
                 puts "Here recharge_limit = #{recharge_limit}"

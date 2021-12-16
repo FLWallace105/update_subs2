@@ -258,6 +258,8 @@ module ResqueHelper
     #my_line_items = OrderSize.add_missing_sub_size(my_line_items)
 
     my_prod = CurrentProduct.find_by_prod_id_value(product_id)
+    puts "my_prod = #{my_prod.inspect}"
+
     if my_prod.nil?
       stuff_to_return = {"skip" => true}
       return stuff_to_return
@@ -412,6 +414,7 @@ module ResqueHelper
 
     puts "Now my_line_items = #{my_line_items}"
     
+    puts "Continiung ... "
 
 
     #if found_outfit_id == false
@@ -435,16 +438,20 @@ module ResqueHelper
 
    # end
 
+   puts "my_prod prepaid = #{my_prod.prepaid}"
 
-    stuff_to_return =
-      if my_prod.prepaid?
-        { "properties" => my_line_items }
+    stuff_to_return = {}
+      if my_prod.prepaid == true
+        #stuff_to_return = { "properties" => my_line_items }
       else
-        { "sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => my_line_items }
-        #{ "sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id}
+        #stuff_to_return = { "sku" => my_new_product_info.sku, "status" => 'ACTIVE', product_title => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => my_line_items }
+        stuff_to_return = { "sku" => my_new_product_info.sku, "status" => 'ACTIVE', "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => my_line_items}
       end
 
-    stuff_to_return
+    puts "stuff_to_return = #{stuff_to_return.inspect}"
+    #exit
+
+    return stuff_to_return
   end
 
   def update_subscriptions_next_month(params)
