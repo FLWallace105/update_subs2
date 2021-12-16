@@ -441,6 +441,7 @@ module ResqueHelper
         { "properties" => my_line_items }
       else
         { "sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => my_line_items }
+        #{ "sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id}
       end
 
     stuff_to_return
@@ -491,6 +492,7 @@ module ResqueHelper
         
         body = new_prod_info.to_json
         puts body.inspect
+        #exit
         
         
         
@@ -506,6 +508,7 @@ module ResqueHelper
         puts "************************"
         puts "update_info = #{my_update_sub.inspect}"
         puts "*************************"
+        #exit
 
         #if 7 > 3
         if my_update_sub.code == 200
