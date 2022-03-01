@@ -485,8 +485,20 @@ module ResqueHelper
       puts new_prod_info.inspect
       Resque.logger.info "Now sizes reflect:"
       Resque.logger.info new_prod_info.inspect
+
+     
+      # new_prod_info['properties'].each do |tp|
+      #   puts "tp = #{tp.inspect}"
+      #   if (tp['name'] == 'leggings' || tp['name'] == 'sports-bra' || tp['name'] == 'sports-jacket')
+      #     tp['value'] = 'M'
+      #   end
+
+      # end
+
+      # puts "now info after XXL = #{new_prod_info.inspect}"
       
-      
+      # puts "exiting"
+      # exit
 
         
         body = new_prod_info.to_json
@@ -496,6 +508,22 @@ module ResqueHelper
         
 
         my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{my_sub_id}", :headers => recharge_change_header, :body => body, :timeout => 80)
+
+
+        #POST /subscriptions/{id}/set_next_charge_date
+        # request.body = {"date": "2020-08-05"}.to_json
+        # my_integer = rand(5..30)
+        # my_str = ""
+        # if my_integer < 10
+        #     my_str = "0#{my_integer}"
+        # else
+        #     my_str = "#{my_integer}"
+        # end
+        # my_date = "2022-01-#{my_str}"
+        # my_body = {"date" => my_date}.to_json
+        # my_update_sub = HTTParty.post("https://api.rechargeapps.com/subscriptions/#{my_sub_id}/set_next_charge_date", :headers => recharge_change_header, :body => my_body, :timeout => 120)
+
+
         puts my_update_sub.inspect
         recharge_header = my_update_sub.response["x-recharge-limit"]
         determine_limits(recharge_header, 0.65)

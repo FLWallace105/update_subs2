@@ -28,6 +28,15 @@ namespace :download_subs do
 
 end
 
+namespace :write_prod_coll_report do
+    desc 'write csv containing all empty product collections for subs and orders this month'
+    task :write_prod_coll do |t|
+        FixSubInfo::SubUpdater.new.write_csv_empty_product_collections
+
+    end
+
+end
+
 namespace :sub_update do
 desc 'list current products'
 task :current_products do |t|
