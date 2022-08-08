@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210925195809) do
+ActiveRecord::Schema.define(version: 2022_08_08_184017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(version: 20210925195809) do
     t.index ["charge_id"], name: "index_charges_shipping_lines_on_charge_id"
   end
 
-  create_table "config", primary_key: "key", id: :string, limit: 100, force: :cascade do |t|
+  create_table "config", primary_key: "key", id: { type: :string, limit: 100 }, force: :cascade do |t|
     t.jsonb "val"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
@@ -376,6 +376,13 @@ ActiveRecord::Schema.define(version: 20210925195809) do
     t.index ["order_id"], name: "index_order_line_items_variable_on_order_id"
   end
 
+  create_table "order_raw_skus", force: :cascade do |t|
+    t.string "order_id"
+    t.datetime "scheduled_at"
+    t.boolean "prepaid", default: false
+    t.string "sku"
+  end
+
   create_table "order_shipping_address", force: :cascade do |t|
     t.string "order_id"
     t.string "province"
@@ -422,6 +429,7 @@ ActiveRecord::Schema.define(version: 20210925195809) do
     t.jsonb "shipping_address"
     t.jsonb "billing_address"
     t.datetime "synced_at"
+    t.boolean "is_mix_match", default: false
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["charge_id"], name: "index_orders_on_charge_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
@@ -744,6 +752,13 @@ ActiveRecord::Schema.define(version: 20210925195809) do
     t.index ["subscription_id"], name: "index_sub_line_items_on_subscription_id"
   end
 
+  create_table "sub_raw_skus", force: :cascade do |t|
+    t.string "subscription_id"
+    t.datetime "next_charge_scheduled_at"
+    t.boolean "prepaid", default: false
+    t.string "sku"
+  end
+
   create_table "subs_next_month_dry_run", force: :cascade do |t|
     t.string "subscription_id"
     t.string "customer_id"
@@ -800,6 +815,7 @@ ActiveRecord::Schema.define(version: 20210925195809) do
     t.integer "expire_after_specific_number_charges"
     t.boolean "is_prepaid", default: false
     t.string "email"
+    t.boolean "is_mix_match", default: false
     t.index ["address_id"], name: "index_subscriptions_on_address_id"
     t.index ["customer_id"], name: "index_subscriptions_on_customer_id"
     t.index ["expire_after_specific_number_charges"], name: "index_subscriptions_on_expire_after_specific_number_charges"
@@ -882,6 +898,45 @@ ActiveRecord::Schema.define(version: 20210925195809) do
     t.string "subscription_id"
     t.jsonb "properties"
     t.boolean "updated", default: false
+  end
+
+  create_table "update_prepaid", force: :cascade do |t|
+    t.string "order_id"
+    t.string "transaction_id"
+    t.string "charge_status"
+    t.string "payment_processor"
+    t.integer "address_is_active"
+    t.string "status"
+    t.string "order_type"
+    t.string "charge_id"
+    t.string "address_id"
+    t.string "shopify_id"
+    t.string "shopify_order_id"
+    t.string "shopify_cart_token"
+    t.datetime "shipping_date"
+    t.datetime "scheduled_at"
+    t.datetime "shipped_date"
+    t.datetime "processed_at"
+    t.string "customer_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "is_prepaid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "email"
+    t.jsonb "line_items"
+    t.decimal "total_price", precision: 10, scale: 2
+    t.jsonb "shipping_address"
+    t.jsonb "billing_address"
+    t.datetime "synced_at"
+    t.boolean "is_updated", default: false
+  end
+
+  create_table "update_prepaid_config", force: :cascade do |t|
+    t.string "title"
+    t.string "product_id"
+    t.string "variant_id"
+    t.string "product_collection"
   end
 
   create_table "update_products", force: :cascade do |t|

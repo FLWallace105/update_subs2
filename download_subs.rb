@@ -61,6 +61,7 @@ module DownloadSubs
                 sub_array = Array.new
                 sub_collection_sizes_array = Array.new
                 sub_line_sizes_array = Array.new
+                sub_raw_skus_array = Array.new
 
                 local_sub = mysubs['subscriptions']
                 local_sub.each do |sub|
@@ -68,6 +69,33 @@ module DownloadSubs
                     puts sub['id']
                     #puts sub.inspect
                     puts "------------------"
+
+                    temp_mix_array = sub['properties'].select {|property| property['name'] == 'is_mix_and_match_order'} 
+                    mix_match_boolean  = false
+                    if temp_mix_array != []
+                        mix_match_boolean = my_bool_true?(temp_mix_array.first['value'])
+                    else
+                        mix_match_boolean = false
+                    end
+
+                    if mix_match_boolean == false && sub['properties'].select {|property| property['name'] == 'raw_skus'} != []
+                        #i.e. there is some raw sku there not scrubbed yet
+                        mix_match_boolean = true
+
+                    end
+
+                    temp_raw_skus = sub['properties'].select {|property| property['name'] == 'raw_skus'} 
+                    is_raw_sku = false
+                    my_raw_skus = ''
+                    sku_array = []
+                    if temp_raw_skus != []
+                        is_raw_sku = true
+                        my_raw_skus = temp_raw_skus.first['value']
+                        sku_array = my_raw_skus.split(",")
+                        sku_array.map! {|x| x.strip}
+                    else
+                        is_raw_sku = false
+                    end
                 
 
                     subscription_id = sub['id']
@@ -95,9 +123,10 @@ module DownloadSubs
                     expire_after = sub['expire_after_specific_number_charges']
                     is_prepaid = sub['is_prepaid']
                     email = sub['email']
+                    is_mix_and_match = mix_match_boolean
                     #create sub
                     #Subscription.create(subscription_id: subscription_id, address_id: address_id, customer_id: customer_id, created_at: created_at, updated_at: updated_at, next_charge_scheduled_at: next_charge_scheduled_at, cancelled_at: cancelled_at, product_title: product_title, price: price, quantity: quantity, status: status, shopify_product_id: shopify_product_id, shopify_variant_id: shopify_variant_id, sku: sku, order_interval_unit: order_interval_unit, order_interval_frequency: order_interval_frequency, charge_interval_frequency: charge_interval_frequency, order_day_of_month: order_day_of_month, order_day_of_week: order_day_of_week, raw_line_item_properties: properties, expire_after_specific_number_charges: expire_after, is_prepaid: is_prepaid, email: email)
-                    sub_array << { "subscription_id" => subscription_id, "address_id" => address_id, "customer_id" => customer_id, "created_at" => created_at, "updated_at" => updated_at, "next_charge_scheduled_at" => next_charge_scheduled_at, "cancelled_at" => cancelled_at, "product_title" => product_title, "price" => price, "quantity" =>  quantity, "status" => status, "shopify_product_id" => shopify_product_id, "shopify_variant_id" => shopify_variant_id, "sku" => sku, "order_interval_unit" => order_interval_unit, "order_interval_frequency" => order_interval_frequency, "charge_interval_frequency" => charge_interval_frequency, "order_day_of_month" => order_day_of_month, "order_day_of_week" => order_day_of_week, "raw_line_item_properties" => properties, "expire_after_specific_number_charges" => expire_after, "is_prepaid" => is_prepaid, "email" => email}
+                    sub_array << { "subscription_id" => subscription_id, "address_id" => address_id, "customer_id" => customer_id, "created_at" => created_at, "updated_at" => updated_at, "next_charge_scheduled_at" => next_charge_scheduled_at, "cancelled_at" => cancelled_at, "product_title" => product_title, "price" => price, "quantity" =>  quantity, "status" => status, "shopify_product_id" => shopify_product_id, "shopify_variant_id" => shopify_variant_id, "sku" => sku, "order_interval_unit" => order_interval_unit, "order_interval_frequency" => order_interval_frequency, "charge_interval_frequency" => charge_interval_frequency, "order_day_of_month" => order_day_of_month, "order_day_of_week" => order_day_of_week, "raw_line_item_properties" => properties, "expire_after_specific_number_charges" => expire_after, "is_prepaid" => is_prepaid, "email" => email, "is_mix_match" => is_mix_and_match}
 
                     properties.each do |temp|
                         temp_name = temp['name']
@@ -109,6 +138,13 @@ module DownloadSubs
                         end
                     end
 
+                    if is_raw_sku == true
+                        sku_array.each do |mysku|
+                            sub_raw_skus_array.push({"subscription_id" => subscription_id, "next_charge_scheduled_at" => next_charge_scheduled_at, "prepaid" => is_prepaid, "sku" => mysku})
+                        end
+                        #puts "sub_raw_skus_array = #{sub_raw_skus_array.inspect}"
+                        
+                    end
 
                     
                     
@@ -140,12 +176,19 @@ module DownloadSubs
 
                 sub_array.uniq!
                 sub_collection_sizes_array.uniq!
+
                 
                 result = Subscription.insert_all(sub_array, unique_by: :subscription_id)
                 puts result.inspect
                 result2 = SubCollectionSizes.insert_all(sub_collection_sizes_array)
                 puts result2.inspect
                 result3 = SubLineItem.insert_all(sub_line_sizes_array)
+
+                #puts "sub_raw_skus_array = #{sub_raw_skus_array.inspect}"
+                if sub_raw_skus_array != []
+                    result4 = SubRawSku.insert_all(sub_raw_skus_array)
+                    puts result4.inspect
+                end
 
             puts "Done with page #{page} of #{num_pages} pages"
             determine_limits(recharge_limit, 0.65)
@@ -444,7 +487,27 @@ module DownloadSubs
     
         end
 
+        def get_active_customers
 
+
+        end
+
+        def get_active_addresses
+
+
+
+        end
+
+
+        def my_bool_true?(obj)
+            obj.to_s.downcase == "true"
+        end
+
+        def is_mix_match_sub(line_item)
+            mix_match_key = line_item['properties'].select {|property| property['name'] == 'is_mix_and_match_order'}
+            mix_match_key.present?  ? (mix_match_key.first['value'].length > 0) : false
+        
+        end
 
 
         def get_min_max

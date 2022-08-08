@@ -16,6 +16,18 @@ class Customer < ActiveRecord::Base
   self.table_name = 'customers'
 end
 
+class OrderRawSku < ActiveRecord::Base
+  self.table_name = 'order_raw_skus'
+end
+
+class SubRawSku < ActiveRecord::Base
+  self.table_name = 'sub_raw_skus'
+end
+
+class Address < ActiveRecord::Base
+  self.table_name = 'addresses'
+end
+
 class MonthlySubNull < ActiveRecord::Base
   self.table_name = 'monthly_sub_nulls'
 end
