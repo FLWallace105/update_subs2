@@ -9,6 +9,7 @@ require 'sinatra/activerecord/rake'
 require 'resque/tasks'
 require_relative 'update_subs'
 require_relative 'download_subs'
+require_relative 'scrub'
 #require 'pry'
 
 
@@ -25,6 +26,19 @@ namespace :download_subs do
 
     end
 
+
+end
+
+namespace :scrub_mix_match do 
+    desc 'set up mix and match subs for scrubbing'
+    task :setup_mix_match_scrub do |t|
+        Scrub.new.setup_mix_match_subs
+    end
+
+    desc 'scrub mix/match in resque background mix and match subs'
+    task :scrub_mix_match do |t|
+        Resque.enqueue(Scrub)
+    end
 
 end
 
