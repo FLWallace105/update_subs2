@@ -40,6 +40,11 @@ namespace :scrub_mix_match do
         Resque.enqueue(Scrub)
     end
 
+    desc 'setup configuration for mix/match scrubs'
+    task :scrub_setup_config do |t|
+        Scrub.new.setup_ellie_picks_config
+    end
+
 end
 
 namespace :write_prod_coll_report do

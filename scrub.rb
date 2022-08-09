@@ -47,6 +47,58 @@ class Scrub
 
     end
 
+    def setup_ellie_picks_config
+        UpdateProduct.delete_all
+        ActiveRecord::Base.connection.reset_pk_sequence!('update_products')
+
+        CSV.foreach('staging_update_products_ellie_picks.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+           puts row.inspect
+           sku = row['sku']
+           product_title = row['product_title']
+           shopify_product_id = row['shopify_product_id']
+           shopify_variant_id = row['shopify_variant_id']
+           product_collection = row['product_collection']
+           UpdateProduct.create(sku: sku, product_title: product_title, shopify_product_id: shopify_product_id, shopify_variant_id: shopify_variant_id, product_collection: product_collection)
+   
+           
+         end
+         puts "Done with update_products table!"
+
+        CurrentProduct.delete_all
+        ActiveRecord::Base.connection.reset_pk_sequence!('current_products')
+
+        my_config_sql = "select count(id), product_title, shopify_product_id from subscriptions_updated group by product_title, shopify_product_id order by product_title asc"
+
+        ActiveRecord::Base.connection.execute(my_config_sql).each do |row|
+            puts row.inspect
+            next_month_prod_id = "FAIL"
+            my_title = row['product_title']
+            my_prod_id = row['shopify_product_id']
+
+            case my_title
+                when /\s2\sitem/i
+                    next_month_prod_id = "6959754969249"
+                when /\s3\sitem/i
+                    next_month_prod_id = "6959754870945"
+                when /\s5\sitem/i
+                    next_month_prod_id = "6959754674337"
+                when "3 MONTHS"
+                    next_month_prod_id = "6959754674337"
+                else
+                    next_month_prod_id = "6959754674337"
+            end
+        CurrentProduct.create(prod_id_key: my_title, prod_id_value: my_prod_id, next_month_prod_id: next_month_prod_id, prepaid: false )
+
+      end
+      my_current_products = CurrentProduct.all
+      my_current_products.each do |myp|
+        puts myp.inspect
+      end
+
+      puts "All done with configuration setup for Mix and Match"
+
+    end
+
     
 
     def self.perform
