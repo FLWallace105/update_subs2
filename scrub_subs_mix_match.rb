@@ -59,6 +59,8 @@ module ScrubSubsMixMatch
         puts mysub.inspect
         my_prod = CurrentProduct.find_by_prod_id_value(mysub.shopify_product_id)
 
+        is_prepaid_sub = my_prod.prepaid
+
         next_month_product_id = my_prod.next_month_prod_id
         puts "next_month_product_id = #{next_month_product_id}"
         my_new_product_info = UpdateProduct.find_by_shopify_product_id(next_month_product_id)
@@ -94,12 +96,18 @@ module ScrubSubsMixMatch
         end
 
         puts "At here"
-        recharge_json = { "sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => temp_props }
+
+        if is_prepaid_sub
+            recharge_json = {"properties" => temp_props}
+        else
+            recharge_json = { "sku" => my_new_product_info.sku, "product_title" => my_new_product_info.product_title, "shopify_product_id" => my_new_product_info.shopify_product_id, "shopify_variant_id" => my_new_product_info.shopify_variant_id, "properties" => temp_props }
+        end
     
         puts "Sending to Recharge:"
         puts "=================================="
         puts recharge_json.inspect
         puts "----------------------------------"
+        
 
         my_update_sub = HTTParty.put("https://api.rechargeapps.com/subscriptions/#{mysub.subscription_id}", :headers => my_change_header, :body => recharge_json.to_json, :timeout => 80)
 

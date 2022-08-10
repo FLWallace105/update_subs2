@@ -241,6 +241,35 @@ module DownloadSubs
 
                 my_orders.each do |order|
 
+                    #fix mix_match indicator here
+
+                    temp_is_mix_match = false
+
+                    if order['is_prepaid'].to_i == 1
+                        order_line_item_info = order['line_items'].first
+
+                        temp_mix_array = order_line_item_info['properties'].select {|property| property['name'] == 'is_mix_and_match_order'} 
+                        temp_is_mix_match = false
+
+                        if temp_mix_array != []
+                            temp_is_mix_match = my_bool_true?(temp_mix_array.first['value'])
+                         else
+                            temp_is_mix_match = false
+                        end
+
+                        if temp_is_mix_match == false && order_line_item_info['properties'].select {|property| property['name'] == 'raw_skus'} != []
+                            #i.e. there is some raw sku there not scrubbed yet
+                            temp_is_mix_match = true
+    
+                        end
+
+                    end
+
+                    
+
+
+
+
                     puts order.inspect
                     order_id = order['id'] 
                     transaction_id = order['id']
@@ -274,7 +303,7 @@ module DownloadSubs
 
                     total_price = order['total_price']
 
-                    order_array << { "order_id" => order_id, "transaction_id" => transaction_id, "charge_status" => charge_status, "payment_processor" => payment_processor, "address_is_active" => address_is_active, "status" => status, "order_type" => type, "charge_id" => charge_id, "address_id" => address_id, "shopify_id" => shopify_id, "shopify_order_id" => shopify_order_id, "shopify_order_number" => shopify_order_number, "shopify_cart_token" => shopify_cart_token, "shipping_date" => shipping_date, "scheduled_at" => scheduled_at, "shipped_date" => shipped_date, "processed_at" => processed_at, "customer_id" => customer_id, "first_name" => first_name, "last_name" => last_name, "is_prepaid" => is_prepaid, "created_at" => created_at, "updated_at" => updated_at, "email" => email, "line_items" => line_items, "total_price" => total_price, "shipping_address" => shipping_address, "billing_address" => billing_address }
+                    order_array << { "order_id" => order_id, "transaction_id" => transaction_id, "charge_status" => charge_status, "payment_processor" => payment_processor, "address_is_active" => address_is_active, "status" => status, "order_type" => type, "charge_id" => charge_id, "address_id" => address_id, "shopify_id" => shopify_id, "shopify_order_id" => shopify_order_id, "shopify_order_number" => shopify_order_number, "shopify_cart_token" => shopify_cart_token, "shipping_date" => shipping_date, "scheduled_at" => scheduled_at, "shipped_date" => shipped_date, "processed_at" => processed_at, "customer_id" => customer_id, "first_name" => first_name, "last_name" => last_name, "is_prepaid" => is_prepaid, "created_at" => created_at, "updated_at" => updated_at, "email" => email, "line_items" => line_items, "total_price" => total_price, "shipping_address" => shipping_address, "billing_address" => billing_address, "is_mix_match" =>  temp_is_mix_match }
 
                     #puts "order_array = #{order_array.inspect}"
                     #exit

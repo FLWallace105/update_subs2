@@ -32,7 +32,7 @@ class Scrub
 
     def setup_mix_match_subs
 
-        scrub_mix_match_sql = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.created_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2022-08-09' and subscriptions.next_charge_scheduled_at < '2022-10-01' and sub_collection_sizes.subscription_id = subscriptions.subscription_id and   ( sub_collection_sizes.product_collection  not ilike 'test%prod%' ) and subscriptions.is_prepaid = \'f\' and subscriptions.is_mix_match  = \'t\' limit 10"
+        scrub_mix_match_sql = "insert into subscriptions_updated (subscription_id, customer_id, updated_at, created_at,  next_charge_scheduled_at, product_title, status, sku, shopify_product_id, shopify_variant_id, raw_line_items) select subscriptions.subscription_id, subscriptions.customer_id, subscriptions.updated_at, subscriptions.created_at, subscriptions.next_charge_scheduled_at, subscriptions.product_title, subscriptions.status, subscriptions.sku, subscriptions.shopify_product_id, subscriptions.shopify_variant_id, subscriptions.raw_line_item_properties from subscriptions, sub_collection_sizes where subscriptions.status = 'ACTIVE' and subscriptions.next_charge_scheduled_at > '2022-08-05' and subscriptions.next_charge_scheduled_at < '2029-10-01' and sub_collection_sizes.subscription_id = subscriptions.subscription_id and   ( sub_collection_sizes.product_collection  not ilike 'test%prod%' ) and subscriptions.is_prepaid = \'t\' and subscriptions.is_mix_match  = \'t\' "
 
         SubscriptionsUpdated.delete_all
         #Now reset index
@@ -51,7 +51,7 @@ class Scrub
         UpdateProduct.delete_all
         ActiveRecord::Base.connection.reset_pk_sequence!('update_products')
 
-        CSV.foreach('staging_update_products_ellie_picks.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
+        CSV.foreach('staging_update_prepaid.csv', :encoding => 'ISO-8859-1', :headers => true) do |row|
            puts row.inspect
            sku = row['sku']
            product_title = row['product_title']
@@ -77,17 +77,17 @@ class Scrub
 
             case my_title
                 when /\s2\sitem/i
-                    next_month_prod_id = "6959754969249"
+                    next_month_prod_id = "6960050241697"
                 when /\s3\sitem/i
-                    next_month_prod_id = "6959754870945"
+                    next_month_prod_id = "6960205168801"
                 when /\s5\sitem/i
-                    next_month_prod_id = "6959754674337"
+                    next_month_prod_id = "6960205103265"
                 when "3 MONTHS"
-                    next_month_prod_id = "6959754674337"
+                    next_month_prod_id = "6960205103265"
                 else
-                    next_month_prod_id = "6959754674337"
+                    next_month_prod_id = "6960205103265"
             end
-        CurrentProduct.create(prod_id_key: my_title, prod_id_value: my_prod_id, next_month_prod_id: next_month_prod_id, prepaid: false )
+        CurrentProduct.create(prod_id_key: my_title, prod_id_value: my_prod_id, next_month_prod_id: next_month_prod_id, prepaid: true )
 
       end
       my_current_products = CurrentProduct.all
